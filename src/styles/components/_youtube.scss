@@ -1,0 +1,33 @@
+.youtube {
+
+  .play-button {
+    font-size: 1.25rem;
+    margin-right: 16px;
+  }
+
+  .slider-container {
+    display: flex;
+    margin: auto;
+    color: #fff;
+    align-items: center;
+    padding: 0px 20px 20px;
+
+    .ant-slider-handle {
+      opacity: 0;
+    }
+
+    .ant-slider {
+      margin: 0 16px;
+    }
+
+    .ant-slider:hover .ant-slider-track,
+    .ant-slider-track {
+      background-color: #ff54ae;
+    }
+  }
+
+  .slider {
+    display: flex;
+    flex: 1;
+  }
+}
