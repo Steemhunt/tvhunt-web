@@ -36,6 +36,9 @@ const Youtube = props => {
     if (player) {
       showNoise(true);
       setPlayer(null);
+      setDuration(null);
+      setCurrentTime(null);
+      setStatus(PLAYBACK_STATUS["-1"]);
       ticker && clearInterval(ticker);
       player.destroy();
     }
