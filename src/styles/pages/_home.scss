@@ -1,4 +1,40 @@
 .home {
-  min-height: 100vh;
-  padding: 80px;
+  height: 100vh;
+  .content {
+    padding-top: 80px;
+
+    .title-container {
+      padding: 20px 30px;
+    }
+
+    .tags {
+      margin-top: 10px;
+    }
+
+    .main-player {
+      position: relative;
+      .prev,
+      .next {
+        position: absolute;
+        top: calc(50% - 60px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 60px;
+        height: 60px;
+        background-color: rgba(9, 12, 21, 0.65);
+        cursor: pointer;
+
+
+        img {
+          width: 30px;
+          height: 30px;
+        }
+      }
+
+      .next {
+        right: 0;
+      }
+    }
+  }
 }

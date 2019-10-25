@@ -1,0 +1,60 @@
+$sidebar-width: 360px;
+
+.side-bar {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: $sidebar-width;
+  height: 100vh;
+  background-color: #111724;
+
+  .quiz-and-earn {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    overflow: hidden;
+    padding: 20px;
+
+    .donut-earn-button {
+      width: 100%;
+      height: 34px;
+      border-radius: 0;
+      border-color: $primary;
+      background-color: transparent;
+      color: #fff;
+    }
+  }
+
+  .answers {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    overflow: auto;
+  }
+
+  .profile-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+
+    .name {
+      color: #f2f2f9;
+      margin: 10px 0;
+    }
+
+    .profile-img {
+      width: 60px;
+      height: 60px;
+
+      img {
+        width: 100%;
+        height: 100%;
+        border-radius: 30px;
+        object-fit: cover;
+        border: solid 4px #07dee7;
+      }
+    }
+  }
+}

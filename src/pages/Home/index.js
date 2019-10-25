@@ -1,13 +1,24 @@
 import React, { useEffect, useState } from "react";
-import { Button } from "antd";
 import { scrollTop } from "utils/scroller";
+import IconTag from "components/IconTag";
 import Youtube from "components/Youtube";
-import CreateQuizForm from "components/CreateQuizForm";
-import numeral from 'numeral';
+import useWindowSize from "hooks/useWindowSize";
+import donutImg from "assets/images/donut.svg";
+import pacmanImg from "assets/images/pacman.svg";
+import prevImg from "assets/images/prev.svg";
+import nextImg from "assets/images/next.svg";
+import SideBar from "./SideBar";
+
+const youtubeIDs = ["FTS5bdW7ykc", "vWUHoAGRTHU", "Yf6rUhPxj70", "iMAKYI4RJsY"];
 
 const Home = props => {
   const [player, setPlayer] = useState(null);
   const [currentTime, setCurrentTime] = useState(null);
+  const [idx, setIndex] = useState(0);
+  const { width } = useWindowSize();
+  const youtubeWidth = width - 360;
+  const youtubeHeight = youtubeWidth * 0.6;
+  const videoId = youtubeIDs[idx];
 
   useEffect(() => {
     scrollTop();
@@ -15,25 +26,55 @@ const Home = props => {
 
   return (
     <div className="home">
-      <Youtube
-        player={player}
-        setPlayer={setPlayer}
-        width={500}
-        height={300}
-        onTick={ct => {
-          console.log("tick called");
-          setCurrentTime(ct)}}
-      />
-
-      <Button
-        onClick={() => {
-          alert(player.getCurrentTime());
-        }}
-        style={{marginTop: 40}}
-      >
-        Create Quiz at {numeral(currentTime).format("00:00:00")}
-      </Button>
-      <CreateQuizForm/>
+      <div className="row-space-between">
+        <div className="content">
+          <div className="main-player">
+            <Youtube
+              player={player}
+              setPlayer={setPlayer}
+              width={youtubeWidth}
+              height={youtubeHeight}
+              onTick={ct => {
+                console.log("tick called");
+                setCurrentTime(ct);
+              }}
+              videoId={videoId}
+            />
+            <div
+              className="prev"
+              onClick={() => {
+                console.log("prev clicked");
+                setIndex((idx - 1) % (youtubeIDs.length));
+              }}
+            >
+              <img src={prevImg} alt="" />
+            </div>
+            <div
+              className="next"
+              onClick={() => {
+                console.log("next clicked");
+                setIndex((idx + 1) % (youtubeIDs.length));
+              }}
+            >
+              <img src={nextImg} alt="" />
+            </div>
+          </div>
+          <div className="title-container">
+            <div className="title big text-white">
+              {player && player.getVideoData().title}
+            </div>
+            <div className="row-align-center tags">
+              <IconTag
+                src={pacmanImg}
+                text="210.9k"
+                style={{ color: "#f7e07e", marginRight: 10 }}
+              />
+              <IconTag src={donutImg} text="210.9k" />
+            </div>
+          </div>
+        </div>
+        <SideBar />
+      </div>
     </div>
   );
 };

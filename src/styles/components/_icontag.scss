@@ -1,0 +1,15 @@
+.icon-tag {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 24px;
+  border-radius: 14.5px;
+  background-color: #090c15;
+  color: $primary;
+  font-size: 12px;
+  padding: 0 16px;
+
+  img {
+    margin-right: 3px;
+  }
+}

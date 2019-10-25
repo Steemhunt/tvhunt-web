@@ -1,5 +1,6 @@
-import React, { useRef, useEffect, useState } from "react";
+import React, { useRef, useEffect, useMemo, useState } from "react";
 import { Icon, Slider } from "antd";
+import TvNoise from "components/TvNoise";
 import PropTypes from "prop-types";
 import numeral from "numeral";
 import _ from "lodash";
@@ -23,13 +24,21 @@ const PLAYBACK_STATUS = {
 const Youtube = props => {
   const playerRef = useRef();
   const [player, setPlayer] = useState(null);
+  const [ticker, setTicker] = useState(null);
   const [duration, setDuration] = useState(null);
   const [currentTime, setCurrentTime] = useState(null);
+  const [noise, showNoise] = useState(true);
   const [status, setStatus] = useState(STATUS_UNSTARTED);
 
   const { width, height, videoId, onTick } = props;
 
   useEffect(() => {
+    if (player) {
+      showNoise(true);
+      setPlayer(null);
+      ticker && clearInterval(ticker);
+      player.destroy();
+    }
     new window.YT.Player(playerRef.current, {
       height,
       width,
@@ -40,7 +49,7 @@ const Youtube = props => {
         onStateChange: onPlayerStateChange
       }
     });
-  });
+  }, [videoId]); //eslint-disable-line
 
   useEffect(() => {
     let tick = () => {
@@ -51,11 +60,9 @@ const Youtube = props => {
       onTick(currentTime);
     };
 
-    let ticker = null;
-
     if (status === STATUS_PLAYING) {
       tick();
-      ticker = setInterval(tick, 1000);
+      setTicker(setInterval(tick, 1000));
     }
 
     player && onTick(player.getCurrentTime());
@@ -70,6 +77,8 @@ const Youtube = props => {
     setCurrentTime(target.getCurrentTime());
     setPlayer(target);
     props.setPlayer(target);
+
+    setTimeout(() => showNoise(false), 1000);
   }
 
   function onPlayerStateChange({ data }) {
@@ -94,6 +103,11 @@ const Youtube = props => {
     playIcon = "caret-right";
     playOnClick = () => player.playVideo();
   }
+
+  const Noise = useMemo(() => <TvNoise width={width} height={height} />, [
+    width,
+    height
+  ]);
 
   return (
     <div className="youtube" style={{ width, backgroundColor: "#000" }}>
@@ -126,6 +140,8 @@ const Youtube = props => {
           {duration ? numeral(duration).format("00:00:00") : "00:00:00"}
         </div>
       </div>
+
+      {noise && <div className={`noise ${player && "fade-out"}`}>{Noise}</div>}
     </div>
   );
 };

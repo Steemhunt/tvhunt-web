@@ -4,7 +4,7 @@ body,
   font-family: "Roboto", sans-serif;
   font-size: 16px;
   font-weight: 300;
-  background: #232323;
+  background: #000;
   margin: 0;
   padding: 0;
 }
@@ -136,6 +136,18 @@ a {
 
 .text-warning {
   color: #ff597a;
+}
+
+.primary {
+  color: $primary;
+}
+
+.small {
+  font-size: 0.875rem;
+}
+
+.big {
+  font-size: 1.125rem;
 }
 
 .uppercase {
