@@ -27,9 +27,13 @@
       height: 100%;
       top: 0;
       left: 0;
+      img {
+        width: 400px;
+        max-width: 90vw;
+        height: auto;
+      }
     }
   }
-
 
   .play-button,
   .sound-button,
@@ -49,10 +53,9 @@
       transition: width 0.1s ease-in-out;
     }
 
-
     .ant-slider:hover .ant-slider-track,
     .ant-slider-track {
-      background-color: #fff!important;
+      background-color: #fff !important;
     }
 
     &:hover {
