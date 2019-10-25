@@ -1,18 +1,17 @@
 .youtube {
-
   .noise {
     position: absolute;
     top: 0;
     z-index: 1;
     opacity: 1;
     background-color: #000;
-    transition: opacity .5s linear;
+    transition: opacity 0.5s linear;
 
     &.fade-out {
       opacity: 0;
     }
 
-    .absolute-center{ 
+    .absolute-center {
       position: absolute;
       display: flex;
       justify-content: center;
@@ -29,11 +28,7 @@
     margin-right: 16px;
   }
 
-  .slider-container {
-    display: flex;
-    margin: auto;
-    color: #fff;
-    align-items: center;
+  .controls {
     padding: 0px 20px 20px;
 
     .ant-slider-handle {
@@ -41,13 +36,26 @@
     }
 
     .ant-slider {
-      margin: 0 16px;
+      margin: 0;
+      padding: 0;
+    }
+
+    .ant-slider:hover .ant-slider-rail,
+    .ant-slider-rail {
+      background-color: rgba(255, 255, 255, 0.2);
     }
 
     .ant-slider:hover .ant-slider-track,
     .ant-slider-track {
       background-color: #ff54ae;
     }
+  }
+
+  .slider-container {
+    display: flex;
+    margin: auto;
+    color: #fff;
+    align-items: center;
   }
 
   .slider {

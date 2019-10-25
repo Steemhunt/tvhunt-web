@@ -119,11 +119,7 @@ const Youtube = props => {
   return (
     <div className="youtube" style={{ width, backgroundColor: "#000" }}>
       <div ref={playerRef} />
-      <div className="slider-container">
-        <Icon className="play-button" type={playIcon} onClick={playOnClick} />
-        <div>
-          {currentTime ? numeral(currentTime).format("00:00:00") : "00:00:00"}
-        </div>
+      <div className="controls">
         <Slider
           className="slider"
           value={slider}
@@ -145,8 +141,15 @@ const Youtube = props => {
             onTick(currentTime);
           }}
         />
-        <div>
-          {duration ? numeral(duration).format("00:00:00") : "00:00:00"}
+        <div className="slider-container">
+          <Icon className="play-button" type={playIcon} onClick={playOnClick} />
+          <div>
+            {currentTime ? numeral(currentTime).format("00:00:00") : "00:00:00"}
+          </div>
+          /
+          <div>
+            {duration ? numeral(duration).format("00:00:00") : "00:00:00"}
+          </div>
         </div>
       </div>
 
