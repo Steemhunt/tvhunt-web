@@ -20,6 +20,14 @@ const Home = props => {
   const youtubeHeight = youtubeWidth * 0.6;
   const videoId = youtubeIDs[idx];
 
+  const prev = () => {
+    setIndex((idx - 1) % youtubeIDs.length);
+  };
+
+  const skip = () => {
+    setIndex((idx + 1) % youtubeIDs.length);
+  };
+
   useEffect(() => {
     scrollTop();
   });
@@ -38,24 +46,13 @@ const Home = props => {
                 console.log("tick called");
                 setCurrentTime(ct);
               }}
+              skip={skip}
               videoId={videoId}
             />
-            <div
-              className="prev"
-              onClick={() => {
-                console.log("prev clicked");
-                setIndex((idx - 1) % (youtubeIDs.length));
-              }}
-            >
+            <div className="prev" onClick={prev}>
               <img src={prevImg} alt="" />
             </div>
-            <div
-              className="next"
-              onClick={() => {
-                console.log("next clicked");
-                setIndex((idx + 1) % (youtubeIDs.length));
-              }}
-            >
+            <div className="next" onClick={skip}>
               <img src={nextImg} alt="" />
             </div>
           </div>

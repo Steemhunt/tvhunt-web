@@ -32,7 +32,7 @@ const Youtube = props => {
   const [volume, setVolume] = useState(0);
   const [status, setStatus] = useState(STATUS_UNSTARTED);
 
-  const { width, height, videoId, onTick } = props;
+  const { width, height, videoId, onTick, skip } = props;
 
   useEffect(() => {
     if (player) {
@@ -144,6 +144,7 @@ const Youtube = props => {
         />
         <div className="slider-container">
           <Icon className="play-button" type={playIcon} onClick={playOnClick} />
+          <Icon className="forward-button" type="forward" onClick={skip} />
           <div className="sound-control">
             <Icon
               className="sound-button"
@@ -167,11 +168,11 @@ const Youtube = props => {
               }}
             />
           </div>
-          <div>
+          <div className="small">
             {currentTime ? numeral(currentTime).format("00:00:00") : "00:00:00"}
           </div>
           /
-          <div>
+          <div className="small">
             {duration ? numeral(duration).format("00:00:00") : "00:00:00"}
           </div>
         </div>
@@ -186,7 +187,8 @@ Youtube.propTypes = {
   width: PropTypes.number,
   height: PropTypes.number,
   videoId: PropTypes.string,
-  onTick: PropTypes.func
+  onTick: PropTypes.func,
+  skip: PropTypes.func
 };
 
 Youtube.defaultProps = {
@@ -199,7 +201,8 @@ Youtube.defaultProps = {
     document.documentElement.clientHeight ||
     document.body.clientHeight,
   videoId: "FTS5bdW7ykc",
-  onTick: () => {}
+  onTick: () => {},
+  skip: () => {}
 };
 
 export default Youtube;
