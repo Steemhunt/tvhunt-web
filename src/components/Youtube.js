@@ -29,6 +29,7 @@ const Youtube = props => {
   const [currentTime, setCurrentTime] = useState(null);
   const [noise, showNoise] = useState(true);
   const [slider, setSlider] = useState(0);
+  const [volume, setVolume] = useState(0);
   const [status, setStatus] = useState(STATUS_UNSTARTED);
 
   const { width, height, videoId, onTick } = props;
@@ -81,7 +82,7 @@ const Youtube = props => {
     target.setSize = _.debounce(target.setSize, 100);
     target.seekTo = _.debounce(target.seekTo, 500);
     target.getDuration = _.debounce(target.getDuration, 100);
-    setCurrentTime(target.getCurrentTime());
+    setVolume(target.getVolume());
     setPlayer(target);
     props.setPlayer(target);
 
@@ -143,6 +144,29 @@ const Youtube = props => {
         />
         <div className="slider-container">
           <Icon className="play-button" type={playIcon} onClick={playOnClick} />
+          <div className="sound-control">
+            <Icon
+              className="sound-button"
+              type="sound"
+              onClick={() => {
+                if (volume === 0) {
+                  player && player.setVolume(100);
+                  setVolume(100);
+                } else {
+                  setVolume(0);
+                  player && player.setVolume(0);
+                }
+              }}
+            />
+            <Slider
+              className="volume-slider"
+              value={volume}
+              onChange={volume => {
+                setVolume(volume);
+                player && player.setVolume(volume);
+              }}
+            />
+          </div>
           <div>
             {currentTime ? numeral(currentTime).format("00:00:00") : "00:00:00"}
           </div>

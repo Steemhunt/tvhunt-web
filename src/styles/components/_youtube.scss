@@ -1,4 +1,11 @@
 .youtube {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+
   .noise {
     position: absolute;
     top: 0;
@@ -25,7 +32,35 @@
 
   .play-button {
     font-size: 1.25rem;
-    margin-right: 16px;
+    margin-right: 8px;
+  }
+
+  .sound-control {
+    display: flex;
+    align-items: center;
+    padding-right: 16px;
+
+    .volume-slider {
+      top: 3px;
+      width: 0px;
+      transition: width 0.1s ease-in-out;
+    }
+
+
+    .ant-slider:hover .ant-slider-track,
+    .ant-slider-track {
+      background-color: #fff!important;
+    }
+
+    &:hover {
+      .ant-slider-handle {
+        opacity: 1 !important;
+      }
+      .volume-slider {
+        width: 100px;
+        margin-left: 16px;
+      }
+    }
   }
 
   .controls {
@@ -47,7 +82,7 @@
 
     .ant-slider:hover .ant-slider-track,
     .ant-slider-track {
-      background-color: #ff54ae;
+      background-color: #07dee7;
     }
   }
 
