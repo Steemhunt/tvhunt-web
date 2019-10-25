@@ -135,6 +135,7 @@ const Youtube = props => {
           onAfterChange={value => {
             const duration = player.getDuration();
             const currentTime = duration * (value / 100);
+            clearInterval(ticker);
             setCurrentTime(currentTime);
             onTick(currentTime);
           }}
