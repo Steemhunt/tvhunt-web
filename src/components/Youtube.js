@@ -28,6 +28,7 @@ const Youtube = props => {
   const [duration, setDuration] = useState(null);
   const [currentTime, setCurrentTime] = useState(null);
   const [noise, showNoise] = useState(true);
+  const [slider, setSlider] = useState(0);
   const [status, setStatus] = useState(STATUS_UNSTARTED);
 
   const { width, height, videoId, onTick } = props;
@@ -46,7 +47,7 @@ const Youtube = props => {
       height,
       width,
       videoId,
-      playerVars: { autoplay: 0, controls: 0 },
+      playerVars: { autoplay: 1, controls: 0 },
       events: {
         onReady: onPlayerReady,
         onStateChange: onPlayerStateChange
@@ -60,12 +61,15 @@ const Youtube = props => {
       const duration = player.getDuration();
       setCurrentTime(currentTime);
       setDuration(duration);
+      setSlider((currentTime / duration) * 100);
       onTick(currentTime);
     };
 
     if (status === STATUS_PLAYING) {
       tick();
       setTicker(setInterval(tick, 1000));
+    } else {
+      ticker && clearInterval(ticker);
     }
 
     player && onTick(player.getCurrentTime());
@@ -122,6 +126,7 @@ const Youtube = props => {
         </div>
         <Slider
           className="slider"
+          value={slider}
           tipFormatter={value => {
             if (player) {
               const duration = player.getDuration();
@@ -129,12 +134,12 @@ const Youtube = props => {
             }
           }}
           onChange={value => {
-            const duration = player.getDuration();
-            player.seekTo(duration * (value / 100));
+            setSlider(value);
           }}
           onAfterChange={value => {
             const duration = player.getDuration();
             const currentTime = duration * (value / 100);
+            player.seekTo(duration * (value / 100));
             clearInterval(ticker);
             setCurrentTime(currentTime);
             onTick(currentTime);
