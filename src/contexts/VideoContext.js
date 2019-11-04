@@ -7,9 +7,12 @@ const { Provider, Consumer } = VideoContext;
 class VideoProvider extends Component {
   state = {
     player: null,
+    status: null,
     playlist: ["FTS5bdW7ykc", "vWUHoAGRTHU", "Yf6rUhPxj70", "iMAKYI4RJsY"],
     currentIndex: 1,
-    currentTime: 0
+    currentTime: 0,
+    duration: 0,
+    volume: 0
   };
 
   componentDidMount() {}

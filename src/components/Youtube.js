@@ -1,12 +1,9 @@
 import React, { useRef, useEffect, useMemo, useContext, useState } from "react";
-import { Icon, Slider } from "antd";
+import { Slider } from "antd";
 import VideoContext from "contexts/VideoContext";
 import TvNoise from "components/TvNoise";
 import PropTypes from "prop-types";
 import numeral from "numeral";
-import prevImg from "assets/images/prev.svg";
-import playImg from "assets/images/play.svg";
-import nextImg from "assets/images/next.svg";
 import _ from "lodash";
 
 export const STATUS_UNSTARTED = "unstarted";
@@ -26,28 +23,33 @@ export const PLAYBACK_STATUS = {
 
 const Youtube = props => {
   const playerRef = useRef();
-  const [player, setPlayer] = useState(null);
   const [ticker, setTicker] = useState(null);
-  const [duration, setDuration] = useState(null);
-  const [currentTime, setCurrentTime] = useState(null);
   const [noise, showNoise] = useState(true);
   const [slider, setSlider] = useState(0);
-  const [volume, setVolume] = useState(0);
-  const [status, setStatus] = useState(STATUS_UNSTARTED);
   const { width, height } = props;
 
-  const { prev, next, playlist, currentIndex, updateState } = useContext(
-    VideoContext
-  );
+  const {
+    player,
+    prev,
+    next,
+    playlist,
+    volume,
+    currentIndex,
+    updateState,
+    status,
+    duration,
+    currentTime
+  } = useContext(VideoContext);
   const videoId = playlist[currentIndex];
 
   useEffect(() => {
     if (player) {
       showNoise(true);
-      updateState({ player: null });
-      setDuration(null);
-      setCurrentTime(null);
-      setStatus(PLAYBACK_STATUS["-1"]);
+      updateState({
+        status: PLAYBACK_STATUS["-1"],
+        duration: null,
+        player: null
+      });
       ticker && clearInterval(ticker);
       player.destroy();
     }
@@ -67,10 +69,8 @@ const Youtube = props => {
     let tick = () => {
       const currentTime = player.getCurrentTime();
       const duration = player.getDuration();
-      setCurrentTime(currentTime);
-      setDuration(duration);
       setSlider((currentTime / duration) * 100);
-      updateState({ currentTime });
+      updateState({ currentTime, duration });
     };
 
     if (status === STATUS_PLAYING) {
@@ -89,16 +89,14 @@ const Youtube = props => {
     target.setSize = _.debounce(target.setSize, 100);
     target.seekTo = _.debounce(target.seekTo, 500);
     target.getDuration = _.debounce(target.getDuration, 100);
-    setVolume(target.getVolume());
-    setPlayer(target);
-    updateState({ player: target });
+    updateState({ player: target, volume: target.getVolume() });
 
     setTimeout(() => showNoise(false), 1000);
   }
 
   function onPlayerStateChange({ data }) {
     console.log(PLAYBACK_STATUS[data]);
-    setStatus(PLAYBACK_STATUS[data]);
+    updateState({ status: PLAYBACK_STATUS[data] });
   }
 
   useEffect(() => {
@@ -110,12 +108,12 @@ const Youtube = props => {
   let playIcon = null;
   let playOnClick = null;
   if (status === STATUS_BUFFERING) {
-    playIcon = "loading";
+    playIcon = "la-circle-notch";
   } else if (status === STATUS_PLAYING) {
-    playIcon = "pause";
+    playIcon = "la-pause";
     playOnClick = () => player.pauseVideo();
   } else {
-    playIcon = "caret-right";
+    playIcon = "la-play";
     playOnClick = () => player.playVideo();
   }
 
@@ -145,23 +143,21 @@ const Youtube = props => {
             const currentTime = duration * (value / 100);
             player.seekTo(duration * (value / 100));
             clearInterval(ticker);
-            setCurrentTime(currentTime);
             updateState({ currentTime });
           }}
         />
         <div className="slider-container">
-          <Icon className="play-button" type={playIcon} onClick={playOnClick} />
-          <Icon className="forward-button" type="forward" onClick={next} />
+          <i className={`la ${playIcon} play-button`} onClick={playOnClick} />
+          <i className="la la-step-forward forward-button" onClick={next} />
           <div className="sound-control">
-            <Icon
-              className="sound-button"
-              type="sound"
+            <i
+              className="la la-volume-up sound-button"
               onClick={() => {
                 if (volume === 0) {
                   player && player.setVolume(100);
-                  setVolume(100);
+                  updateState({ volume: 100 });
                 } else {
-                  setVolume(0);
+                  updateState({ volume: 0 });
                   player && player.setVolume(0);
                 }
               }}
@@ -170,7 +166,7 @@ const Youtube = props => {
               className="volume-slider"
               value={volume}
               onChange={volume => {
-                setVolume(volume);
+                updateState({ volume });
                 player && player.setVolume(volume);
               }}
             />
@@ -186,9 +182,9 @@ const Youtube = props => {
       </div>
 
       <div className="hover-controls" onClick={playOnClick}>
-        <img src={prevImg} alt="" onClick={prev} />
-        <img className="play-icon" src={playImg} alt="" onClick={playOnClick} />
-        <img src={nextImg} alt="" onClick={next} />
+        <i className="la la-step-backward" onClick={prev} />
+        <i className={`la ${playIcon} play-icon`} onClick={playOnClick} />
+        <i className="la la-step-forward" onClick={next} />
       </div>
 
       {noise && <div className={`noise ${player && "fade-out"}`}>{Noise}</div>}

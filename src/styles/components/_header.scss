@@ -1,4 +1,10 @@
 .header {
   position: fixed;
   padding: 20px 30px;
+
+  .logo {
+    width: 127px;
+    height: 40px;
+    object-fit: contain;
+  }
 }

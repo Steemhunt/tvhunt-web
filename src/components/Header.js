@@ -5,7 +5,7 @@ import logo from "assets/images/logo-tvh.svg";
 const Header = props => {
   return (
     <div className={`header`}>
-      <img src={logo} alt="logo" />
+      <img className="logo" src={logo} alt="logo" />
     </div>
   );
 };

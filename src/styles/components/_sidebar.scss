@@ -6,78 +6,28 @@
   height: 100vh;
   background-color: #111724;
 
+  .primary-button {
+    background-color: transparent;
+    border-radius: 4px;
+    border: solid 1px #ff54ae;
+    color: #ff54ae;
+  }
+
   .top-header {
     display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
     color: #9f9faf;
-    margin: 12px 20px;
-    border-bottom: solid 1px #4c4b5e;
+    padding: 26px 20px 36px;
     font-size: 0.875rem;
 
-    & > div {
-      display: flex;
-      flex: 1;
-      align-items: center;
-      justify-content: center;
-      padding: 12px;
-      cursor: pointer;
+    .hide-ranking {
+      margin-left: 10px;
     }
 
-    hr {
-      width: 1px;
-      height: 60%;
-      border: none;
-      background-color: #4c4b5e;
-      color: #4c4b5e;
-    }
-  }
-
-  .quiz-and-earn {
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-    overflow: hidden;
-    padding: 20px;
-
-    .donut-earn-button {
-      width: 100%;
-      height: 34px;
-      border-radius: 0;
-      border-color: $primary;
-      background-color: transparent;
-      color: #fff;
-    }
-  }
-
-  .answers {
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-    overflow: auto;
-  }
-
-  .profile-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 40px;
-
-    .name {
-      color: #f2f2f9;
-      margin: 10px 0;
-    }
-
-    .profile-img {
-      width: 60px;
-      height: 60px;
-
-      img {
-        width: 100%;
-        height: 100%;
-        border-radius: 30px;
-        object-fit: cover;
-        border: solid 4px #07dee7;
-      }
+    .primary-button {
+      align-self: flex-end;
     }
   }
 }

@@ -1,31 +1,25 @@
 import React, { useEffect, useState, useContext } from "react";
+import { Button } from "antd";
 import SubmitContext from "contexts/SubmitContext";
-import IconTag from "components/IconTag";
-import donutImg from "assets/images/donut.svg";
-import QuizAndEarn from "./QuizAndEarn";
-import PropTypes from "prop-types";
+import hideImg from "assets/images/hide.svg";
 
 const SideBar = props => {
   const submitContext = useContext(SubmitContext);
+
   return (
     <div className="side-bar">
       <div className="top-header">
-        <div onClick={() => submitContext.updateState({ showDrawer: true })}>
-          Submit Video
+        <div className="row-align-center">
+          <img src={hideImg} alt="" />
+          <div className="hide-ranking">Hide Ranking</div>
         </div>
-        <hr />
-        <div>My Page</div>
+        <Button
+          onClick={() => submitContext.updateState({ showDrawer: true })}
+          className="primary-button"
+        >
+          HUNT VIDEO
+        </Button>
       </div>
-
-      <div className="profile-container">
-        <div className="profile-img">
-          <img src={"http://placekitten.com/200/200"} alt="" />
-        </div>
-        <div className="name small">Arkell Charles</div>
-        <IconTag text="10.5k" src={donutImg} />
-      </div>
-
-      <QuizAndEarn />
     </div>
   );
 };

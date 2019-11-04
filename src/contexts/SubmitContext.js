@@ -6,7 +6,7 @@ const { Provider, Consumer } = SubmitContext;
 
 class SubmitProvider extends Component {
   state = {
-    step: 3,
+    step: 0,
     showDrawer: false,
     videoURL: null,
     questions: []
