@@ -1,8 +1,12 @@
-import React, { useRef, useEffect, useMemo, useState } from "react";
+import React, { useRef, useEffect, useMemo, useContext, useState } from "react";
 import { Icon, Slider } from "antd";
+import VideoContext from "contexts/VideoContext";
 import TvNoise from "components/TvNoise";
 import PropTypes from "prop-types";
 import numeral from "numeral";
+import prevImg from "assets/images/prev.svg";
+import playImg from "assets/images/play.svg";
+import nextImg from "assets/images/next.svg";
 import _ from "lodash";
 
 export const STATUS_UNSTARTED = "unstarted";
@@ -11,8 +15,7 @@ export const STATUS_PLAYING = "playing";
 export const STATUS_PAUSED = "paused";
 export const STATUS_BUFFERING = "buffering";
 export const STATUS_CUED = "cued";
-
-const PLAYBACK_STATUS = {
+export const PLAYBACK_STATUS = {
   "-1": STATUS_UNSTARTED,
   "0": STATUS_ENDED,
   "1": STATUS_PLAYING,
@@ -31,13 +34,17 @@ const Youtube = props => {
   const [slider, setSlider] = useState(0);
   const [volume, setVolume] = useState(0);
   const [status, setStatus] = useState(STATUS_UNSTARTED);
+  const { width, height } = props;
 
-  const { width, height, videoId, onTick, skip } = props;
+  const { prev, next, playlist, currentIndex, updateState } = useContext(
+    VideoContext
+  );
+  const videoId = playlist[currentIndex];
 
   useEffect(() => {
     if (player) {
       showNoise(true);
-      setPlayer(null);
+      updateState({ player: null });
       setDuration(null);
       setCurrentTime(null);
       setStatus(PLAYBACK_STATUS["-1"]);
@@ -48,7 +55,7 @@ const Youtube = props => {
       height,
       width,
       videoId,
-      playerVars: { autoplay: 1, controls: 0 },
+      playerVars: { autoplay: 0, controls: 0 },
       events: {
         onReady: onPlayerReady,
         onStateChange: onPlayerStateChange
@@ -63,7 +70,7 @@ const Youtube = props => {
       setCurrentTime(currentTime);
       setDuration(duration);
       setSlider((currentTime / duration) * 100);
-      onTick(currentTime);
+      updateState({ currentTime });
     };
 
     if (status === STATUS_PLAYING) {
@@ -73,7 +80,7 @@ const Youtube = props => {
       ticker && clearInterval(ticker);
     }
 
-    player && onTick(player.getCurrentTime());
+    player && updateState({ currentTime: player.getCurrentTime() });
 
     return () => ticker && clearInterval(ticker);
   }, [status]); //eslint-disable-line
@@ -84,7 +91,7 @@ const Youtube = props => {
     target.getDuration = _.debounce(target.getDuration, 100);
     setVolume(target.getVolume());
     setPlayer(target);
-    props.setPlayer(target);
+    updateState({ player: target });
 
     setTimeout(() => showNoise(false), 1000);
   }
@@ -139,12 +146,12 @@ const Youtube = props => {
             player.seekTo(duration * (value / 100));
             clearInterval(ticker);
             setCurrentTime(currentTime);
-            onTick(currentTime);
+            updateState({ currentTime });
           }}
         />
         <div className="slider-container">
           <Icon className="play-button" type={playIcon} onClick={playOnClick} />
-          <Icon className="forward-button" type="forward" onClick={skip} />
+          <Icon className="forward-button" type="forward" onClick={next} />
           <div className="sound-control">
             <Icon
               className="sound-button"
@@ -178,6 +185,12 @@ const Youtube = props => {
         </div>
       </div>
 
+      <div className="hover-controls" onClick={playOnClick}>
+        <img src={prevImg} alt="" onClick={prev} />
+        <img className="play-icon" src={playImg} alt="" onClick={playOnClick} />
+        <img src={nextImg} alt="" onClick={next} />
+      </div>
+
       {noise && <div className={`noise ${player && "fade-out"}`}>{Noise}</div>}
     </div>
   );
@@ -185,10 +198,7 @@ const Youtube = props => {
 
 Youtube.propTypes = {
   width: PropTypes.number,
-  height: PropTypes.number,
-  videoId: PropTypes.string,
-  onTick: PropTypes.func,
-  skip: PropTypes.func
+  height: PropTypes.number
 };
 
 Youtube.defaultProps = {
@@ -199,10 +209,7 @@ Youtube.defaultProps = {
   height:
     window.innerHeight ||
     document.documentElement.clientHeight ||
-    document.body.clientHeight,
-  videoId: "FTS5bdW7ykc",
-  onTick: () => {},
-  skip: () => {}
+    document.body.clientHeight
 };
 
 export default Youtube;

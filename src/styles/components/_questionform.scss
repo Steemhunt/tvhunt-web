@@ -1,0 +1,86 @@
+.question-form {
+  width: 100%;
+  color: #9f9faf;
+
+  .form {
+    width: 100%;
+    padding: 30px;
+    margin-top: 8px;
+    background-color: #090c15;
+  }
+
+  .ant-slider {
+    padding: 0;
+    margin: 40px 0;
+  }
+
+  .ant-slider:hover .ant-slider-track,
+  .ant-slider-track {
+    background-color: #07dee7;
+  }
+
+  .question-text {
+    margin-bottom: 8px;
+  }
+
+  .question-max-length {
+    font-size: 0.625rem;
+    color: #4c4b5e;
+    text-align: right;
+  }
+
+  input,
+  input:focus,
+  input:hover,
+  textarea,
+  textarea:focus,
+  textarea:hover {
+    width: 100%;
+    color: #fff;
+    background-color: transparent;
+    box-shadow: none;
+    border: none;
+    border-radius: 0;
+    border-bottom: solid 1px #4c4b5e;
+    padding: 0;
+  }
+
+  input,
+  input:focus,
+  input:hover {
+    border: none;
+  }
+
+  .choices {
+    margin-top: 8px;
+    .answer {
+      display: flex;
+      width: 100%;
+      height: 40px;
+      align-items: center;
+      justify-content: space-between;
+      padding-left: 20px;
+      padding-right: 12px;
+      border-radius: 20px;
+      border: solid 1px #4c4b5e;
+      margin-top: 8px;
+      color: #fff;
+      cursor: pointer;
+    }
+
+    .add-choice {
+      display: flex;
+      font-size: 0.875rem;
+      margin-top: 20px;
+      margin-left: 20px;
+      cursor: pointer;
+
+      &:hover {
+        color: $primary;
+        svg {
+          fill: $primary;
+        }
+      }
+    }
+  }
+}

@@ -1,26 +1,32 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { Router } from 'react-router-dom';
-import history from './browserHistory';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
-import { AuthProvider } from './contexts/AuthContext';
-import { AppProvider } from 'contexts/AppContext';
-import { HomeProvider } from 'contexts/HomeContext';
+import React from "react";
+import ReactDOM from "react-dom";
+import { Router } from "react-router-dom";
+import history from "./browserHistory";
+import App from "./App";
+import * as serviceWorker from "./serviceWorker";
+import { AuthProvider } from "./contexts/AuthContext";
+import { AppProvider } from "contexts/AppContext";
+import { HomeProvider } from "contexts/HomeContext";
+import { SubmitProvider } from "contexts/SubmitContext";
+import { VideoProvider } from "contexts/VideoContext";
 
-require('./utils/polyfill');
+require("./utils/polyfill");
 
 ReactDOM.render(
   <Router history={history}>
     <AppProvider>
       <AuthProvider>
         <HomeProvider>
-          <App />
+          <VideoProvider>
+            <SubmitProvider>
+              <App />
+            </SubmitProvider>
+          </VideoProvider>
         </HomeProvider>
       </AuthProvider>
     </AppProvider>
   </Router>,
-  document.getElementById('root')
+  document.getElementById("root")
 );
 
 // If you want your app to work offline and load faster, you can change

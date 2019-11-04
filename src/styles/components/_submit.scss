@@ -1,0 +1,268 @@
+.submit-container {
+  color: #9f9faf;
+  svg {
+    fill: #9f9faf;
+  }
+
+  hr {
+    width: 100%;
+    border: solid 1px #4c4b5e;
+    margin: 30px 0;
+  }
+
+  .submit-footer {
+    display: flex;
+    justify-content: space-between;
+    position: fixed;
+    width: $sidebar-width - 40px;
+    border-top: solid 1px #4c4b5e;
+    background-color: #111724;
+    margin: 0 20px;
+    padding: 10px 0;
+    height: 72px;
+    bottom: 0;
+
+    .prev,
+    .next {
+      cursor: pointer;
+    }
+
+    .prev {
+      svg {
+        margin-right: 4px;
+      }
+    }
+
+    .next {
+      color: #07dee7;
+      svg {
+        fill: #07dee7;
+        margin-left: 4px;
+      }
+    }
+  }
+
+  .ant-input-number,
+  .ant-input-number:focus,
+  .ant-input-number:hover,
+  .ant-input-number:active,
+  input,
+  input:focus,
+  input:hover,
+  input:active {
+    background-color: transparent;
+    border: none;
+    color: #fff;
+    box-shadow: none;
+  }
+
+  .ant-slider:hover .ant-slider-track,
+  .ant-slider-track {
+    background-color: #07dee7;
+  }
+
+  .title {
+    color: #07dee7;
+    margin-bottom: 30px;
+    align-self: center;
+  }
+
+  .desc {
+    // width: 233px;
+    margin-top: 15px;
+    text-align: center;
+    align-self: center;
+    color: #fff;
+  }
+
+  .dog-img {
+    width: 110px;
+    height: 110px;
+    object-fit: contain;
+    align-self: center;
+  }
+
+  .step-payment,
+  .step-budget,
+  .step-submit,
+  .step-question {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 56px 20px;
+  }
+
+  .step-submit {
+    .input-desc {
+      margin-top: 30px;
+      margin-bottom: 10px;
+    }
+
+    .input-container {
+      display: flex;
+      width: 100%;
+      height: 40px;
+      align-items: center;
+      padding: 0px 16px;
+      border: 2px solid #07dee7;
+      border-radius: 10px;
+    }
+
+    button {
+      border-radius: 20px;
+      background-color: #07dee7;
+      border-color: #07dee7;
+      margin-top: 20px;
+
+      &:hover {
+        color: #fff;
+      }
+    }
+  }
+
+  .step-question {
+    .video-preview {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      padding: 30px;
+      background-color: #090c15;
+      margin-top: 8px;
+      img {
+        width: 60px;
+        height: 60px;
+      }
+      .text-container {
+        margin-left: 14px;
+      }
+    }
+
+    .add-question-button,
+    .pink-highlight-button {
+      width: 100%;
+      height: 34px;
+      border-radius: 0;
+      border-color: $primary;
+      background-color: transparent;
+      margin-top: 20px;
+      margin-bottom: 14px;
+      color: #fff;
+    }
+
+    .add-question-button {
+      height: 50px;
+      border-color: #07dee7;
+
+      svg {
+        fill: #07dee7;
+      }
+    }
+  }
+
+  .step-budget {
+    .budget-container {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      margin-top: 10px;
+    }
+
+    input {
+      text-align: center;
+    }
+
+    .ant-input-number {
+      display: flex;
+      width: 100px;
+      height: 40px;
+      border: solid 1px #4c4b5e;
+      border-radius: 5px;
+    }
+
+    .ant-input-number-input {
+      height: 40px;
+    }
+
+    .budget-slider-container {
+      display: flex;
+      flex: 1;
+      margin-left: 16px;
+    }
+
+    .budget-slider {
+      width: 100%;
+    }
+
+    .estimation-text {
+      margin-top: 30px;
+      margin-bottom: 10px;
+    }
+
+    .estimation-container {
+      width: 100%;
+      padding: 15px;
+      border: 1px solid $primary;
+
+      & > div {
+        display: flex;
+        align-items: center;
+        margin: 4px 0;
+      }
+    }
+
+    .custom-icon {
+      width: 20px;
+      height: 20px;
+      margin-right: 8px;
+    }
+
+    .answer-preview {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      align-items: center;
+      justify-content: center;
+      padding: 30px;
+      margin-top: 20px;
+      background-color: #090c15;
+      color: #fff;
+
+      .donuts {
+        display: flex;
+        align-items: center;
+        color: $primary;
+      }
+
+      .question {
+        margin-top: 12px;
+        margin-bottom: 15px;
+        font-weight: bold;
+        text-align: center;
+      }
+
+      .answer {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        height: 40px;
+        padding: 0 20px;
+        margin: 5px 0;
+        border-radius: 20px;
+        border: solid 1px #4c4b5e;
+
+        &.correct {
+          border: solid 2px $primary;
+        }
+      }
+    }
+  }
+
+  .step-payment {
+    .payment-options {
+      display: flex;
+      width: 100%;
+      justify-content: space-between;
+      margin-top: 10px;
+    }
+  }
+}
