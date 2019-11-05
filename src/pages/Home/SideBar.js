@@ -13,12 +13,12 @@ const SideBar = props => {
     <div className="side-bar">
       <div className="top-header">
         <div
-          className="row-align-center"
+          className="row-align-center hide-ranking"
           onClick={() => videoContext.updateState({ fullscreen: !fullscreen })}
         >
           <Icon type="caret-left"/>
           <Icon type="caret-right"/>
-          <div className="hide-ranking">Hide Ranking</div>
+          <div>Hide Ranking</div>
         </div>
         <Button
           onClick={() => submitContext.updateState({ showDrawer: true })}

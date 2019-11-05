@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import SubmitContext from "contexts/SubmitContext";
 import { Button, Input } from "antd";
-import dogDonut from "assets/images/dog-donut@3x.png";
+import tv from "assets/images/tv@3x.png";
 import youtube from "assets/images/youtube.svg";
 
 const SubmitStep = props => {
@@ -9,13 +9,14 @@ const SubmitStep = props => {
   return (
     <div className="step-submit">
       <div className="title big">SUBMIT VIDEO</div>
-      <img className="dog-img" src={dogDonut} alt="" />
-      <div className="desc">
-        Make videos more likable by adding fun quiz questions with donut
-        bounties.
+      <img className="dog-img" src={tv} alt="" />
+      <div className="desc text">
+        TV Hunt is a daily top chart for videos. You can simply share a cool
+        video that you’ve found today. The daily ranking is based on the
+        upvotes.
       </div>
 
-      <div className="input-desc">Input URL of Youtube Video</div>
+      <div className="input-desc text-white">Input URL of Youtube Video</div>
       <div className="input-container">
         <img src={youtube} alt="" />
         <Input placeholder="https://www.youtube.com/watch?v=…" />

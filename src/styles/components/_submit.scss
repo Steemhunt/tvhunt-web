@@ -72,7 +72,6 @@
     margin-top: 15px;
     text-align: center;
     align-self: center;
-    color: #fff;
   }
 
   .dog-img {
@@ -109,14 +108,13 @@
     }
 
     button {
-      border-radius: 20px;
-      background-color: #07dee7;
-      border-color: #07dee7;
+      width: 102px;
+      height: 40px;
+      border-radius: 7px;
+      background-color: #ff54ae;
+      border-color: #ff54ae;
       margin-top: 20px;
-
-      &:hover {
-        color: #fff;
-      }
+      color: #fff;
     }
   }
 
