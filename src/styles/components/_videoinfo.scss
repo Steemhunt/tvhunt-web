@@ -1,0 +1,37 @@
+.title-container {
+  padding: 20px 30px;
+
+  .big-upvote {
+    width: 170px;
+    height: 60px;
+    font-size: 1.5rem;
+
+    i {
+      margin-right: 10px;
+    }
+  }
+
+  .title {
+    margin-top: 30px;
+  }
+
+  .tags {
+    margin-top: 10px;
+  }
+
+  .badge {
+    justify-content: center;
+    width: 170px;
+    height: 60px;
+    border-radius: 7px;
+    background-color: #111724;
+    margin-left: 15px;
+
+    img {
+      width: 24px;
+      height: 32px;
+      object-fit: contain;
+      margin-right: 10px;
+    }
+  }
+}

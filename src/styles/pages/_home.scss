@@ -1,40 +1,42 @@
 .home {
+  width: 100vw;
   height: 100vh;
+  overflow: hidden;
+
   .content {
     padding-top: 80px;
-
-    .title-container {
-      padding: 20px 30px;
-    }
-
-    .tags {
-      margin-top: 10px;
-    }
-
     .main-player {
       position: relative;
-      .prev,
-      .next {
-        position: absolute;
-        top: calc(50% - 60px);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 60px;
-        height: 60px;
-        background-color: rgba(9, 12, 21, 0.65);
-        cursor: pointer;
+    }
+  }
 
+  .show-ranking {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    top: $header-height/4;
+    right: 30px;
+    opacity: 0;
+    transition: opacity 0ms linear;
+    cursor: pointer;
 
-        img {
-          width: 30px;
-          height: 30px;
-        }
+    i {
+      color: $secondary;
+      font-size: 24px;
+      margin-right: 10px;
+      &:first-child {
+        margin-right: -8px;
       }
+    }
 
-      .next {
-        right: 0;
-      }
+    .text {
+      margin-top: 2px;
+    }
+
+    &.visible {
+      opacity: 1;
+      transition: opacity 1000ms linear;
+      transition-delay: 250ms;
     }
   }
 }

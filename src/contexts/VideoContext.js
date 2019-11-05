@@ -12,7 +12,8 @@ class VideoProvider extends Component {
     currentIndex: 1,
     currentTime: 0,
     duration: 0,
-    volume: 0
+    volume: 0,
+    fullscreen: false
   };
 
   componentDidMount() {}

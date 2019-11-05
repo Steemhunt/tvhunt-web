@@ -5,6 +5,8 @@
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+  
+  transition: width 250ms ease-in-out;
 
   .noise {
     position: absolute;

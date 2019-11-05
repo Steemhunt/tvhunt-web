@@ -1,7 +1,9 @@
 .side-bar {
   position: relative;
+  z-index: 1;
   display: flex;
   flex-direction: column;
+  // width: $sidebar-width;
   width: $sidebar-width;
   height: 100vh;
   background-color: #111724;
@@ -19,11 +21,20 @@
     justify-content: space-between;
     width: 100%;
     color: #9f9faf;
-    padding: 26px 20px 36px;
+    padding: 26px 20px;
     font-size: 0.875rem;
 
+    i {
+      color: $secondary;
+      font-size: 24px;
+        margin-right: 10px;
+      &:first-child {
+        margin-right: -8px;
+      }
+    }
+
     .hide-ranking {
-      margin-left: 10px;
+      cursor: pointer;
     }
 
     .primary-button {

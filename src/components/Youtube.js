@@ -1,9 +1,10 @@
 import React, { useRef, useEffect, useMemo, useContext, useState } from "react";
-import { Slider } from "antd";
+import { Icon, Slider } from "antd";
 import VideoContext from "contexts/VideoContext";
 import TvNoise from "components/TvNoise";
 import PropTypes from "prop-types";
 import numeral from "numeral";
+import useWindowSize from "hooks/useWindowSize";
 import _ from "lodash";
 
 export const STATUS_UNSTARTED = "unstarted";
@@ -26,7 +27,7 @@ const Youtube = props => {
   const [ticker, setTicker] = useState(null);
   const [noise, showNoise] = useState(true);
   const [slider, setSlider] = useState(0);
-  const { width, height } = props;
+  const { width: w } = useWindowSize();
 
   const {
     player,
@@ -38,9 +39,13 @@ const Youtube = props => {
     updateState,
     status,
     duration,
-    currentTime
+    currentTime,
+    fullscreen
   } = useContext(VideoContext);
   const videoId = playlist[currentIndex];
+
+  const width = fullscreen ? w : w - 360;
+  const height = width * 0.5;
 
   useEffect(() => {
     if (player) {
@@ -108,12 +113,12 @@ const Youtube = props => {
   let playIcon = null;
   let playOnClick = null;
   if (status === STATUS_BUFFERING) {
-    playIcon = "la-circle-notch";
+    playIcon = "loading";
   } else if (status === STATUS_PLAYING) {
-    playIcon = "la-pause";
+    playIcon = "pause";
     playOnClick = () => player.pauseVideo();
   } else {
-    playIcon = "la-play";
+    playIcon = "caret-right";
     playOnClick = () => player.playVideo();
   }
 
@@ -147,11 +152,12 @@ const Youtube = props => {
           }}
         />
         <div className="slider-container">
-          <i className={`la ${playIcon} play-button`} onClick={playOnClick} />
-          <i className="la la-step-forward forward-button" onClick={next} />
+          <Icon type={playIcon} className="play-button" onClick={playOnClick} />
+          <Icon type="step-forward" className="forward-button" onClick={next} />
           <div className="sound-control">
-            <i
-              className="la la-volume-up sound-button"
+            <Icon
+              type="sound"
+              className="sound-button"
               onClick={() => {
                 if (volume === 0) {
                   player && player.setVolume(100);
@@ -182,9 +188,9 @@ const Youtube = props => {
       </div>
 
       <div className="hover-controls" onClick={playOnClick}>
-        <i className="la la-step-backward" onClick={prev} />
-        <i className={`la ${playIcon} play-icon`} onClick={playOnClick} />
-        <i className="la la-step-forward" onClick={next} />
+        <Icon type="step-backward" onClick={prev} />
+        <Icon type={playIcon} className="play-icon" onClick={playOnClick} />
+        <Icon type="step-forward" onClick={next} />
       </div>
 
       {noise && <div className={`noise ${player && "fade-out"}`}>{Noise}</div>}

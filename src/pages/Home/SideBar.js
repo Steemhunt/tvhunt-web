@@ -1,16 +1,23 @@
-import React, { useEffect, useState, useContext } from "react";
-import { Button } from "antd";
+import React, { useContext } from "react";
+import { Icon, Button } from "antd";
+import VideoContext from "contexts/VideoContext";
 import SubmitContext from "contexts/SubmitContext";
-import hideImg from "assets/images/hide.svg";
+import RankingList from "./RankingList";
 
 const SideBar = props => {
+  const videoContext = useContext(VideoContext);
   const submitContext = useContext(SubmitContext);
+  const { fullscreen } = videoContext;
 
   return (
     <div className="side-bar">
       <div className="top-header">
-        <div className="row-align-center">
-          <img src={hideImg} alt="" />
+        <div
+          className="row-align-center"
+          onClick={() => videoContext.updateState({ fullscreen: !fullscreen })}
+        >
+          <Icon type="caret-left"/>
+          <Icon type="caret-right"/>
           <div className="hide-ranking">Hide Ranking</div>
         </div>
         <Button
@@ -20,6 +27,8 @@ const SideBar = props => {
           HUNT VIDEO
         </Button>
       </div>
+
+      <RankingList />
     </div>
   );
 };

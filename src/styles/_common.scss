@@ -59,6 +59,13 @@ a {
   color: #3fcaff;
 }
 
+.primary-button {
+  background-color: transparent !important;
+  border-radius: 4px !important;
+  border: solid 1px #ff54ae !important;
+  color: #ff54ae !important;
+}
+
 .col-justify-between {
   display: flex;
   flex-direction: column;
@@ -106,6 +113,10 @@ a {
   flex-direction: column;
 }
 
+.text {
+  color: $text;
+}
+
 .text-black {
   color: $text_black;
 }
@@ -142,9 +153,12 @@ a {
   color: #ff597a;
 }
 
-
 .primary {
   color: $primary;
+}
+
+.secondary {
+  color: $secondary;
 }
 
 .small {
@@ -165,6 +179,12 @@ a {
     color: #ee0804;
     transition: color 0.5s;
   }
+}
+
+.overflow-ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .circular-loading {

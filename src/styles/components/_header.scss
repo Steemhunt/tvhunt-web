@@ -1,6 +1,10 @@
 .header {
   position: fixed;
-  padding: 20px 30px;
+  display: flex;
+  height: 90px;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 30px 30px;
 
   .logo {
     width: 127px;
