@@ -58,7 +58,7 @@ const Youtube = props => {
       ticker && clearInterval(ticker);
       player.destroy();
     }
-    new window.YT.Player(playerRef.current, {
+    window.YT && new window.YT.Player(playerRef.current, {
       height,
       width,
       videoId,

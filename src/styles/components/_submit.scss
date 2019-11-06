@@ -92,6 +92,16 @@
   }
 
   .step-submit {
+    .add-tags {
+      margin-top: 20px;
+      margin-bottom: 10px;
+    }
+
+    .tags {
+      width: 100%;
+      border-bottom: solid 1px #4c4b5e;
+    }
+
     .input-desc {
       margin-top: 30px;
       margin-bottom: 10px;
@@ -105,6 +115,16 @@
       padding: 0px 16px;
       border: 2px solid #07dee7;
       border-radius: 10px;
+
+      &.tag-step {
+        padding: 0;
+        border: none;
+
+        .input {
+          text-decoration: underline;
+          color: #07dee7;
+        }
+      }
     }
 
     button {

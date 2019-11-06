@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { Icon, Drawer } from "antd";
 import SubmitContext from "contexts/SubmitContext";
 import SubmitStep from "./SubmitStep";
-import QuestionStep from "./QuestionStep";
+import TagStep from "./TagStep";
 import BudgetStep from "./BudgetStep";
 import PaymentStep from "./PaymentStep";
 
@@ -22,10 +22,10 @@ const SubmitDrawer = props => {
       bodyStyle={{ padding: 0 }}
     >
       {step === 0 && <SubmitStep />}
-      {step === 1 && <QuestionStep />}
+      {step === 1 && <TagStep />}
       {step === 2 && <BudgetStep />}
       {step === 3 && <PaymentStep />}
-      {step > 0 && (
+      {step > 1 && (
         <div className="submit-footer">
           <div className="prev" onClick={() => updateState({ step: step - 1 })}>
             <Icon type="left" />
