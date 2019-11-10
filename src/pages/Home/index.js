@@ -6,6 +6,7 @@ import SubmitDrawer from "./SubmitDrawer";
 import VideoInformation from "./VideoInformation";
 import ShowRankingButton from "./ShowRankingButton";
 import OnboardingModal from "components/OnboardingModal";
+import MetaHelmet from "components/MetaHelmet";
 
 const Home = props => {
   useEffect(() => {
@@ -14,6 +15,7 @@ const Home = props => {
 
   return (
     <div className="home">
+      <MetaHelmet />
       <div className="row-space-between">
         <div className="content">
           <div className="main-player">
