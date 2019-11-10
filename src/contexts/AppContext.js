@@ -1,11 +1,13 @@
-import React, { Component } from 'react';
-import api from 'utils/api';
+import React, { Component } from "react";
+import api from "utils/api";
 
 const AppContext = React.createContext();
 const { Provider, Consumer } = AppContext;
 
 class AppProvider extends Component {
-  state = {};
+  state = {
+    onboardingModal: true
+  };
 
   componentDidMount() {}
 
@@ -18,7 +20,7 @@ class AppProvider extends Component {
       <Provider
         value={{
           ...this.state,
-          updateState: this.updateState,
+          updateState: this.updateState
         }}
       >
         {this.props.children}

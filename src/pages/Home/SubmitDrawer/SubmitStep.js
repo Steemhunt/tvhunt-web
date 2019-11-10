@@ -5,7 +5,9 @@ import tv from "assets/images/tv@3x.png";
 import youtube from "assets/images/youtube.svg";
 
 const SubmitStep = props => {
-  const { step, updateState } = useContext(SubmitContext);
+  const { videoURL, submitting, getVideoInfo, updateState } = useContext(
+    SubmitContext
+  );
   return (
     <div className="step-submit">
       <div className="title big">SUBMIT VIDEO</div>
@@ -19,9 +21,20 @@ const SubmitStep = props => {
       <div className="input-desc text-white">Input URL of Youtube Video</div>
       <div className="input-container">
         <img src={youtube} alt="" />
-        <Input placeholder="https://www.youtube.com/watch?v=…" />
+        <Input
+          placeholder="https://www.youtube.com/watch?v=…"
+          value={videoURL}
+          onChange={e => updateState({ videoURL: e.target.value })}
+        />
       </div>
-      <Button onClick={() => updateState({ step: step + 1 })}>Submit</Button>
+      <Button
+        disabled={submitting}
+        onClick={() => {
+          getVideoInfo();
+        }}
+      >
+        Submit
+      </Button>
     </div>
   );
 };

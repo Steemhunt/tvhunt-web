@@ -5,13 +5,13 @@ import IconTag from "components/IconTag";
 import badge from "assets/images/badge.svg";
 
 const VideoInformation = props => {
-  const { player } = useContext(VideoContext);
+  const { player, currentVideo } = useContext(VideoContext).value;
   return (
     <div className="title-container">
       <div className="row-align-center">
         <Button className="primary-button big-upvote">
-          <Icon type="caret-up"/>
-          1,245
+          <Icon type="caret-up" />
+          0
         </Button>
 
         <div className="row-align-center badge small">
@@ -27,9 +27,9 @@ const VideoInformation = props => {
         {player && player.getVideoData().title}
       </div>
       <div className="row-align-center tags">
-        <IconTag text="Music" style={{ marginRight: 10 }} />
-        <IconTag text="Learn Something" style={{ marginRight: 10 }} />
-        <IconTag text="ASMR" />
+        {player && currentVideo && currentVideo.tags.map(t => {
+          return <IconTag text={t} style={{ fontSize: 14, marginRight: 10 }} />;
+        })}
       </div>
     </div>
   );

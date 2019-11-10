@@ -5,12 +5,12 @@ import SideBar from "./SideBar";
 import SubmitDrawer from "./SubmitDrawer";
 import VideoInformation from "./VideoInformation";
 import ShowRankingButton from "./ShowRankingButton";
+import OnboardingModal from "components/OnboardingModal";
 
 const Home = props => {
   useEffect(() => {
     scrollTop();
   });
-
 
   return (
     <div className="home">
@@ -24,6 +24,7 @@ const Home = props => {
         <SideBar />
         <SubmitDrawer />
         <ShowRankingButton />
+        <OnboardingModal />
       </div>
     </div>
   );

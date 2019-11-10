@@ -12,6 +12,7 @@ class Routes extends Component {
         <Header />
         <Switch>
           <Route path="/" exact component={Home} />
+          <Route path="/:topic/:slug" exact component={Home} />
         </Switch>
       </div>
     );

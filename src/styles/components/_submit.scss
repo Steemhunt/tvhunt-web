@@ -92,6 +92,12 @@
   }
 
   .step-submit {
+    .thumbnail {
+      width: 100px;
+      height: 80px;
+      object-fit: contain;
+    }
+
     .add-tags {
       margin-top: 20px;
       margin-bottom: 10px;
@@ -100,6 +106,14 @@
     .tags {
       width: 100%;
       border-bottom: solid 1px #4c4b5e;
+    }
+
+    .tag {
+      background: #4c4b5e;
+      border: dashed 1px #9f9faf;
+      color: #9f9faf;
+      cursor: pointer;
+      margin-bottom: 5px;
     }
 
     .input-desc {
@@ -119,8 +133,10 @@
       &.tag-step {
         padding: 0;
         border: none;
+        height: auto;
 
         .input {
+          margin-left: 10px;
           text-decoration: underline;
           color: #07dee7;
         }

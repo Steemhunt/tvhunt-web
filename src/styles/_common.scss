@@ -64,6 +64,12 @@ a {
   border-radius: 4px !important;
   border: solid 1px #ff54ae !important;
   color: #ff54ae !important;
+
+  &.inverse {
+    background-color: #ff54ae !important;
+    border: solid 1px #ff54ae !important;
+    color: #fff !important;
+  }
 }
 
 .col-justify-between {

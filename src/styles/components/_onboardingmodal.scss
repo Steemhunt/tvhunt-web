@@ -1,0 +1,63 @@
+.onboarding-modal {
+  svg {
+    fill: #fff;
+  }
+
+  .logo {
+    width: 127px;
+    height: 40px;
+    object-fit: contain;
+  }
+
+  .circle-image {
+    width: 80px;
+    height: 80px;
+    object-fit: center;
+    margin-top: 40px;
+  }
+
+  .ant-modal-body {
+    padding: 0;
+  }
+
+  .content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .title {
+    width: 331px;
+    max-width: 100%;
+    font-size: 1.75rem;
+    font-weight: 500;
+    margin-top: 40px;
+    margin-bottom: 20px;
+  }
+
+  .ant-modal {
+    width: 720px !important;
+    max-width: 100vw;
+  }
+
+  .ant-modal-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #111724;
+    padding: 50px 100px;
+  }
+
+  .dashed-dots {
+    width: 90px;
+    border: dashed 2px $secondary;
+  }
+
+  .primary-button {
+    width: 130px;
+    height: 40px;
+    margin-top: 40px;
+  }
+}

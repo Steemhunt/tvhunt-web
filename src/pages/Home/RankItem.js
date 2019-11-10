@@ -1,18 +1,29 @@
-import React from "react";
+import React, { useContext } from "react";
+import VideoContext from "contexts/VideoContext";
 import { Icon, Button } from "antd";
 
 const RankItem = props => {
-  const {rank} = props;
+  const { rank, data } = props;
+  const { title, vote_count, unique_id } = data;
+  const { updateState } = useContext(VideoContext);
+
   return (
-    <div className="row-align-center rank-item">
+    <div
+      className="row-align-center rank-item"
+      onClick={() => updateState({ currentVideo: data })}
+    >
       <div className="secondary rank small">{rank}</div>
       <div className="row-align-center video-detail">
-        <img src="https://placekitten.com/200/200" alt="" />
-        <div className="text small">DJ Lady Style - Dancehall Mixhawiefhiwefiasjd</div>
+        <img
+          className="rank-item-thumbnail"
+          src={`https://img.youtube.com/vi/${unique_id}/hqdefault.jpg`}
+          alt=""
+        />
+        <div className="text small">{title}</div>
       </div>
       <Button className="primary-button upvote-button">
-        <Icon type="caret-up"/>
-        1,000
+        <Icon type="caret-up" />
+        {vote_count}
       </Button>
     </div>
   );

@@ -1,6 +1,8 @@
 import React, { useRef, useEffect, useMemo, useContext, useState } from "react";
+import { withRouter } from "react-router";
 import { Icon, Slider } from "antd";
 import VideoContext from "contexts/VideoContext";
+import SubmitContext from "contexts/SubmitContext";
 import TvNoise from "components/TvNoise";
 import PropTypes from "prop-types";
 import numeral from "numeral";
@@ -23,29 +25,33 @@ export const PLAYBACK_STATUS = {
 };
 
 const Youtube = props => {
+  const {
+    match: {
+      params: { topic, slug }
+    }
+  } = props;
+
   const playerRef = useRef();
   const [ticker, setTicker] = useState(null);
   const [noise, showNoise] = useState(true);
   const [slider, setSlider] = useState(0);
-  const { width: w } = useWindowSize();
+  const { width: w, height: h } = useWindowSize();
+
+  const { value, prev, next, updateState } = useContext(VideoContext);
+  const { videoId } = useContext(SubmitContext);
 
   const {
     player,
-    prev,
-    next,
-    playlist,
     volume,
-    currentIndex,
-    updateState,
     status,
     duration,
     currentTime,
+    currentVideo,
     fullscreen
-  } = useContext(VideoContext);
-  const videoId = playlist[currentIndex];
+  } = value;
 
   const width = fullscreen ? w : w - 360;
-  const height = width * 0.5;
+  const height = Math.min(h, width * .7)
 
   useEffect(() => {
     if (player) {
@@ -58,17 +64,20 @@ const Youtube = props => {
       ticker && clearInterval(ticker);
       player.destroy();
     }
-    window.YT && new window.YT.Player(playerRef.current, {
-      height,
-      width,
-      videoId,
-      playerVars: { autoplay: 0, controls: 0 },
-      events: {
-        onReady: onPlayerReady,
-        onStateChange: onPlayerStateChange
-      }
-    });
-  }, [videoId]); //eslint-disable-line
+    console.log(videoId);
+    currentVideo &&
+      window.YT &&
+      new window.YT.Player(playerRef.current, {
+        height,
+        width,
+        videoId: videoId ? videoId : currentVideo.unique_id,
+        playerVars: { autoplay: 1, controls: 0 },
+        events: {
+          onReady: onPlayerReady,
+          onStateChange: onPlayerStateChange
+        }
+      });
+  }, [currentVideo, videoId]); //eslint-disable-line
 
   useEffect(() => {
     let tick = () => {
@@ -214,4 +223,4 @@ Youtube.defaultProps = {
     document.body.clientHeight
 };
 
-export default Youtube;
+export default withRouter(Youtube);
