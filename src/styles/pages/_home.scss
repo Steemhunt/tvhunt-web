@@ -19,6 +19,9 @@
     opacity: 0;
     transition: opacity 0ms linear;
     cursor: pointer;
+    @include responsive(mobile) {
+      right: 15px;
+    }
 
     i {
       color: $secondary;
@@ -31,6 +34,10 @@
 
     .text {
       margin-top: 2px;
+
+      @include responsive(mobile) {
+        display: none;
+      }
     }
 
     &.visible {

@@ -33,7 +33,12 @@ const OnboardingModal = props => {
           the user full controllability of his/her data usage.
         </div>
 
-        <Button className="primary-button inverse">DIVE IN NOW</Button>
+        <Button
+          className="primary-button inverse"
+          onClick={() => updateState({ onboardingModal: false })}
+        >
+          DIVE IN NOW
+        </Button>
       </div>
     </Modal>
   );

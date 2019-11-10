@@ -6,9 +6,18 @@
   align-items: center;
   padding: 20px 30px 30px;
 
+  @include responsive(mobile) {
+    padding-left: 15px;
+  }
+
   .logo {
     width: 127px;
     height: 40px;
     object-fit: contain;
+
+    @include responsive(mobile) {
+       width: 80px;
+       height: 25px;
+    }
   }
 }

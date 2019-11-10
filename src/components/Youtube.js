@@ -50,8 +50,8 @@ const Youtube = props => {
     fullscreen
   } = value;
 
-  const width = fullscreen ? w : w - 360;
-  const height = Math.min(h, width * .7)
+  const width = w <= 768 || fullscreen ? w : w - 360;
+  const height = Math.min(h, width * 0.7);
 
   useEffect(() => {
     if (player) {
