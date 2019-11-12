@@ -15,7 +15,7 @@ const User = props => {
         </div>
       }
     >
-      {user.username.replace(".id.blockstack", "")}
+      {user.username.split('.')[0]}
       <Icon
         type="caret-down"
         style={{ fontSize: 12, color: "#9f9faf", marginLeft: 8 }}

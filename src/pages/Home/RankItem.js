@@ -9,8 +9,6 @@ const RankItem = props => {
   const { updateState, value } = useContext(VideoContext);
   const { tab } = value;
 
-  console.log("tab", tab);
-
   return (
     <div
       className="row-align-center rank-item"
