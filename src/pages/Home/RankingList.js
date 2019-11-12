@@ -14,7 +14,9 @@ const RankingList = props => {
     }
   } = props;
 
-  const { value, loadVideos, updateState } = useContext(VideoContext);
+  const { value, loadVideos, updateState, updateCurrentVideo } = useContext(
+    VideoContext
+  );
   const { tabs, tab, playlist } = value;
 
   const sortedFilteredList = useMemo(() => {
@@ -27,6 +29,10 @@ const RankingList = props => {
   useEffect(() => {
     loadVideos(topic, slug);
   }, []); //eslint-disable-line
+
+  useEffect(() => {
+    updateCurrentVideo(topic, slug);
+  }, [topic, slug]);
 
   let videoCount = 0;
 

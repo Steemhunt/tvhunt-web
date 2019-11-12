@@ -31,6 +31,7 @@ class VideoProvider extends Component {
       prev: this.prev,
       next: this.next,
       updateState: this.updateState,
+      updateCurrentVideo: this.updateCurrentVideo,
       getVideoInfo: this.getVideoInfo
     };
   }
@@ -71,6 +72,14 @@ class VideoProvider extends Component {
         });
       })
       .catch(handleErrorMessage);
+  };
+
+  updateCurrentVideo = (topic, slug) => {
+    const { playlist, currentVideo } = this.state.value;
+    const foundVideo = _.find(playlist, ["slug", slug]);
+    if (foundVideo && !_.isEqual(foundVideo, currentVideo)) {
+      this.updateState({ currentVideo: foundVideo });
+    }
   };
 
   updateTags = (id, tags) => {
