@@ -26,6 +26,7 @@ class VideoProvider extends Component {
     this.state = {
       value: INITIAL_STATE,
       loadVideos: this.loadVideos,
+      loadVideo: this.loadVideo,
       prev: this.prev,
       next: this.next,
       updateState: this.updateState,
@@ -39,18 +40,29 @@ class VideoProvider extends Component {
 
   getVideoInfo = () => {};
 
-  loadVideos = () => {
+  loadVideos = (topic, slug) => {
     api
       .get("/videos.json")
       .then(({ total_count, videos }) => {
         const tabs = Object.entries(
           _.countBy(videos.reduce((acc, video) => acc.concat(video.tags), []))
         ).sort((a, b) => b[1] - a[1]);
-        const currentVideo = videos[0];
+
+        let currentVideo = null;
+        let tab = "all";
+
+        if (topic && slug) {
+          currentVideo = _.find(videos, ["slug", slug]);
+          tab = topic;
+        } else {
+          currentVideo = videos[0];
+        }
+
         this.updateState({
           playlist: videos,
           currentVideo,
-          tabs
+          tabs,
+          tab
         });
       })
       .catch(handleErrorMessage);

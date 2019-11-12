@@ -1,16 +1,23 @@
 import React, { useContext } from "react";
+import { withRouter } from "react-router";
 import VideoContext from "contexts/VideoContext";
 import { Icon, Button } from "antd";
 
 const RankItem = props => {
   const { rank, data } = props;
-  const { title, vote_count, unique_id } = data;
-  const { updateState } = useContext(VideoContext);
+  const { title, vote_count, unique_id, slug } = data;
+  const { updateState, value } = useContext(VideoContext);
+  const { tab } = value;
+
+  console.log("tab", tab);
 
   return (
     <div
       className="row-align-center rank-item"
-      onClick={() => updateState({ currentVideo: data })}
+      onClick={() => {
+        props.history.push(`/${tab}/${slug}`);
+        updateState({ currentVideo: data });
+      }}
     >
       <div className="secondary rank small">{rank}</div>
       <div className="row-align-center video-detail">
@@ -29,4 +36,4 @@ const RankItem = props => {
   );
 };
 
-export default RankItem;
+export default withRouter(RankItem);

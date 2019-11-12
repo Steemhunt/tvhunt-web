@@ -2,11 +2,13 @@ import React, { useContext } from "react";
 import { Icon, Button } from "antd";
 import VideoContext from "contexts/VideoContext";
 import SubmitContext from "contexts/SubmitContext";
+import AuthContext from "contexts/AuthContext";
 import RankingList from "./RankingList";
 
 const SideBar = props => {
   const videoContext = useContext(VideoContext);
   const submitContext = useContext(SubmitContext);
+  const {login} = useContext(AuthContext);
   const { fullscreen } = videoContext.value;
 
   return (
@@ -22,7 +24,7 @@ const SideBar = props => {
             <Icon type="caret-left" />
             <Icon type="caret-right" />
           </div>
-          <div className="login">Join/Login</div>
+          <div className="login" onClick={login}>Join/Login</div>
         </div>
         <Button
           onClick={() => submitContext.updateState({ showDrawer: true })}

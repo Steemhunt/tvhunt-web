@@ -3,7 +3,14 @@ import Helmet from "react-helmet";
 import PropTypes from "prop-types";
 
 const MetaHelmet = props => {
-     const { title, description, image, url, script, onChangeClientState } = props;
+     const {
+          title,
+          description,
+          image,
+          url,
+          script,
+          onChangeClientState
+     } = props;
      return (
           <Helmet script={script} onChangeClientState={onChangeClientState}>
                <title>{title}</title>
@@ -41,8 +48,7 @@ MetaHelmet.propTypes = {
 
 MetaHelmet.defaultProps = {
      title: "TV Hunt - Daily top ranking chart for videos",
-     description:
-          "TV Hunt is a daily top ranking chart for videos.",
+     description: "TV Hunt is a daily top ranking chart for videos.",
      image: `${process.env.REACT_APP_PUBLIC_URL}/og-image-1200.png`,
      url: process.env.REACT_APP_PUBLIC_URL,
      script: [],

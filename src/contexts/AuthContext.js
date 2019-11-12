@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import api from "utils/api";
 import { handleErrorMessage } from "utils/errorMessage";
-import {getToken, setToken} from "utils/token";
+import { getToken, setToken } from "utils/token";
+import * as blockstack from "blockstack";
 
 const AuthContext = React.createContext();
 const { Provider, Consumer } = AuthContext;
@@ -25,7 +26,7 @@ class AuthProvider extends Component {
     const userForm = { user: { email, password, name } };
     try {
       const user = await api.post("/users.json", userForm);
-      const {api_key} = user;
+      const { api_key } = user;
       setToken(api_key);
       this.setState({ user });
     } catch (e) {
@@ -33,14 +34,16 @@ class AuthProvider extends Component {
     }
   };
 
-  login = () => {};
+  login = () => {
+    blockstack.redirectToSignIn();
+  };
 
   logout = () => {};
 
   refreshSession = () => {
     const token = getToken();
     console.log("token", token);
-  }
+  };
 
   updateState = state => {
     this.setState(state);

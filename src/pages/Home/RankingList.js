@@ -25,7 +25,7 @@ const RankingList = props => {
   }, [playlist, tab]);
 
   useEffect(() => {
-    loadVideos();
+    loadVideos(topic, slug);
   }, []); //eslint-disable-line
 
   let videoCount = 0;
@@ -42,7 +42,7 @@ const RankingList = props => {
     <div className="ranking-list">
       <Tabs
         className="tabs"
-        activeKey={topic}
+        activeKey={tab}
         onChange={tab => updateState({ tab })}
       >
         <TabPane tab={"All"} key={"all"} />

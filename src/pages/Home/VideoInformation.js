@@ -28,7 +28,7 @@ const VideoInformation = props => {
       </div>
       <div className="row-align-center tags">
         {player && currentVideo && currentVideo.tags.map(t => {
-          return <IconTag text={t} style={{ fontSize: 14, marginRight: 10 }} />;
+          return <IconTag key={t} text={t} style={{ fontSize: 14, marginRight: 10 }} />;
         })}
       </div>
     </div>
