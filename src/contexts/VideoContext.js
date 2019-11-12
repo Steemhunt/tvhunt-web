@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { withRouter } from "react-router";
 import api from "utils/api";
 import { handleErrorMessage } from "utils/errorMessage";
 import _ from "lodash";
@@ -56,6 +57,10 @@ class VideoProvider extends Component {
           tab = topic;
         } else {
           currentVideo = videos[0];
+        }
+
+        if (this.props.history.location.pathname === "/") {
+          this.props.history.push(`${tab}/${currentVideo.slug}`);
         }
 
         this.updateState({
@@ -124,6 +129,8 @@ class VideoProvider extends Component {
   }
 }
 
-export { VideoProvider, Consumer as VideoConsumer };
+const videoWithRouter = withRouter(VideoProvider);
+
+export { videoWithRouter as VideoProvider, Consumer as VideoConsumer };
 
 export default VideoContext;

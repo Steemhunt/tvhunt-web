@@ -26,7 +26,7 @@ const SideBar = props => {
           </div>
           {user ? (
             <div className="login" onClick={logout}>
-              {user.username}
+              {user.username.replace(".id.blockstack", "")}
             </div>
           ) : (
             <div className="login" onClick={login}>

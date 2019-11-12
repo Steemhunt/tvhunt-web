@@ -51,7 +51,6 @@ class AuthProvider extends Component {
   };
 
   logout = () => {
-    this.setState({ user: null });
     userSession.signUserOut(window.location.origin);
   };
 
