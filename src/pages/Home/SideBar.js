@@ -8,7 +8,7 @@ import RankingList from "./RankingList";
 const SideBar = props => {
   const videoContext = useContext(VideoContext);
   const submitContext = useContext(SubmitContext);
-  const {login} = useContext(AuthContext);
+  const { login, logout, user } = useContext(AuthContext);
   const { fullscreen } = videoContext.value;
 
   return (
@@ -24,7 +24,15 @@ const SideBar = props => {
             <Icon type="caret-left" />
             <Icon type="caret-right" />
           </div>
-          <div className="login" onClick={login}>Join/Login</div>
+          {user ? (
+            <div className="login" onClick={logout}>
+              {user.username}
+            </div>
+          ) : (
+            <div className="login" onClick={login}>
+              Join/Login
+            </div>
+          )}
         </div>
         <Button
           onClick={() => submitContext.updateState({ showDrawer: true })}

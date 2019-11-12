@@ -2,8 +2,10 @@ import React, { Component } from "react";
 import api from "utils/api";
 import { handleErrorMessage } from "utils/errorMessage";
 import { getToken, setToken } from "utils/token";
-import * as blockstack from "blockstack";
+import { UserSession, AppConfig } from "blockstack";
 
+const appConfig = new AppConfig();
+const userSession = new UserSession({ appConfig });
 const AuthContext = React.createContext();
 const { Provider, Consumer } = AuthContext;
 
@@ -14,11 +16,21 @@ class AuthProvider extends Component {
     password: "12341234",
     name: "abcde",
     biography: "aa",
-    social_link: "a"
+    social_link: "a",
+    authenticating: false
   };
 
-  componentWillMount() {
-    // this.refreshSession();
+  async componentDidMount() {
+    this.setState({ authenticating: true });
+    if (userSession.isUserSignedIn()) {
+      const user = await userSession.loadUserData();
+      this.setState({ user, authenticating: false });
+    } else if (userSession.isSignInPending()) {
+      const user = await userSession.handlePendingSignIn();
+      this.setState({ user, authenticating: false });
+    } else {
+      this.setState({ authenticating: false });
+    }
   }
 
   signup = async () => {
@@ -35,10 +47,13 @@ class AuthProvider extends Component {
   };
 
   login = () => {
-    blockstack.redirectToSignIn();
+    userSession.redirectToSignIn();
   };
 
-  logout = () => {};
+  logout = () => {
+    this.setState({ user: null });
+    userSession.signUserOut(window.location.origin);
+  };
 
   refreshSession = () => {
     const token = getToken();

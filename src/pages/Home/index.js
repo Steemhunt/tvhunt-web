@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { withRouter } from "react-router";
 import { scrollTop } from "utils/scroller";
 import Youtube from "components/Youtube";
 import SideBar from "./SideBar";
@@ -11,7 +12,7 @@ import MetaHelmet from "components/MetaHelmet";
 const Home = props => {
   useEffect(() => {
     scrollTop();
-  });
+  }, []);
 
   return (
     <div className="home">
@@ -36,4 +37,4 @@ Home.propTypes = {};
 
 Home.defaultProps = {};
 
-export default Home;
+export default withRouter(Home);

@@ -25,12 +25,6 @@ export const PLAYBACK_STATUS = {
 };
 
 const Youtube = props => {
-  const {
-    match: {
-      params: { topic, slug }
-    }
-  } = props;
-
   const playerRef = useRef();
   const [ticker, setTicker] = useState(null);
   const [noise, showNoise] = useState(true);
@@ -53,6 +47,8 @@ const Youtube = props => {
   const width = w <= 768 || fullscreen ? w : w - 360;
   const height = Math.min(h, width * 0.7);
 
+  console.log("youtube rerendered");
+
   useEffect(() => {
     if (player) {
       showNoise(true);
@@ -64,7 +60,6 @@ const Youtube = props => {
       ticker && clearInterval(ticker);
       player.destroy();
     }
-    console.log(videoId);
     currentVideo &&
       window.YT &&
       new window.YT.Player(playerRef.current, {
