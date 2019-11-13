@@ -5,12 +5,10 @@ import { handleErrorMessage } from "utils/errorMessage";
 import { getList, appendToList, removeFromList } from "utils/storage";
 import {
   readFile,
-  deleteFile,
   appendToFile,
   removeFromFile
 } from "utils/blockstackStorage";
 import { UserSession, AppConfig } from "blockstack";
-import moment from "moment";
 import _ from "lodash";
 
 const appConfig = new AppConfig();

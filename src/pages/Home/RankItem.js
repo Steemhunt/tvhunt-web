@@ -1,7 +1,6 @@
 import React, { useContext } from "react";
 import { withRouter } from "react-router";
 import VideoContext from "contexts/VideoContext";
-import AuthContext from "contexts/AuthContext";
 import { Icon, Button } from "antd";
 
 const RankItem = props => {

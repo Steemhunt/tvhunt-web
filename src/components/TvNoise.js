@@ -37,10 +37,10 @@ const TvNoise = props => {
       var trans = 1 - Math.random() * 0.05;
 
       var intensityCurve = [];
-      for (var i = 0; i < Math.floor(h / factor) + factor; i++)
+      for (let i = 0; i < Math.floor(h / factor) + factor; i++)
         intensityCurve.push(Math.floor(Math.random() * 15));
 
-      for (var i = 0; i < h; i++) {
+      for (let i = 0; i < h; i++) {
         var value = interpolate(
           i / factor,
           Math.floor(i / factor),

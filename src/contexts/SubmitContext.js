@@ -1,6 +1,4 @@
 import React, { Component } from "react";
-import AppContext from "contexts/AppContext";
-import VideoContext from "contexts/VideoContext";
 import { handleErrorMessage } from "utils/errorMessage";
 import { appendToFile } from "utils/blockstackStorage";
 import api from "utils/api";
@@ -9,7 +7,7 @@ const SubmitContext = React.createContext();
 const { Provider, Consumer } = SubmitContext;
 
 function youtubeParser(url) {
-  var regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#\&\?]*).*/;
+  var regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*/;
   var match = url.match(regExp);
   return match && match[7].length === 11 ? match[7] : false;
 }

@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import AppContext from "contexts/AppContext";
 import AuthContext from "contexts/AuthContext";
-import { Icon, Button, Modal } from "antd";
+import { Button, Modal } from "antd";
 import logo from "assets/images/logo-tvh.svg";
 import tvhCircle from "assets/images/tvh-circle.svg";
 import blockstackCircle from "assets/images/blockstack-circle.svg";

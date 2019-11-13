@@ -5,7 +5,7 @@ import VideoContext from "contexts/VideoContext";
 import AppContext from "contexts/AppContext";
 
 const User = props => {
-  const { login, logout, user } = useContext(AuthContext);
+  const { logout, user } = useContext(AuthContext);
   const { loadMyUploads, loadMyVotes } = useContext(VideoContext);
   const { updateState } = useContext(AppContext);
   return user ? (

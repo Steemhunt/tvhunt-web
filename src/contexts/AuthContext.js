@@ -3,8 +3,6 @@ import api from "utils/api";
 import { handleErrorMessage } from "utils/errorMessage";
 import { getToken, setToken } from "utils/token";
 import { UserSession, AppConfig } from "blockstack";
-import { readFile } from "utils/blockstackStorage";
-import { getList } from "utils/storage";
 const appConfig = new AppConfig();
 const userSession = new UserSession({ appConfig });
 const AuthContext = React.createContext();
