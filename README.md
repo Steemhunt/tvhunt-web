@@ -1,7 +1,7 @@
 # TV Hunt
 TV Hunt is a daily top chart for videos. Anyone can simply share a cool video that they found today.
 - No sign-ups are required for guest users
-- Your voting data is stored on your own [Gaia](https://github.com/blockstack/gaia) storage via [Blockstack](https://blockstack.org/).
+- Your voting data is stored on your own [Gaia storage](https://github.com/blockstack/gaia) via [Blockstack](https://blockstack.org/).
 
 Live Product: https://tv.hunt.town
 
