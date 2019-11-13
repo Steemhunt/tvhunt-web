@@ -26,7 +26,7 @@ const RankItem = props => {
             className="rank-item-thumbnail"
             src={`https://img.youtube.com/vi/${unique_id}/hqdefault.jpg`}
             alt=""
-          />
+        />
           <div className="text small">{title}</div>
         </div>
       </div>

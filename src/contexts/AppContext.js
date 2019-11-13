@@ -6,7 +6,7 @@ const { Provider, Consumer } = AppContext;
 
 class AppProvider extends Component {
   state = {
-    onboardingModal: true
+    loginModal: false
   };
 
   componentDidMount() {}

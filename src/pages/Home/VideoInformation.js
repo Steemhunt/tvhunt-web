@@ -4,6 +4,7 @@ import VideoContext from "contexts/VideoContext";
 import IconTag from "components/IconTag";
 import badge from "assets/images/badge.svg";
 import numeral from "numeral";
+import moment from 'moment';
 
 const VideoInformation = props => {
   const { likeUnlike } = useContext(VideoContext);

@@ -1,4 +1,4 @@
-.onboarding-modal {
+.login-modal {
   svg {
     fill: #fff;
   }
@@ -56,8 +56,15 @@
   }
 
   .primary-button {
-    width: 130px;
+    width: auto;
     height: 40px;
     margin-top: 40px;
+  }
+
+  .what-is-blockstack {
+    margin-top: 20px;
+    text-decoration: underline;
+    text-decoration-color: $text;
+
   }
 }

@@ -2,10 +2,12 @@ import React, { useContext } from "react";
 import { Icon, Tooltip } from "antd";
 import AuthContext from "contexts/AuthContext";
 import VideoContext from "contexts/VideoContext";
+import AppContext from "contexts/AppContext";
 
 const User = props => {
   const { login, logout, user } = useContext(AuthContext);
   const { loadMyUploads, loadMyVotes } = useContext(VideoContext);
+  const { updateState } = useContext(AppContext);
   return user ? (
     <Tooltip
       className="login"
@@ -17,7 +19,7 @@ const User = props => {
             <Icon type="upload" style={{ marginRight: 4 }} /> My Uploads
           </div>
           <div onClick={loadMyVotes} className="tooltip-menu-item">
-            <Icon type="up" style={{ marginRight: 4 }} /> My Votes
+            <Icon type="caret-up" style={{ marginRight: 4 }} /> My Votes
           </div>
           <div onClick={logout} className="tooltip-menu-item">
             <Icon type="poweroff" style={{ marginRight: 4 }} /> Log out
@@ -31,8 +33,8 @@ const User = props => {
       </div>
     </Tooltip>
   ) : (
-    <div className="login" onClick={login}>
-      Join/Login
+    <div className="login" onClick={() => updateState({ loginModal: true })}>
+      Sign in
     </div>
   );
 };
