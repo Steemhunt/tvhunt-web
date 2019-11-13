@@ -8,6 +8,7 @@ import numeral from "numeral";
 const VideoInformation = props => {
   const { likeUnlike } = useContext(VideoContext);
   const { player, currentVideo } = useContext(VideoContext).value;
+
   return (
     <div className="title-container">
       <div className="row-align-center">
@@ -19,13 +20,15 @@ const VideoInformation = props => {
           {numeral(currentVideo && currentVideo.vote_count).format("0,00")}
         </Button>
 
-        <div className="row-align-center badge small">
-          <img src={badge} alt="" />
-          <div>
-            <div className="secondary">#1 Video</div>
-            <div className="text">October 30, 2019</div>
+        {currentVideo && (
+          <div className="row-align-center badge small">
+            <img src={badge} alt="" />
+            <div>
+              <div className="secondary">#${currentVideo.ranking} Video</div>
+              <div className="text">October 30, 2019</div>
+            </div>
           </div>
-        </div>
+        )}
       </div>
 
       <div className="title big text-white">
