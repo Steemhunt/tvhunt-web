@@ -182,7 +182,7 @@ a {
 .hover-link {
   &:hover {
     cursor: pointer;
-    color: #ee0804;
+    color: $primary;
     transition: color 0.5s;
   }
 }

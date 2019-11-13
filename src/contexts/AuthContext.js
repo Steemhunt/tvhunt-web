@@ -3,7 +3,8 @@ import api from "utils/api";
 import { handleErrorMessage } from "utils/errorMessage";
 import { getToken, setToken } from "utils/token";
 import { UserSession, AppConfig } from "blockstack";
-
+import { readFile } from "utils/blockstackStorage";
+import { getList } from "utils/storage";
 const appConfig = new AppConfig();
 const userSession = new UserSession({ appConfig });
 const AuthContext = React.createContext();
@@ -12,11 +13,6 @@ const { Provider, Consumer } = AuthContext;
 class AuthProvider extends Component {
   state = {
     user: null,
-    email: "abc@mail.com",
-    password: "12341234",
-    name: "abcde",
-    biography: "aa",
-    social_link: "a",
     authenticating: false
   };
 

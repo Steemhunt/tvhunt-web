@@ -1,7 +1,7 @@
 import React, { useEffect, useContext, useMemo } from "react";
 import { withRouter } from "react-router";
-import { Tabs } from "antd";
-import VideoContext from "contexts/VideoContext";
+import { Icon, Tabs } from "antd";
+import VideoContext, { MODE_TV } from "contexts/VideoContext";
 import RankItem from "./RankItem";
 import _ from "lodash";
 
@@ -14,13 +14,10 @@ const RankingList = props => {
     }
   } = props;
 
-  const {
-    value,
-    loadVideos,
-    updateState,
-    updateCurrentVideo,
-  } = useContext(VideoContext);
-  const { tabs, tab, playlist } = value;
+  const { value, loadVideos, updateState, updateCurrentVideo } = useContext(
+    VideoContext
+  );
+  const { mode, tabs, tab, playlist, loading } = value;
 
   const sortedFilteredList = useMemo(() => {
     const sortedList = playlist.sort((a, b) => b.vote_count - a.vote_count);
@@ -49,22 +46,38 @@ const RankingList = props => {
 
   return (
     <div className="ranking-list">
-      <Tabs
-        className="tabs"
-        activeKey={tab}
-        onChange={tab => updateState({ tab })}
-      >
-        <TabPane tab={"All"} key={"all"} />
-        {tabs.map(tab => {
-          return <TabPane tab={_.capitalize(tab[0])} key={tab[0]} />;
-        })}
-      </Tabs>
+      {mode === MODE_TV ? (
+        <>
+          <Tabs
+            className="tabs"
+            activeKey={tab}
+            onChange={tab => updateState({ tab })}
+          >
+            <TabPane tab={"All"} key={"all"} />
+            {tabs.map(tab => {
+              return <TabPane tab={_.capitalize(tab[0])} key={tab[0]} />;
+            })}
+          </Tabs>
+          <div className="title secondary">TODAY</div>
+          <div className="text small compete-text">
+            Total {videoCount} videos are competing
+          </div>
+        </>
+      ) : (
+        <div
+          className="secondary small hover-link"
+          onClick={() => {
+            loadVideos(topic, slug);
+            updateState({ mode: MODE_TV });
+          }}
+        >
+          <Icon type="left" style={{ marginRight: 4 }} />
+          BACK TO RANKING
+        </div>
+      )}
 
-      <div className="title secondary">TODAY</div>
-      <div className="text small compete-text">
-        Total {videoCount} videos are competing
-      </div>
       <div className="list">
+        {loading && <Icon type="loading" />}
         {sortedFilteredList.map((item, index) => {
           return <RankItem key={index} rank={index + 1} data={item} />;
         })}

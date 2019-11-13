@@ -9,15 +9,24 @@ import {
   appendToFile,
   removeFromFile
 } from "utils/blockstackStorage";
+import { UserSession, AppConfig } from "blockstack";
 import moment from "moment";
 import _ from "lodash";
 
+const appConfig = new AppConfig();
+const userSession = new UserSession({ appConfig });
+
+export const MODE_TV = "MODE_TV";
+export const MODE_UPLOADED = "MODE_UPLOADED";
+export const MODE_VOTED = "MODE_VOTED";
 const INITIAL_STATE = {
+  mode: MODE_TV,
   tab: "all",
   tabs: [],
   player: null,
   status: null,
   playlist: [],
+  liked: [],
   currentIndex: 0,
   currentVideo: null,
   currentTime: 0,
@@ -42,12 +51,25 @@ class VideoProvider extends Component {
       updateCurrentVideo: this.updateCurrentVideo,
       getVideoInfo: this.getVideoInfo,
       likeUnlike: this.likeUnlike,
-      loadMyUploads: this.loadMyUploads
+      loadMyUploads: this.loadMyUploads,
+      loadMyVotes: this.loadMyVotes,
+      loading: false
     };
   }
 
   componentDidMount() {
-    // deleteFile("my_videos.json");
+    this.refreshLikes();
+  }
+
+  async refreshLikes() {
+    let liked = [];
+    if (userSession.isUserSignedIn()) {
+      liked = await readFile("votes.json");
+    } else {
+      liked = await getList("liked");
+    }
+    console.log("liked", liked);
+    this.updateState({ liked });
   }
 
   updateState = newState => {
@@ -57,19 +79,34 @@ class VideoProvider extends Component {
   getVideoInfo = () => {};
 
   loadMyUploads = async () => {
+    this.updateState({ mode: MODE_UPLOADED, loading: true });
     const videos = await readFile("my_videos.json");
     const slugs = videos.join(",");
     api
-      .get(`/videos?slugs=${slugs}.json`)
+      .get(`/videos.json?slugs=${slugs}`)
       .then(({ total_count, videos }) => this.populateList(videos))
-      .catch(handleErrorMessage);
+      .catch(handleErrorMessage)
+      .finally(() => this.updateState({ loading: false }));
+  };
+
+  loadMyVotes = async () => {
+    this.updateState({ mode: MODE_VOTED, loading: true });
+    const videos = await readFile("votes.json");
+    const slugs = videos.join(",");
+    api
+      .get(`/videos.json?slugs=${slugs}`)
+      .then(({ total_count, videos }) => this.populateList(videos))
+      .catch(handleErrorMessage)
+      .finally(() => this.updateState({ loading: false }));
   };
 
   loadVideos = (topic, slug) => {
+    this.updateState({ loading: true });
     api
       .get("/videos.json")
       .then(({ total_count, videos }) => this.populateList(videos, topic, slug))
-      .catch(handleErrorMessage);
+      .catch(handleErrorMessage)
+      .finally(() => this.updateState({ loading: false }));
   };
 
   populateList = (videos, topic, slug) => {
@@ -114,20 +151,20 @@ class VideoProvider extends Component {
       .catch(handleErrorMessage);
   };
 
-  likeUnlike = ({ id }) => {
+  likeUnlike = ({ id, slug }) => {
     const { playlist } = this.state.value;
     const likedList = getList("liked");
-    let method = likedList.includes(id) ? "unlike" : "like";
+    let method = likedList && likedList.includes(id) ? "unlike" : "like";
 
     api
       .patch(`/videos/${id}/${method}.json`)
       .then(({ success, vote_count }) => {
         if (method === "like") {
           appendToList("liked", id);
-          appendToFile("votes.json", { id, timestamp: moment().utc() });
+          appendToFile("votes.json", slug, {}, () => this.refreshLikes());
         } else {
           removeFromList("liked", id);
-          removeFromFile("votes.json", { id });
+          removeFromFile("votes.json", slug, {}, () => this.refreshLikes());
         }
         const clonedPlaylist = _.clone(playlist);
         const video = _.find(clonedPlaylist, ["id", id]);
@@ -135,6 +172,7 @@ class VideoProvider extends Component {
           video.vote_count = vote_count;
         }
         this.updateState({ playlist: clonedPlaylist });
+        this.refreshLikes();
       })
       .catch(e => {
         handleErrorMessage(e);

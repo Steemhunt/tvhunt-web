@@ -5,7 +5,7 @@ import VideoContext from "contexts/VideoContext";
 
 const User = props => {
   const { login, logout, user } = useContext(AuthContext);
-  const { loadMyUploads } = useContext(VideoContext);
+  const { loadMyUploads, loadMyVotes } = useContext(VideoContext);
   return user ? (
     <Tooltip
       className="login"
@@ -15,6 +15,9 @@ const User = props => {
         <div>
           <div onClick={loadMyUploads} className="tooltip-menu-item">
             <Icon type="upload" style={{ marginRight: 4 }} /> My Uploads
+          </div>
+          <div onClick={loadMyVotes} className="tooltip-menu-item">
+            <Icon type="up" style={{ marginRight: 4 }} /> My Votes
           </div>
           <div onClick={logout} className="tooltip-menu-item">
             <Icon type="poweroff" style={{ marginRight: 4 }} /> Log out

@@ -1,13 +1,15 @@
 import React, { useContext } from "react";
 import { withRouter } from "react-router";
 import VideoContext from "contexts/VideoContext";
+import AuthContext from "contexts/AuthContext";
 import { Icon, Button } from "antd";
 
 const RankItem = props => {
   const { rank, data } = props;
-  const { id, title, vote_count, unique_id, slug } = data;
+  const { title, vote_count, unique_id, slug } = data;
   const { likeUnlike, updateState, value } = useContext(VideoContext);
-  const { tab } = value;
+  const { liked, tab } = value;
+
 
   return (
     <div className="row-align-center rank-item">
@@ -29,7 +31,8 @@ const RankItem = props => {
         </div>
       </div>
       <Button
-        className="primary-button upvote-button"
+        className={`primary-button upvote-button ${liked.includes(slug) &&
+          "liked"}`}
         onClick={() => likeUnlike(data)}
       >
         <Icon type="caret-up" />
