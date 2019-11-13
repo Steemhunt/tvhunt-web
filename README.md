@@ -10,6 +10,9 @@ Live Product: https://tv.hunt.town
 rm -rf build
 ln -s ../api/public/ build
 
+# Staging
 git push && npm run build-staging && cd ../api && git push && bundle exec cap staging deploy
+
+# Production
 git push && npm run build && cd ../api && git push && bundle exec cap production deploy
 ```
