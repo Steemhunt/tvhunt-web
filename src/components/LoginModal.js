@@ -19,7 +19,7 @@ const LoginModal = props => {
     >
       <div className="content">
         <img className="logo" src={logo} alt="" />
-        <div className="row-align-center">
+        <div className="row-align-center dash-container">
           <img className="circle-image" src={tvhCircle} alt="" />
           <div className="dashed-dots" />
           <img className="circle-image" src={blockstackCircle} alt="" />
