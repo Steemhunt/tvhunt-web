@@ -4,6 +4,7 @@ import api from "utils/api";
 import { handleErrorMessage } from "utils/errorMessage";
 import { getList, appendToList, removeFromList } from "utils/storage";
 import { appendToFile, removeFromFile } from "utils/blockstackStorage";
+import moment from 'moment';
 import _ from "lodash";
 
 const INITIAL_STATE = {
@@ -97,7 +98,7 @@ class VideoProvider extends Component {
       .catch(handleErrorMessage);
   };
 
-  likeUnlike = ({id}) => {
+  likeUnlike = ({ id }) => {
     const { playlist } = this.state.value;
     const likedList = getList("liked");
     let method = likedList.includes(id) ? "unlike" : "like";
@@ -107,10 +108,10 @@ class VideoProvider extends Component {
       .then(({ success, vote_count }) => {
         if (method === "like") {
           appendToList("liked", id);
-          appendToFile("votes.json", id);
+          appendToFile("votes.json", { id, timestamp: moment().utc() });
         } else {
           removeFromList("liked", id);
-          removeFromFile("votes.json", id);
+          removeFromFile("votes.json", { id });
         }
         const clonedPlaylist = _.clone(playlist);
         const video = _.find(clonedPlaylist, ["id", id]);
