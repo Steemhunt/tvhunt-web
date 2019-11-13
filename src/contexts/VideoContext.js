@@ -151,7 +151,7 @@ class VideoProvider extends Component {
       .catch(handleErrorMessage);
   };
 
-  likeUnlike = ({ id, slug }) => {
+  likeUnlike = ({ id, slug }, cb) => {
     const { playlist } = this.state.value;
     const likedList = getList("liked");
     let method = likedList && likedList.includes(id) ? "unlike" : "like";
@@ -176,7 +176,8 @@ class VideoProvider extends Component {
       })
       .catch(e => {
         handleErrorMessage(e);
-      });
+      })
+      .finally(cb && cb());
   };
 
   prev = () => {

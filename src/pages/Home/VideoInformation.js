@@ -19,13 +19,13 @@ const VideoInformation = props => {
           {numeral(currentVideo && currentVideo.vote_count).format("0,00")}
         </Button>
 
-        {/*<div className="row-align-center badge small">
+        <div className="row-align-center badge small">
           <img src={badge} alt="" />
           <div>
             <div className="secondary">#1 Video</div>
             <div className="text">October 30, 2019</div>
           </div>
-        </div>*/}
+        </div>
       </div>
 
       <div className="title big text-white">
