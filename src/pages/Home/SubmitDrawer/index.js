@@ -17,7 +17,7 @@ const SubmitDrawer = props => {
       visible={showDrawer}
       mask={false}
       width={360}
-      onClose={() => updateState({ showDrawer: false })}
+      onClose={() => updateState({ showDrawer: false, step: 0, tags: [] })}
       drawerStyle={{ backgroundColor: "#111724" }}
       bodyStyle={{ padding: 0 }}
     >

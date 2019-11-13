@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import AppContext from "contexts/AppContext";
 import VideoContext from "contexts/VideoContext";
 import { handleErrorMessage } from "utils/errorMessage";
+import { appendToFile } from "utils/blockstackStorage";
 import api from "utils/api";
 
 const SubmitContext = React.createContext();
@@ -13,23 +14,25 @@ function youtubeParser(url) {
   return match && match[7].length === 11 ? match[7] : false;
 }
 
+const INITIAL_STATE = {
+  step: 0,
+  showDrawer: false,
+  videoURL: "",
+  videoId: null,
+  videoInfo: {},
+  thumbnail: null,
+  tags: [],
+  submitting: false
+};
+
 class SubmitProvider extends Component {
-  state = {
-    step: 0,
-    showDrawer: false,
-    videoURL: "https://www.youtube.com/watch?v=vwUzK4bCBZI",
-    videoId: null,
-    videoInfo: {},
-    thumbnail: null,
-    tags: [],
-    submitting: false
-  };
+  state = INITIAL_STATE;
 
   updateState = state => {
     this.setState(state);
   };
 
-  submitVideo = async (username = null) => {
+  submitVideo = async user => {
     const { videoId, tags } = this.state;
     if (tags.length === 0) {
       handleErrorMessage("At least one tag is required.");
@@ -37,13 +40,14 @@ class SubmitProvider extends Component {
     }
 
     api
-     .post("/videos", {
+      .post("/videos", {
         unique_id: videoId,
         tags,
-        username
+        username: user ? user.username : null
       })
-      .then(videos => {
-        this.updateState({ tags: [] });
+      .then(video => {
+        this.updateState({ ...INITIAL_STATE, videoId });
+        appendToFile("my_videos.json", videoId);
       })
       .catch(handleErrorMessage);
   };
