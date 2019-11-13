@@ -3,14 +3,18 @@ import { Icon, Button } from "antd";
 import VideoContext from "contexts/VideoContext";
 import IconTag from "components/IconTag";
 import badge from "assets/images/badge.svg";
-import numeral from 'numeral';
+import numeral from "numeral";
 
 const VideoInformation = props => {
+  const { likeUnlike } = useContext(VideoContext);
   const { player, currentVideo } = useContext(VideoContext).value;
   return (
     <div className="title-container">
       <div className="row-align-center">
-        <Button className="primary-button big-upvote">
+        <Button
+          className="primary-button big-upvote"
+          onClick={() => likeUnlike(currentVideo)}
+        >
           <Icon type="caret-up" />
           {numeral(currentVideo && currentVideo.vote_count).format("0,00")}
         </Button>
@@ -28,9 +32,17 @@ const VideoInformation = props => {
         {player && player.getVideoData().title}
       </div>
       <div className="row-align-center tags">
-        {player && currentVideo && currentVideo.tags.map(t => {
-          return <IconTag key={t} text={t} style={{ fontSize: 14, marginRight: 10 }} />;
-        })}
+        {player &&
+          currentVideo &&
+          currentVideo.tags.map(t => {
+            return (
+              <IconTag
+                key={t}
+                text={t}
+                style={{ fontSize: 14, marginRight: 10 }}
+              />
+            );
+          })}
       </div>
     </div>
   );
