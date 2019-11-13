@@ -47,7 +47,7 @@ class SubmitProvider extends Component {
       })
       .then(video => {
         this.updateState({ ...INITIAL_STATE, videoId });
-        appendToFile("my_videos.json", videoId);
+        appendToFile("my_videos.json", video.slug);
       })
       .catch(handleErrorMessage);
   };

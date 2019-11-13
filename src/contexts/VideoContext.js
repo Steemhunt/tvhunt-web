@@ -3,8 +3,13 @@ import { withRouter } from "react-router";
 import api from "utils/api";
 import { handleErrorMessage } from "utils/errorMessage";
 import { getList, appendToList, removeFromList } from "utils/storage";
-import { appendToFile, removeFromFile } from "utils/blockstackStorage";
-import moment from 'moment';
+import {
+  readFile,
+  deleteFile,
+  appendToFile,
+  removeFromFile
+} from "utils/blockstackStorage";
+import moment from "moment";
 import _ from "lodash";
 
 const INITIAL_STATE = {
@@ -36,8 +41,13 @@ class VideoProvider extends Component {
       updateState: this.updateState,
       updateCurrentVideo: this.updateCurrentVideo,
       getVideoInfo: this.getVideoInfo,
-      likeUnlike: this.likeUnlike
+      likeUnlike: this.likeUnlike,
+      loadMyUploads: this.loadMyUploads
     };
+  }
+
+  componentDidMount() {
+    // deleteFile("my_videos.json");
   }
 
   updateState = newState => {
@@ -46,41 +56,47 @@ class VideoProvider extends Component {
 
   getVideoInfo = () => {};
 
+  loadMyUploads = async () => {
+    const videos = await readFile("my_videos.json");
+    const slugs = videos.join(",");
+    api
+      .get(`/videos?slugs=${slugs}.json`)
+      .then(({ total_count, videos }) => this.populateList(videos))
+      .catch(handleErrorMessage);
+  };
+
   loadVideos = (topic, slug) => {
     api
       .get("/videos.json")
-      .then(({ total_count, videos }) => {
-        const tabs = Object.entries(
-          _.countBy(videos.reduce((acc, video) => acc.concat(video.tags), []))
-        ).sort((a, b) => b[1] - a[1]);
-
-        let currentVideo = null;
-        let tab = "all";
-
-        if (topic && slug) {
-          currentVideo = _.find(videos, ["slug", slug]);
-          tab = topic;
-        } else {
-          currentVideo = videos[0];
-        }
-
-        if (this.props.history.location.pathname === "/") {
-          this.props.history.push(`${tab}/${currentVideo.slug}`);
-        }
-
-        this.updateState(
-          {
-            playlist: videos,
-            currentVideo,
-            tabs,
-            tab
-          },
-          () => {
-            this.sortList();
-          }
-        );
-      })
+      .then(({ total_count, videos }) => this.populateList(videos, topic, slug))
       .catch(handleErrorMessage);
+  };
+
+  populateList = (videos, topic, slug) => {
+    const tabs = Object.entries(
+      _.countBy(videos.reduce((acc, video) => acc.concat(video.tags), []))
+    ).sort((a, b) => b[1] - a[1]);
+
+    let currentVideo = null;
+    let tab = "all";
+
+    if (topic && slug) {
+      currentVideo = _.find(videos, ["slug", slug]);
+      tab = topic;
+    } else {
+      currentVideo = videos[0];
+    }
+
+    if (this.props.history.location.pathname === "/") {
+      this.props.history.push(`${tab}/${currentVideo.slug}`);
+    }
+
+    this.updateState({
+      playlist: videos,
+      currentVideo,
+      tabs,
+      tab
+    });
   };
 
   updateCurrentVideo = (topic, slug) => {

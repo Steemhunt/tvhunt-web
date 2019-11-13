@@ -76,8 +76,9 @@ const Youtube = props => {
     let tick = () => {
       const currentTime = player.getCurrentTime();
       const duration = player.getDuration();
+      const volume = player.getVolume();
       setSlider((currentTime / duration) * 100);
-      updateState({ currentTime, duration });
+      updateState({ currentTime, duration, volume });
     };
 
     if (status === STATUS_PLAYING) {

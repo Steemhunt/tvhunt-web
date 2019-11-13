@@ -37,6 +37,7 @@ export async function removeFromFile(path, value, options = {}, cb = () => {}) {
 export async function readFile(path, options = {}) {
   if (!userSignedIn()) return false;
   const file = await userSession.getFile(path, options);
+  console.log(path, file);
   return JSON.parse(file);
 }
 
