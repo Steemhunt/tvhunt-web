@@ -29,14 +29,22 @@ class SubmitProvider extends Component {
     this.setState(state);
   };
 
-  submitVideo = async () => {
+  submitVideo = async (username = null) => {
     const { videoId, tags } = this.state;
-    await api
-      .post("/videos", {
+    if (tags.length === 0) {
+      handleErrorMessage("At least one tag is required.");
+      return;
+    }
+
+    api
+     .post("/videos", {
         unique_id: videoId,
-        tags
+        tags,
+        username
       })
-      .then(videos => {})
+      .then(videos => {
+        this.updateState({ tags: [] });
+      })
       .catch(handleErrorMessage);
   };
 
@@ -46,7 +54,7 @@ class SubmitProvider extends Component {
 
     try {
       if (videoId) {
-        this.updateState({submitting: true});
+        this.updateState({ submitting: true });
         const resp = await fetch(
           `https://www.youtube.com/oembed?url=http://www.youtube.com/watch?v=${videoId}&format=json`
         );
@@ -58,6 +66,7 @@ class SubmitProvider extends Component {
       }
     } catch (e) {}
   };
+
   render() {
     return (
       <Provider

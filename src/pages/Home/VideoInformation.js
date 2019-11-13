@@ -3,6 +3,7 @@ import { Icon, Button } from "antd";
 import VideoContext from "contexts/VideoContext";
 import IconTag from "components/IconTag";
 import badge from "assets/images/badge.svg";
+import numeral from 'numeral';
 
 const VideoInformation = props => {
   const { player, currentVideo } = useContext(VideoContext).value;
@@ -11,7 +12,7 @@ const VideoInformation = props => {
       <div className="row-align-center">
         <Button className="primary-button big-upvote">
           <Icon type="caret-up" />
-          0
+          {numeral(currentVideo && currentVideo.vote_count).format("0,00")}
         </Button>
 
         <div className="row-align-center badge small">

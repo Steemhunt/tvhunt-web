@@ -5,28 +5,33 @@ import { Icon, Button } from "antd";
 
 const RankItem = props => {
   const { rank, data } = props;
-  const { title, vote_count, unique_id, slug } = data;
-  const { updateState, value } = useContext(VideoContext);
+  const { id, title, vote_count, unique_id, slug } = data;
+  const { likeUnlike, updateState, value } = useContext(VideoContext);
   const { tab } = value;
 
   return (
-    <div
-      className="row-align-center rank-item"
-      onClick={() => {
-        props.history.push(`/${tab}/${slug}`);
-        updateState({ currentVideo: data });
-      }}
-    >
-      <div className="secondary rank small">{rank}</div>
-      <div className="row-align-center video-detail">
-        <img
-          className="rank-item-thumbnail"
-          src={`https://img.youtube.com/vi/${unique_id}/hqdefault.jpg`}
-          alt=""
-        />
-        <div className="text small">{title}</div>
+    <div className="row-align-center rank-item">
+      <div
+        className="row-align-center"
+        onClick={() => {
+          props.history.push(`/${tab}/${slug}`);
+          updateState({ currentVideo: data });
+        }}
+      >
+        <div className="secondary rank small">{rank}</div>
+        <div className="row-align-center video-detail">
+          <img
+            className="rank-item-thumbnail"
+            src={`https://img.youtube.com/vi/${unique_id}/hqdefault.jpg`}
+            alt=""
+          />
+          <div className="text small">{title}</div>
+        </div>
       </div>
-      <Button className="primary-button upvote-button">
+      <Button
+        className="primary-button upvote-button"
+        onClick={() => likeUnlike(data)}
+      >
         <Icon type="caret-up" />
         {vote_count}
       </Button>

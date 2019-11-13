@@ -47,8 +47,6 @@ const Youtube = props => {
   const width = w <= 768 || fullscreen ? w : w - 360;
   const height = Math.min(h, width * 0.7);
 
-  console.log("youtube rerendered");
-
   useEffect(() => {
     if (player) {
       showNoise(true);
@@ -192,9 +190,11 @@ const Youtube = props => {
       </div>
 
       <div className="hover-controls" onClick={playOnClick}>
-        <Icon type="step-backward" onClick={prev} />
-        <Icon type={playIcon} className="play-icon" onClick={playOnClick} />
-        <Icon type="step-forward" onClick={next} />
+        <div className="row-align-center middle-container">
+          <Icon type="step-backward" onClick={prev} />
+          <Icon type={playIcon} className="play-icon" onClick={playOnClick} />
+          <Icon type="step-forward" onClick={next} />
+        </div>
       </div>
 
       {noise && <div className={`noise ${player && "fade-out"}`}>{Noise}</div>}

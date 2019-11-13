@@ -1,10 +1,14 @@
 import React, { useRef, useState, useEffect, useContext } from "react";
 import SubmitContext from "contexts/SubmitContext";
+import AuthContext from "contexts/AuthContext";
 import { Tag, Input, Tooltip, Icon, Button } from "antd";
 import tv from "assets/images/tv@3x.png";
 
 const TagStep = props => {
   const { submitVideo, videoURL, videoId } = useContext(SubmitContext);
+  const {
+    user: { username }
+  } = useContext(AuthContext);
   return (
     <div className="step-submit">
       <div className="title big">SUBMIT VIDEO</div>
@@ -28,7 +32,7 @@ const TagStep = props => {
       <div className="add-tags small text">Add tags (up to 3 tags)</div>
 
       <EditableTags />
-      <Button onClick={() => submitVideo()}>HUNT NOW</Button>
+      <Button onClick={() => submitVideo(username)}>HUNT NOW</Button>
     </div>
   );
 };

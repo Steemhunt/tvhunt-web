@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { withRouter } from "react-router";
 import api from "utils/api";
 import { handleErrorMessage } from "utils/errorMessage";
+import { getList, appendToList, removeFromList } from "utils/storage";
+import { appendToFile, removeFromFile } from "utils/blockstackStorage";
 import _ from "lodash";
 
 const INITIAL_STATE = {
@@ -32,7 +34,8 @@ class VideoProvider extends Component {
       next: this.next,
       updateState: this.updateState,
       updateCurrentVideo: this.updateCurrentVideo,
-      getVideoInfo: this.getVideoInfo
+      getVideoInfo: this.getVideoInfo,
+      likeUnlike: this.likeUnlike
     };
   }
 
@@ -64,12 +67,17 @@ class VideoProvider extends Component {
           this.props.history.push(`${tab}/${currentVideo.slug}`);
         }
 
-        this.updateState({
-          playlist: videos,
-          currentVideo,
-          tabs,
-          tab
-        });
+        this.updateState(
+          {
+            playlist: videos,
+            currentVideo,
+            tabs,
+            tab
+          },
+          () => {
+            this.sortList();
+          }
+        );
       })
       .catch(handleErrorMessage);
   };
@@ -89,29 +97,31 @@ class VideoProvider extends Component {
       .catch(handleErrorMessage);
   };
 
-  likeVideo = id => {
-    api
-      .patch(`/videos/${id}/like.json`)
-      .then(({ success, vote_count }) => {
-        if (success) {
-          //save the id to local storage
-          //set the vote count
-        } else {
-        }
-      })
-      .catch(handleErrorMessage);
-  };
+  likeUnlike = ({id}) => {
+    const { playlist } = this.state.value;
+    const likedList = getList("liked");
+    let method = likedList.includes(id) ? "unlike" : "like";
 
-  unlikeVideo = id => {
     api
-      .patch(`/videos/${id}/unlike.json`)
+      .patch(`/videos/${id}/${method}.json`)
       .then(({ success, vote_count }) => {
-        if (success) {
-          //remove the id to local storage
+        if (method === "like") {
+          appendToList("liked", id);
+          appendToFile("votes.json", id);
         } else {
+          removeFromList("liked", id);
+          removeFromFile("votes.json", id);
         }
+        const clonedPlaylist = _.clone(playlist);
+        const video = _.find(clonedPlaylist, ["id", id]);
+        if (video) {
+          video.vote_count = vote_count;
+        }
+        this.updateState({ playlist: clonedPlaylist });
       })
-      .catch(handleErrorMessage);
+      .catch(e => {
+        handleErrorMessage(e);
+      });
   };
 
   prev = () => {

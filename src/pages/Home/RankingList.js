@@ -14,13 +14,16 @@ const RankingList = props => {
     }
   } = props;
 
-  const { value, loadVideos, updateState, updateCurrentVideo } = useContext(
-    VideoContext
-  );
+  const {
+    value,
+    loadVideos,
+    updateState,
+    updateCurrentVideo,
+  } = useContext(VideoContext);
   const { tabs, tab, playlist } = value;
 
   const sortedFilteredList = useMemo(() => {
-    const sortedList = _.sortBy(playlist, [v => v.vote_count]);
+    const sortedList = playlist.sort((a, b) => b.vote_count - a.vote_count);
     return tab === "all"
       ? sortedList
       : sortedList.filter(v => v.tags.includes(tab));
@@ -32,7 +35,7 @@ const RankingList = props => {
 
   useEffect(() => {
     updateCurrentVideo(topic, slug);
-  }, [topic, slug]);
+  }, [topic, slug]); //eslint-disable-line
 
   let videoCount = 0;
 
