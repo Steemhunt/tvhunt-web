@@ -31,7 +31,7 @@ const RankItem = props => {
         </div>
       </div>
       <Button
-        className={`primary-button upvote-button ${liked.includes(slug) &&
+        className={`primary-button upvote-button ${liked && liked.includes(slug) &&
           "liked"}`}
         onClick={() => likeUnlike(data)}
       >
