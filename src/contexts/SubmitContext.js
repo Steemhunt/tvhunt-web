@@ -30,10 +30,10 @@ class SubmitProvider extends Component {
     this.setState(state);
   };
 
-  submitVideo = async user => {
+  submitVideo = async (user, cb) => {
     const { videoId, tags } = this.state;
     if (tags.length === 0) {
-      handleErrorMessage("At least one tag is required.");
+      handleErrorMessage({ message: "At least one tag is required" });
       return;
     }
 
@@ -46,6 +46,7 @@ class SubmitProvider extends Component {
       .then(video => {
         this.updateState({ ...INITIAL_STATE, videoId });
         appendToFile("my_videos.json", video.slug);
+        cb && cb();
       })
       .catch(handleErrorMessage);
   };
@@ -54,19 +55,23 @@ class SubmitProvider extends Component {
     const { videoURL, step } = this.state;
     const videoId = youtubeParser(videoURL);
 
-    try {
-      if (videoId) {
-        this.updateState({ submitting: true });
-        const resp = await fetch(
-          `https://www.youtube.com/oembed?url=http://www.youtube.com/watch?v=${videoId}&format=json`
-        );
-        const videoInfo = await resp.json();
-        console.log("vid info", videoId);
-        this.setState({ videoInfo, videoId, step: step + 1 });
-      } else {
-        handleErrorMessage({ message: "Invalid Video URL" });
-      }
-    } catch (e) {}
+    if (videoId) {
+      this.updateState({ submitting: true });
+      await api
+        .get("/videos/get_info.json", {
+          unique_id: videoId
+        })
+        .then(videoInfo => {
+          console.log("vid info", videoInfo);
+          this.setState({ videoInfo, videoId, step: step + 1 });
+        })
+        .catch(handleErrorMessage)
+        .finally(() => {
+          this.updateState({ submitting: false });
+        });
+    } else {
+      handleErrorMessage({ message: "Invalid Video URL" });
+    }
   };
 
   render() {
