@@ -10,8 +10,7 @@ const ShowRankingButton = props => {
       className={`small show-ranking ${fullscreen && "visible"}`}
       onClick={() => updateState({ fullscreen: false })}
     >
-      <Icon type="caret-left" />
-      <Icon type="caret-right" />
+      <Icon type="menu-fold" />
       <div className="text">Show Ranking</div>
     </div>
   );

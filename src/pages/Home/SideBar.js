@@ -20,8 +20,7 @@ const SideBar = props => {
               videoContext.updateState({ fullscreen: !fullscreen })
             }
           >
-            <Icon type="caret-left" />
-            <Icon type="caret-right" />
+            <Icon type="menu-unfold" />
           </div>
           <User />
         </div>
