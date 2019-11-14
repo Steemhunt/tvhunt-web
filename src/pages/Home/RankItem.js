@@ -1,14 +1,15 @@
 import React, { useContext } from "react";
 import { withRouter } from "react-router";
 import VideoContext from "contexts/VideoContext";
+import useWindowSize from "hooks/useWindowSize";
 import { Icon, Button } from "antd";
 
 const RankItem = props => {
   const { rank, data } = props;
   const { title, vote_count, unique_id, slug } = data;
   const { likeUnlike, updateState, value } = useContext(VideoContext);
+  const { width } = useWindowSize();
   const { liked, tab } = value;
-
 
   return (
     <div className="row-align-center rank-item">
@@ -16,7 +17,7 @@ const RankItem = props => {
         className="row-align-center"
         onClick={() => {
           props.history.push(`/${tab}/${slug}`);
-          updateState({ currentVideo: data });
+          updateState({ currentVideo: data, fullscreen: width <= 768 });
         }}
       >
         <div className="secondary rank small">{rank}</div>
@@ -25,12 +26,13 @@ const RankItem = props => {
             className="rank-item-thumbnail"
             src={`https://img.youtube.com/vi/${unique_id}/hqdefault.jpg`}
             alt=""
-        />
+          />
           <div className="text small">{title}</div>
         </div>
       </div>
       <Button
-        className={`primary-button upvote-button ${liked && liked.includes(slug) &&
+        className={`primary-button upvote-button ${liked &&
+          liked.includes(slug) &&
           "liked"}`}
         onClick={() => likeUnlike(data)}
       >
