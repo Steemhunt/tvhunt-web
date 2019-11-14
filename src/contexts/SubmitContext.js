@@ -62,7 +62,6 @@ class SubmitProvider extends Component {
           unique_id: videoId
         })
         .then(videoInfo => {
-          console.log("vid info", videoInfo);
           this.setState({ videoInfo, videoId, step: step + 1 });
         })
         .catch(handleErrorMessage)
