@@ -4,7 +4,7 @@ import VideoContext from "contexts/VideoContext";
 import IconTag from "components/IconTag";
 import badge from "assets/images/badge.svg";
 import numeral from "numeral";
-import moment from 'moment';
+import moment from "moment";
 
 const VideoInformation = props => {
   const { likeUnlike } = useContext(VideoContext);
@@ -21,7 +21,7 @@ const VideoInformation = props => {
           {numeral(currentVideo && currentVideo.vote_count).format("0,00")}
         </Button>
 
-        {currentVideo && (
+        {currentVideo && currentVideo.ranking && (
           <div className="row-align-center badge small">
             <img src={badge} alt="" />
             <div>
