@@ -76,7 +76,7 @@ const Youtube = props => {
     ticker && clearInterval(ticker);
     player &&
       player.loadVideoById({
-        videoId: videoId ? videoId : currentVideo.unique_id
+        videoId: videoId ? videoId : (currentVideo ? currentVideo.unique_id : null)
       });
   }, [player, currentVideo, videoId]); //eslint-disable-line
 
