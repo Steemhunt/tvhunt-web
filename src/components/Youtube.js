@@ -2,10 +2,12 @@ import React, { useRef, useEffect, useMemo, useContext, useState } from "react";
 import { withRouter } from "react-router";
 import { Icon, Slider } from "antd";
 import fullScreenImg from "assets/images/full-screen.svg";
+import volumeImg from "assets/images/volume-light.svg";
+import volumeMuteImg from "assets/images/volume-mute-light.svg";
+import volumeMuteBlackImg from "assets/images/volume-mute-black.svg";
 import VideoContext from "contexts/VideoContext";
 import SubmitContext from "contexts/SubmitContext";
 import TvNoise from "components/TvNoise";
-import PropTypes from "prop-types";
 import numeral from "numeral";
 import useWindowSize from "hooks/useWindowSize";
 import _ from "lodash";
@@ -29,6 +31,7 @@ const Youtube = props => {
   const playerRef = useRef();
   const [ticker, setTicker] = useState(null);
   const [noise, showNoise] = useState(true);
+  const [noiseFade, setNoiseFade] = useState(false);
   const [slider, setSlider] = useState(0);
   const { width: w, height: h } = useWindowSize();
 
@@ -45,29 +48,16 @@ const Youtube = props => {
     fullscreen
   } = value;
 
-  const width = w <= 768 || fullscreen ? w : w - 360;
+  const width = w <= 500 || fullscreen ? w : w - 360;
   // const height = Math.min(h, width * 0.7);
   const headerHeight = 90;
-  const videoInfoHeight = 280;
-  const height = h - headerHeight - videoInfoHeight;
+  const height = h - headerHeight - 80;
 
   useEffect(() => {
-    if (player) {
-      showNoise(true);
-      updateState({
-        status: PLAYBACK_STATUS["-1"],
-        duration: null,
-        player: null
-      });
-      ticker && clearInterval(ticker);
-      player.destroy();
-    }
-    currentVideo &&
-      window.YT &&
+    if (window.YT) {
       new window.YT.Player(playerRef.current, {
         height,
         width,
-        videoId: videoId ? videoId : currentVideo.unique_id,
         playerVars: {
           autoplay: 1,
           controls: 0,
@@ -79,7 +69,16 @@ const Youtube = props => {
           onStateChange: onPlayerStateChange
         }
       });
-  }, [currentVideo, videoId]); //eslint-disable-line
+    }
+  }, []); //eslint-disable-line
+
+  useEffect(() => {
+    ticker && clearInterval(ticker);
+    player &&
+      player.loadVideoById({
+        videoId: videoId ? videoId : currentVideo.unique_id
+      });
+  }, [player, currentVideo, videoId]); //eslint-disable-line
 
   useEffect(() => {
     let tick = () => {
@@ -103,21 +102,28 @@ const Youtube = props => {
   }, [status]); //eslint-disable-line
 
   function onPlayerReady({ target }) {
+    console.log("player ready!");
     target.setSize = _.debounce(target.setSize, 100);
     target.seekTo = _.debounce(target.seekTo, 500);
     target.getDuration = _.debounce(target.getDuration, 100);
-    target.setVolume(0);
     updateState({ player: target, volume: 0 });
-
-    setTimeout(() => showNoise(false), 1000);
+    target.playVideo();
+    target.setVolume(0);
   }
 
   function onPlayerStateChange({ data }) {
-    if (PLAYBACK_STATUS[data] === STATUS_ENDED) {
+    const status = PLAYBACK_STATUS[data];
+    console.log("status", status);
+    if (status === STATUS_ENDED) {
       console.log("should play next");
-      next();
+    } else if (status === STATUS_PLAYING) {
+      setNoiseFade(true);
+      setTimeout(() => showNoise(false), 1000);
+    } else if (status === STATUS_BUFFERING) {
+      showNoise(true);
+      setNoiseFade(false);
     }
-    updateState({ status: PLAYBACK_STATUS[data] });
+    updateState({ status });
   }
 
   useEffect(() => {
@@ -180,8 +186,9 @@ const Youtube = props => {
               onClick={next}
             />
             <div className="sound-control">
-              <Icon
-                type="sound"
+              <img
+                src={volume === 0 ? volumeMuteImg : volumeImg}
+                alt=""
                 className="sound-button"
                 onClick={() => {
                   if (volume === 0) {
@@ -238,7 +245,19 @@ const Youtube = props => {
         </div>
       </div>
 
-      {noise && <div className={`noise ${player && "fade-out"}`}>{Noise}</div>}
+      {noise && (
+        <div className={`noise ${noiseFade && "fade-out"}`}>{Noise}</div>
+      )}
+
+      {volume === 0 && (
+        <div
+          className="tap-to-unmute hover-link"
+          onClick={() => player && player.setVolume(100)}
+        >
+          <img className="unmute-img" alt="" src={volumeMuteBlackImg} />
+          <div>Click To Unmute</div>
+        </div>
+      )}
     </div>
   );
 };

@@ -169,7 +169,7 @@
     @media only screen and (max-width: 330px) { @content; }
   }
   @else if $media == mobile {
-    @media only screen and (max-width: 768px) { @content; }
+    @media only screen and (max-width: 500px) { @content; }
   }
   @else if $media == tablet { // 1 column
     @media only screen and (max-width: 1023px) { @content; }
