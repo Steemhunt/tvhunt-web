@@ -60,14 +60,16 @@ class VideoProvider extends Component {
   }
 
   async refreshLikes() {
-    let liked = [];
-    if (userSession.isUserSignedIn()) {
-      liked = await readFile("votes.json");
-    } else {
-      liked = await getList("liked");
-    }
-    console.log("liked", liked);
+    let liked = getList("liked");
     this.updateState({ liked });
+
+    console.log("refreshing likes", liked);
+
+    if (userSession.isUserSignedIn()) {
+      const gaiaLiked = await readFile("votes.json");
+      if (gaiaLiked) liked.concat(gaiaLiked);
+      this.updateState({ liked });
+    }
   }
 
   updateState = newState => {
@@ -152,16 +154,16 @@ class VideoProvider extends Component {
   likeUnlike = ({ id, slug }, cb) => {
     const { playlist } = this.state.value;
     const likedList = getList("liked");
-    let method = likedList && likedList.includes(id) ? "unlike" : "like";
+    let method = likedList && likedList.includes(slug) ? "unlike" : "like";
 
     api
       .patch(`/videos/${id}/${method}.json`)
       .then(({ success, vote_count }) => {
         if (method === "like") {
-          appendToList("liked", id);
+          appendToList("liked", slug);
           appendToFile("votes.json", slug, {}, () => this.refreshLikes());
         } else {
-          removeFromList("liked", id);
+          removeFromList("liked", slug);
           removeFromFile("votes.json", slug, {}, () => this.refreshLikes());
         }
         const clonedPlaylist = _.clone(playlist);
