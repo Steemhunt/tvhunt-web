@@ -12,6 +12,9 @@ import { VideoProvider } from "contexts/VideoContext";
 
 require("./utils/polyfill");
 
+window.console.log =
+  process.env.NODE_ENV === "production" ? () => {} : window.console.log;
+
 ReactDOM.render(
   <Router history={history}>
     <AppProvider>
