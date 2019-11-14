@@ -68,12 +68,15 @@ const Youtube = props => {
         height,
         width,
         videoId: videoId ? videoId : currentVideo.unique_id,
+        host: "http://www.youtube-nocookie.com",
         playerVars: {
           autoplay: 1,
           controls: 0,
           listType: "playlist",
           rel: 0,
-          modestbranding: 1
+          modestbranding: 1,
+          playsinline: 1,
+          widget_referrer: process.env.REACT_APP_PUBLIC_URL
         },
         events: {
           onReady: onPlayerReady,
@@ -107,7 +110,8 @@ const Youtube = props => {
     target.setSize = _.debounce(target.setSize, 100);
     target.seekTo = _.debounce(target.seekTo, 500);
     target.getDuration = _.debounce(target.getDuration, 100);
-    updateState({ player: target, volume: target.getVolume() });
+    target.setVolume(0);
+    updateState({ player: target, volume: 0 });
 
     setTimeout(() => showNoise(false), 1000);
   }
@@ -241,22 +245,6 @@ const Youtube = props => {
       {noise && <div className={`noise ${player && "fade-out"}`}>{Noise}</div>}
     </div>
   );
-};
-
-Youtube.propTypes = {
-  width: PropTypes.number,
-  height: PropTypes.number
-};
-
-Youtube.defaultProps = {
-  width:
-    window.innerWidth ||
-    document.documentElement.clientWidth ||
-    document.body.clientWidth,
-  height:
-    window.innerHeight ||
-    document.documentElement.clientHeight ||
-    document.body.clientHeight
 };
 
 export default withRouter(Youtube);
