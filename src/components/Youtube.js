@@ -1,6 +1,7 @@
 import React, { useRef, useEffect, useMemo, useContext, useState } from "react";
 import { withRouter } from "react-router";
 import { Icon, Slider } from "antd";
+import fullScreenImg from "assets/images/full-screen.svg";
 import VideoContext from "contexts/VideoContext";
 import SubmitContext from "contexts/SubmitContext";
 import TvNoise from "components/TvNoise";
@@ -45,7 +46,10 @@ const Youtube = props => {
   } = value;
 
   const width = w <= 768 || fullscreen ? w : w - 360;
-  const height = Math.min(h, width * 0.7);
+  // const height = Math.min(h, width * 0.7);
+  const headerHeight = 90;
+  const videoInfoHeight = 280;
+  const height = h - headerHeight - videoInfoHeight;
 
   useEffect(() => {
     if (player) {
@@ -132,7 +136,7 @@ const Youtube = props => {
 
   return (
     <div className="youtube" style={{ width, backgroundColor: "#000" }}>
-      <div ref={playerRef} />
+      <div id="youtube-iframe" ref={playerRef} />
       <div className="controls">
         <Slider
           className="slider"
@@ -155,38 +159,65 @@ const Youtube = props => {
           }}
         />
         <div className="slider-container">
-          <Icon type={playIcon} className="play-button" onClick={playOnClick} />
-          <Icon type="step-forward" className="forward-button" onClick={next} />
-          <div className="sound-control">
+          <div className="row-align-center controls-left">
             <Icon
-              type="sound"
-              className="sound-button"
-              onClick={() => {
-                if (volume === 0) {
-                  player && player.setVolume(100);
-                  updateState({ volume: 100 });
-                } else {
-                  updateState({ volume: 0 });
-                  player && player.setVolume(0);
-                }
-              }}
+              type={playIcon}
+              className="play-button"
+              onClick={playOnClick}
             />
-            <Slider
-              className="volume-slider"
-              value={volume}
-              onChange={volume => {
-                updateState({ volume });
-                player && player.setVolume(volume);
-              }}
+            <Icon
+              type="step-forward"
+              className="forward-button"
+              onClick={next}
             />
+            <div className="sound-control">
+              <Icon
+                type="sound"
+                className="sound-button"
+                onClick={() => {
+                  if (volume === 0) {
+                    player && player.setVolume(100);
+                    updateState({ volume: 100 });
+                  } else {
+                    updateState({ volume: 0 });
+                    player && player.setVolume(0);
+                  }
+                }}
+              />
+              <Slider
+                className="volume-slider"
+                value={volume}
+                onChange={volume => {
+                  updateState({ volume });
+                  player && player.setVolume(volume);
+                }}
+              />
+            </div>
+            <div className="small">
+              {currentTime
+                ? numeral(currentTime).format("00:00:00")
+                : "00:00:00"}
+            </div>
+            /
+            <div className="small">
+              {duration ? numeral(duration).format("00:00:00") : "00:00:00"}
+            </div>
           </div>
-          <div className="small">
-            {currentTime ? numeral(currentTime).format("00:00:00") : "00:00:00"}
-          </div>
-          /
-          <div className="small">
-            {duration ? numeral(duration).format("00:00:00") : "00:00:00"}
-          </div>
+          <img
+            className="fullscreen-img hover-link"
+            src={fullScreenImg}
+            alt=""
+            onClick={() => {
+              const iframe = document.getElementById("youtube-iframe");
+              var requestFullScreen =
+                iframe.requestFullScreen ||
+                iframe.mozRequestFullScreen ||
+                iframe.webkitRequestFullScreen;
+              if (requestFullScreen) {
+                requestFullScreen.bind(iframe)();
+              }
+            }}
+          />
         </div>
       </div>
 
