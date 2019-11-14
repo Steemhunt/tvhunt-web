@@ -4,6 +4,7 @@ import VideoContext from "contexts/VideoContext";
 import IconTag from "components/IconTag";
 import badge from "assets/images/badge.svg";
 import numeral from "numeral";
+import moment from 'moment';
 
 const VideoInformation = props => {
   const { likeUnlike } = useContext(VideoContext);
@@ -24,8 +25,10 @@ const VideoInformation = props => {
           <div className="row-align-center badge small">
             <img src={badge} alt="" />
             <div>
-              <div className="secondary">#${currentVideo.ranking} Video</div>
-              <div className="text">October 30, 2019</div>
+              <div className="secondary">#{currentVideo.ranking} Video</div>
+              <div className="text">
+                {moment(currentVideo.created_at).format("MMMM DD, YYYY")}
+              </div>
             </div>
           </div>
         )}

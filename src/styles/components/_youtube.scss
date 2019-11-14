@@ -50,6 +50,11 @@
     animation: rotate 1s infinite linear;
   }
 
+  .fullscreen-img {
+    width: 18px;
+    height: 18px;
+  }
+
   .play-button,
   .sound-button,
   .forward-button {
@@ -114,6 +119,7 @@
     margin: auto;
     color: #fff;
     align-items: center;
+    justify-content: space-between;
   }
 
   .slider {

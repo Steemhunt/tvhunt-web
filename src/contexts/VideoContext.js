@@ -81,7 +81,7 @@ class VideoProvider extends Component {
     const videos = await readFile("my_videos.json");
     const slugs = videos.join(",");
     api
-      .get("/videos.json", { slugs: slugs })
+      .get("/videos.json", { slugs })
       .then(({ total_count, videos }) => this.populateList(videos))
       .catch(handleErrorMessage)
       .finally(() => this.updateState({ loading: false }));
@@ -92,7 +92,7 @@ class VideoProvider extends Component {
     const videos = await readFile("votes.json");
     const slugs = videos.join(",");
     api
-      .get("/videos.json", { slugs: slugs })
+      .get("/videos.json", { slugs })
       .then(({ total_count, videos }) => this.populateList(videos))
       .catch(handleErrorMessage)
       .finally(() => this.updateState({ loading: false }));

@@ -1,11 +1,15 @@
 import React, { useRef, useState, useEffect, useContext } from "react";
 import SubmitContext from "contexts/SubmitContext";
+import VideoContext from "contexts/VideoContext";
 import AuthContext from "contexts/AuthContext";
 import { Tag, Input, Tooltip, Icon, Button } from "antd";
 import tv from "assets/images/tv@3x.png";
 
 const TagStep = props => {
-  const { submitVideo, videoURL, videoId } = useContext(SubmitContext);
+  const { loadVideos } = useContext(VideoContext);
+  const { submitVideo, videoInfo, videoURL, videoId } = useContext(
+    SubmitContext
+  );
   const { user } = useContext(AuthContext);
   return (
     <div className="step-submit">
@@ -18,26 +22,38 @@ const TagStep = props => {
       </div>
 
       <div className="input-desc text-white">Wanting to share</div>
+
       <div className="input-container tag-step">
-        <img
-          className="thumbnail"
-          src={`https://img.youtube.com/vi/${videoId}/hqdefault.jpg`}
-          alt=""
-        />
-        <div className="input overflow-ellipsis">{videoURL}</div>
+        <a
+          href={videoURL}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <img
+            className="thumbnail"
+            src={`https://img.youtube.com/vi/${videoId}/hqdefault.jpg`}
+            alt=""
+          />
+        </a>
+        <div className="overflow-ellipsis author-title">
+          <div className="primary overflow-ellipsis">
+            {videoInfo.author_name}
+          </div>
+          <div className="text small overflow-ellipsis">{videoInfo.title}</div>
+        </div>
       </div>
 
       <div className="add-tags small text">Add tags (up to 3 tags)</div>
 
       <EditableTags />
-      <Button onClick={() => submitVideo(user)}>HUNT NOW</Button>
+      <Button onClick={() => submitVideo(user, loadVideos)}>HUNT NOW</Button>
     </div>
   );
 };
 
 const EditableTags = props => {
   const input = useRef();
-  const { tags, unique_id, updateState } = useContext(SubmitContext);
+  const { tags, tagInput, updateState } = useContext(SubmitContext);
   const [inputVisible, setInputVisible] = useState(false);
 
   const handleClose = removedTag => {
@@ -50,17 +66,22 @@ const EditableTags = props => {
   };
 
   const handleInputChange = e => {
-    updateState({ unique_id: e.target.value });
+    const tagInput = e.target.value;
+    if (tagInput.includes(" ") || tagInput.includes(",")) {
+      handleInputConfirm();
+    } else {
+      updateState({ tagInput: e.target.value });
+    }
   };
 
   const handleInputConfirm = () => {
     let newTags = tags;
-    if (unique_id && tags.indexOf(unique_id) === -1) {
-      newTags = [...tags, unique_id];
+    if (tagInput && tags.indexOf(tagInput) === -1) {
+      newTags = [...tags, tagInput];
     }
     updateState({ tags: newTags });
     setInputVisible(false);
-    updateState({ unique_id: "" });
+    updateState({ tagInput: "" });
   };
 
   useEffect(() => {
@@ -95,7 +116,7 @@ const EditableTags = props => {
           type="text"
           size="small"
           style={{ width: 78 }}
-          value={unique_id}
+          value={tagInput}
           onChange={handleInputChange}
           onBlur={handleInputConfirm}
           onPressEnter={handleInputConfirm}

@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import SubmitContext from "contexts/SubmitContext";
-import { Button, Input } from "antd";
+import { Icon, Button, Input } from "antd";
 import tv from "assets/images/tv@3x.png";
 import youtube from "assets/images/youtube.svg";
 
@@ -33,7 +33,7 @@ const SubmitStep = props => {
           getVideoInfo();
         }}
       >
-        Submit
+        {submitting ? <Icon type="loading" /> : "Submit"}
       </Button>
     </div>
   );
