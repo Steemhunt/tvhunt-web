@@ -56,7 +56,6 @@
   }
 
   .play-button,
-  .sound-button,
   .forward-button {
     font-size: 22px;
   }
@@ -65,9 +64,13 @@
     margin-right: 4px;
   }
 
-  .sound-button,
   .forward-button {
     margin-right: 8px;
+  }
+
+  .sound-button {
+    width: 24px;
+    height: 24px;
   }
 
   .sound-control {
@@ -92,7 +95,7 @@
       }
       .volume-slider {
         width: 100px;
-        margin-left: 6px;
+        margin-left: 14px;
       }
     }
   }
@@ -100,7 +103,7 @@
   .controls {
     position: relative;
     z-index: 2;
-    padding: 0px 20px 20px;
+    padding: 1.25rem;
 
     @include responsive(mobile) {
       padding: 0px 10px 20px;

@@ -83,7 +83,7 @@
   }
 
   .video-detail {
-    width: 208px;
+    flex: 1;
     overflow: hidden;
     @include responsive(tiny) {
       width: 200px;
@@ -99,7 +99,7 @@
   }
 
   .primary-button {
-    width: 72px;
+    min-width: 72px;
     padding: 0px 6px;
     i {
       margin-right: 4px;

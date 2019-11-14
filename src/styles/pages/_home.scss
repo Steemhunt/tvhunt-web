@@ -1,7 +1,7 @@
 .home {
   width: 100vw;
-  min-height: 100vh;
-  overflow: scroll;
+  height: 100vh;
+  overflow: hidden;
 
   .row-space-between {
     min-height: 100vh;
@@ -31,9 +31,6 @@
       color: $secondary;
       font-size: 24px;
       margin-right: 10px;
-      &:first-child {
-        margin-right: -8px;
-      }
     }
 
     .text {
