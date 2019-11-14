@@ -58,7 +58,15 @@
   .play-button,
   .sound-button,
   .forward-button {
-    font-size: 1.25rem;
+    font-size: 22px;
+  }
+
+  .play-button {
+    margin-right: 4px;
+  }
+
+  .sound-button,
+  .forward-button {
     margin-right: 8px;
   }
 
@@ -93,6 +101,10 @@
     position: relative;
     z-index: 2;
     padding: 0px 20px 20px;
+
+    @include responsive(mobile) {
+      padding: 0px 10px 20px;
+    }
 
     .ant-slider-handle {
       opacity: 0;

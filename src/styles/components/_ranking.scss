@@ -58,6 +58,10 @@
 
   .rank {
     width: 42px;
+
+    @include responsive(tiny) {
+      width: 32px;
+    }
   }
 
   .rank-item-thumbnail {
@@ -81,6 +85,9 @@
   .video-detail {
     width: 208px;
     overflow: hidden;
+    @include responsive(tiny) {
+      width: 200px;
+    }
   }
 
   .text {

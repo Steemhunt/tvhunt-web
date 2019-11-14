@@ -68,13 +68,9 @@ const Youtube = props => {
         height,
         width,
         videoId: videoId ? videoId : currentVideo.unique_id,
-        host: "http://www.youtube-nocookie.com",
         playerVars: {
           autoplay: 1,
           controls: 0,
-          listType: "playlist",
-          rel: 0,
-          modestbranding: 1,
           playsinline: 1,
           widget_referrer: process.env.REACT_APP_PUBLIC_URL
         },

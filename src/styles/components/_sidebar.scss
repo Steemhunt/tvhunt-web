@@ -6,6 +6,7 @@
   flex-direction: column;
   // width: $sidebar-width;
   width: $sidebar-width;
+  max-width: 100vw;
   height: 100vh;
   background-color: #111724;
   transition: all 250ms ease-in-out;
