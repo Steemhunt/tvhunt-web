@@ -50,6 +50,8 @@ function request(
   }
   var url = API_ROOT + path + qs;
 
+  console.log("url", url);
+
   return fetch(url, { method, headers, body })
     .then(parseJSON)
     .then(checkError)

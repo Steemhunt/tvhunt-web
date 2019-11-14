@@ -107,6 +107,7 @@ const Youtube = props => {
   }
 
   function onPlayerStateChange({ data }) {
+    console.log(PLAYBACK_STATUS[data]);
     updateState({ status: PLAYBACK_STATUS[data] });
   }
 

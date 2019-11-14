@@ -10,6 +10,7 @@ const CreateQuizForm = props => {
 
   useEffect(() => {
     if (inputVisible) {
+      console.log(inputRef.current);
       inputRef.current.focus();
     }
   }, [inputVisible]);

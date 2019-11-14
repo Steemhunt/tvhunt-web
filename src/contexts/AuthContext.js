@@ -1,4 +1,7 @@
 import React, { Component } from "react";
+import api from "utils/api";
+import { handleErrorMessage } from "utils/errorMessage";
+import { getToken, setToken } from "utils/token";
 import { UserSession, AppConfig } from "blockstack";
 const appConfig = new AppConfig();
 const userSession = new UserSession({ appConfig });
@@ -24,12 +27,30 @@ class AuthProvider extends Component {
     }
   }
 
+  signup = async () => {
+    const { email, password, name } = this.state;
+    const userForm = { user: { email, password, name } };
+    try {
+      const user = await api.post("/users.json", userForm);
+      const { api_key } = user;
+      setToken(api_key);
+      this.setState({ user });
+    } catch (e) {
+      handleErrorMessage(e);
+    }
+  };
+
   login = () => {
     userSession.redirectToSignIn();
   };
 
   logout = () => {
     userSession.signUserOut(window.location.origin);
+  };
+
+  refreshSession = () => {
+    const token = getToken();
+    console.log("token", token);
   };
 
   updateState = state => {
