@@ -237,7 +237,10 @@ const Youtube = props => {
         </div>
       </div>
 
-      <div className="hover-controls" onClick={playOnClick}>
+      <div
+        className={`hover-controls ${status !== STATUS_PLAYING && "paused"}`}
+        onClick={playOnClick}
+      >
         <div className="row-align-center middle-container">
           <Icon type="step-backward" onClick={prev} />
           <Icon type={playIcon} className="play-icon" onClick={playOnClick} />
