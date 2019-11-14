@@ -9,6 +9,7 @@
     width: 170px;
     height: 60px;
     font-size: 1.5rem;
+    border-radius: 7px !important;
 
     i {
       margin-right: 10px;
@@ -16,7 +17,8 @@
   }
 
   .title {
-    margin-top: 30px;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
   }
 
   .tags {
