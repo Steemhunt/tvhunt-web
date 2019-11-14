@@ -19,12 +19,8 @@ const RankingList = props => {
   );
   const { mode, tabs, tab, playlist, loading } = value;
 
-  const sortedFilteredList = useMemo(() => {
-    const sortedList = playlist.sort((a, b) => b.vote_count - a.vote_count);
-    return tab === "all"
-      ? sortedList
-      : sortedList.filter(v => v.tags.includes(tab));
-  }, [playlist, tab]);
+  const sortedFilteredList =
+    tab === "all" ? playlist : playlist.filter(v => v.tags.includes(tab));
 
   useEffect(() => {
     loadVideos(topic, slug);
