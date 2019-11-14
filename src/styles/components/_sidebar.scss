@@ -11,8 +11,15 @@
   background-color: #111724;
   transition: all 250ms ease-in-out;
 
+  @include responsive(mobile) {
+    width: 100vw;
+  }
+
   &.fullscreen {
     transform: translateX($sidebar-width);
+    @include responsive(mobile) {
+      transform: translateX(-100vw);
+    }
   }
 
   .primary-button {
