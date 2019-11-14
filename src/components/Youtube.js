@@ -68,7 +68,13 @@ const Youtube = props => {
         height,
         width,
         videoId: videoId ? videoId : currentVideo.unique_id,
-        playerVars: { autoplay: 1, controls: 0 },
+        playerVars: {
+          autoplay: 1,
+          controls: 0,
+          listType: "playlist",
+          rel: 0,
+          modestbranding: 1
+        },
         events: {
           onReady: onPlayerReady,
           onStateChange: onPlayerStateChange
@@ -107,7 +113,10 @@ const Youtube = props => {
   }
 
   function onPlayerStateChange({ data }) {
-    console.log(PLAYBACK_STATUS[data]);
+    if (PLAYBACK_STATUS[data] === STATUS_ENDED) {
+      console.log("should play next");
+      next();
+    }
     updateState({ status: PLAYBACK_STATUS[data] });
   }
 
