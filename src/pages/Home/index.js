@@ -22,7 +22,6 @@ const Home = props => {
           <div className="main-player">
             <Youtube />
           </div>
-          <VideoInformation />
         </div>
         <SideBar />
         <SubmitDrawer />

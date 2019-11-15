@@ -1,38 +1,24 @@
 .title-container {
-  padding: 20px 20px;
+  position: absolute;
+  top: 40px;
+  left: 0;
+  padding: 1.625rem 0.9375rem;
 
   @include responsive(mobile) {
     padding: 20px 10px;
   }
 
-  .big-upvote {
-    width: 170px;
-    height: 60px;
-    font-size: 1.5rem;
-    border-radius: 7px !important;
-
-    i {
-      margin-right: 10px;
-    }
-  }
-
-  .title {
-    margin-top: 2rem;
-    margin-bottom: 1rem;
-  }
-
   .tags {
-    margin-top: 10px;
+    margin-top: 1.25rem;
   }
 
   .badge {
     justify-content: center;
-    min-width: 170px;
+    min-width: 200px;
     height: 60px;
     border-radius: 7px;
-    background-color: #111724;
-    margin-left: 15px;
-    padding: 0 15px;
+    padding: 0 1.25rem;
+    background-color: rgba(17, 23, 36, 0.8);
 
     img {
       width: 24px;
@@ -40,5 +26,21 @@
       object-fit: contain;
       margin-right: 10px;
     }
+  }
+
+  .divider {
+    width: 1px;
+    height: 37px;
+    background-color: #4c4b5e;
+    margin: 0 14px;
+  }
+
+  .upvote {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: $primary;
+    font-size: 16px;
   }
 }

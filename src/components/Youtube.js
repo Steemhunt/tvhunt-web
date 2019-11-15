@@ -10,6 +10,7 @@ import SubmitContext from "contexts/SubmitContext";
 import TvNoise from "components/TvNoise";
 import numeral from "numeral";
 import useWindowSize from "hooks/useWindowSize";
+import VideoInformation from "pages/Home/VideoInformation";
 import _ from "lodash";
 
 export const STATUS_UNSTARTED = "unstarted";
@@ -76,7 +77,11 @@ const Youtube = props => {
     ticker && clearInterval(ticker);
     player &&
       player.loadVideoById({
-        videoId: videoId ? videoId : (currentVideo ? currentVideo.unique_id : null)
+        videoId: videoId
+          ? videoId
+          : currentVideo
+          ? currentVideo.unique_id
+          : null
       });
   }, [player, currentVideo, videoId]); //eslint-disable-line
 
@@ -261,6 +266,8 @@ const Youtube = props => {
           <div>Click To Unmute</div>
         </div>
       )}
+
+      {status === STATUS_PAUSED && <VideoInformation />}
     </div>
   );
 };

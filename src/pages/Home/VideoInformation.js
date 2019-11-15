@@ -13,14 +13,6 @@ const VideoInformation = props => {
   return (
     <div className="title-container">
       <div className="row-align-center">
-        <Button
-          className="primary-button big-upvote"
-          onClick={() => likeUnlike(currentVideo)}
-        >
-          <Icon type="caret-up" />
-          {numeral(currentVideo && currentVideo.vote_count).format("0,00")}
-        </Button>
-
         {currentVideo && currentVideo.ranking && (
           <div className="row-align-center badge small">
             <img src={badge} alt="" />
@@ -30,12 +22,16 @@ const VideoInformation = props => {
                 {moment(currentVideo.created_at).format("MMMM DD, YYYY")}
               </div>
             </div>
+            <div className="divider" />
+            <div
+              className="hover-link upvote"
+              onClick={() => likeUnlike(currentVideo.id)}
+            >
+              <Icon type="caret-up" />
+              <div>{numeral(currentVideo.vote_count).format("0,0")}</div>
+            </div>
           </div>
         )}
-      </div>
-
-      <div className="title big text-white">
-        {player && player.getVideoData().title}
       </div>
       <div className="row-align-center tags">
         {player &&
