@@ -59,7 +59,13 @@ const Youtube = props => {
 
   useEffect(() => {
     player && player.setSize(width, height);
-  }, [width, height]);
+  }, [width, height]); // eslint-disable-line
+
+  useEffect(() => {
+    if (hover) {
+      setTimeout(() => setHover(false), 1500);
+    }
+  }, [hover]); //eslint-disable-line
 
   useEffect(() => {
     if (window.YT) {
@@ -161,10 +167,7 @@ const Youtube = props => {
     playOnClick = () => player.playVideo();
   }
 
-  const Noise = useMemo(() => <TvNoise width={w} height={h} />, [
-    w,
-    h
-  ]);
+  const Noise = useMemo(() => <TvNoise width={w} height={h} />, [w, h]);
 
   const alreadyVoted =
     currentVideo && liked && liked.includes(currentVideo.slug);
