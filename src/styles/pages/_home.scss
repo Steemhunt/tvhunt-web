@@ -9,6 +9,11 @@
 
   .content {
     padding-top: 80px;
+
+    @include responsive(mobile) {
+      padding-top: 0;
+    }
+
     .main-player {
       position: relative;
     }

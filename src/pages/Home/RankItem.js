@@ -17,7 +17,7 @@ const RankItem = props => {
         className="row-align-center"
         onClick={() => {
           props.history.push(`/${tab}/${slug}`);
-          updateState({ currentVideo: data, fullscreen: width <= 768 });
+          updateState({ currentVideo: data, fullscreen: width <= 500 });
         }}
       >
         <div className="secondary rank small">{rank}</div>

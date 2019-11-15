@@ -1,10 +1,25 @@
 .youtube {
+  position: relative;
+  background-color: #000;
+
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   -khtml-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+
+  @include responsive(mobile) {
+    z-index: 1000;
+    transform: translateX(100vw);
+    transition: all 250ms ease-in-out;
+  }
+
+  &.fullscreen {
+    @include responsive(mobile) {
+      transform: translateX(0);
+    }
+  }
 
   transition: width 250ms ease-in-out;
 
@@ -214,5 +229,13 @@
       height: 20px;
       margin-right: 8px;
     }
+  }
+
+  .show-ranking-mobile {
+    width: 100vw;
+    max-height: 90px;
+    color: $secondary;
+    padding: 20px;
+    font-size: 24px;
   }
 }

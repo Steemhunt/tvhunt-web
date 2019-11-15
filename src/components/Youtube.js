@@ -55,11 +55,11 @@ const Youtube = props => {
 
   const width = w <= 500 || fullscreen ? w : w - 360;
   const headerHeight = 90;
-  const height = h - headerHeight - 80;
+  const height = w <= 500 ? h - headerHeight - 40 : h - headerHeight - 80;
 
   useEffect(() => {
     player && player.setSize(width, height);
-  }, [width, height])
+  }, [width, height]);
 
   useEffect(() => {
     if (window.YT) {
@@ -161,15 +161,22 @@ const Youtube = props => {
     height
   ]);
 
-  const alreadyVoted = currentVideo && liked && liked.includes(currentVideo.slug);
+  const alreadyVoted =
+    currentVideo && liked && liked.includes(currentVideo.slug);
 
   return (
     <div
-      className="youtube"
+      className={`youtube ${fullscreen && "fullscreen"}`}
       style={{ width, backgroundColor: "#000" }}
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
     >
+      <div className="mobile-visible show-ranking-mobile">
+        <Icon
+          type="menu-unfold"
+          onClick={() => updateState({ fullscreen: false })}
+        />
+      </div>
       <div id="youtube-iframe" ref={playerRef} />
       <div className="controls">
         <Slider

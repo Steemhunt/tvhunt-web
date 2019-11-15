@@ -10,6 +10,8 @@
   height: 100vh;
   background-color: #111724;
   transition: all 250ms ease-in-out;
+  pointer-events: auto;
+  // display: none;
 
   @include responsive(mobile) {
     width: 100vw;
@@ -18,7 +20,7 @@
   &.fullscreen {
     transform: translateX($sidebar-width);
     @include responsive(mobile) {
-      transform: translateX(-100vw);
+      transform: translateX(0);
     }
   }
 
