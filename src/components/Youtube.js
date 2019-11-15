@@ -56,15 +56,10 @@ const Youtube = props => {
 
   const mobile = isMobile().phone;
 
-  const width = mobile || fullscreen ? w : w - 360;
   const headerHeight = 90;
-  const height = mobile
-    ? h - headerHeight - 20
-    : h - headerHeight - 80;
 
-  useEffect(() => {
-    player && player.setSize(width, height);
-  }, [width, height]); // eslint-disable-line
+  const width = mobile ? w : fullscreen ? w : w - 360;
+  const height = mobile ? h - headerHeight - 20 : h - headerHeight - 80;
 
   useEffect(() => {
     if (hover) {
@@ -179,8 +174,8 @@ const Youtube = props => {
 
   return (
     <div
-      className={`youtube ${mobile && "mobile"} ${fullscreen && "fullscreen"}`}
-      style={{ width, backgroundColor: "#000" }}
+      className={`youtube ${fullscreen && "fullscreen"}`}
+      style={{ width, height: h, backgroundColor: "#000" }}
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
     >

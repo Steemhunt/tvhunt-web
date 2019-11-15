@@ -2,6 +2,8 @@ import React, { useContext } from "react";
 import { withRouter } from "react-router";
 import VideoContext from "contexts/VideoContext";
 import useWindowSize from "hooks/useWindowSize";
+import isMobile from "ismobilejs";
+
 import { Icon, Button } from "antd";
 
 const RankItem = props => {
@@ -17,7 +19,7 @@ const RankItem = props => {
         className="row-align-center"
         onClick={() => {
           props.history.push(`/${tab}/${slug}`);
-          updateState({ currentVideo: data, fullscreen: width <= 500 });
+          updateState({ currentVideo: data, fullscreen: isMobile().phone });
         }}
       >
         <div className="secondary rank small">{rank}</div>

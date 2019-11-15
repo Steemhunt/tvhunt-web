@@ -15,11 +15,6 @@
     transition: all 250ms ease-in-out;
   }
 
-  &.mobile {
-    width: 100vw;
-    height: 100vh;
-  }
-
   &.fullscreen {
     @include responsive(mobile) {
       transform: translateX(0);
@@ -124,6 +119,7 @@
     position: relative;
     z-index: 2;
     padding: 1.25rem;
+    background-color: #000;
 
     &.mobile {
       padding: 0px 10px 20px;

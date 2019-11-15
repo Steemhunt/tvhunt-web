@@ -6,15 +6,18 @@ import useWindowSize from "hooks/useWindowSize";
 import RankingList from "./RankingList";
 import User from "./User";
 import logo from "assets/images/logo-tvh.svg";
+import isMobile from "ismobilejs";
 
 const SideBar = props => {
   const videoContext = useContext(VideoContext);
   const submitContext = useContext(SubmitContext);
   const { fullscreen } = videoContext.value;
-  const { width } = useWindowSize();
+  const mobile = isMobile().phone;
 
   return (
-    <div className={`side-bar ${fullscreen && "fullscreen"}`}>
+    <div
+      className={`side-bar ${mobile && "mobile"} ${fullscreen && "fullscreen"}`}
+    >
       <div className="top-header">
         <img className="logo mobile-visible" src={logo} alt="logo" />
         <div className="row-align-center hide-ranking mobile-hidden">

@@ -19,12 +19,9 @@ const Home = props => {
       <MetaHelmet />
       <div className="row-space-between">
         <div
-          className="content"
           style={{ paddingTop: isMobile().phone ? 0 : 80 }}
         >
-          <div className="main-player">
-            <Youtube />
-          </div>
+          <Youtube />
         </div>
         <SideBar />
         <SubmitDrawer />

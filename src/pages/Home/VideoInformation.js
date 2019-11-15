@@ -5,6 +5,7 @@ import IconTag from "components/IconTag";
 import badge from "assets/images/badge.svg";
 import numeral from "numeral";
 import moment from "moment";
+import isMobile from "ismobilejs";
 
 const VideoInformation = props => {
   const { className } = props;
@@ -12,7 +13,7 @@ const VideoInformation = props => {
   const { player, currentVideo } = useContext(VideoContext).value;
 
   return (
-    <div className={`title-container ${className}`}>
+    <div className={`title-container ${isMobile().phone && "mobile"} ${className}`}>
       <div className="row-align-center">
         {currentVideo && currentVideo.ranking && (
           <div className="row-align-center badge small">
