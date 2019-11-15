@@ -298,11 +298,12 @@ const Youtube = props => {
         <div className={`noise ${noiseFade && "fade-out"}`}>{Noise}</div>
       )}
 
-      {volume === 0 && (
+      {player && player.isMuted() && (
         <div
           className="tap-to-unmute hover-link"
           onClick={() => {
-            player && player.setVolume(100);
+            player.setVolume(100);
+            player.unMute();
             updateState({ volume: 100 });
           }}
         >
