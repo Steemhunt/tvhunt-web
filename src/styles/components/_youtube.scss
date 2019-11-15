@@ -224,6 +224,10 @@
     font-weight: bold;
     color: #000;
 
+    @include responsive(mobile) {
+      left: 10px;
+    }
+
     .unmute-img {
       width: 20px;
       height: 20px;

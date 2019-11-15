@@ -135,7 +135,10 @@ const Youtube = props => {
     } else if (status === STATUS_BUFFERING) {
       showNoise(true);
       setNoiseFade(false);
+    } else if (status === STATUS_UNSTARTED) {
+      player && player.playVideo();
     }
+
     updateState({ status });
   }
 
