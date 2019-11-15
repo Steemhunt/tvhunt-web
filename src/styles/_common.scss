@@ -59,17 +59,20 @@ a {
   color: #3fcaff;
 }
 
-input[type='text'] {
-  &::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+input[type="text"] {
+  &::placeholder {
+    /* Chrome, Firefox, Opera, Safari 10.1+ */
     color: #313c52;
     opacity: 1; /* Firefox */
   }
 
-  &:-ms-input-placeholder { /* Internet Explorer 10-11 */
+  &:-ms-input-placeholder {
+    /* Internet Explorer 10-11 */
     color: #313c52;
   }
 
-  &::-ms-input-placeholder { /* Microsoft Edge */
+  &::-ms-input-placeholder {
+    /* Microsoft Edge */
     color: #313c52;
   }
 }
@@ -220,4 +223,13 @@ input[type='text'] {
   height: 100vh;
   background-color: #242424;
   color: #fff;
+}
+
+.fade-in-out {
+  opacity: 0;
+  transition: opacity 250ms ease-in-out;
+  
+  &.hover {
+    opacity: 1;
+  }
 }

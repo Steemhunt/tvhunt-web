@@ -17,7 +17,7 @@
     min-width: 200px;
     height: 60px;
     border-radius: 7px;
-    padding: 0 1.25rem;
+    padding: 0 0 0 15px;
     background-color: rgba(17, 23, 36, 0.8);
 
     img {
@@ -32,7 +32,7 @@
     width: 1px;
     height: 37px;
     background-color: #4c4b5e;
-    margin: 0 14px;
+    margin: 0 0 0 15px;
   }
 
   .upvote {
@@ -42,5 +42,6 @@
     align-items: center;
     color: $primary;
     font-size: 16px;
+    padding: 0 20px 0 15px;
   }
 }

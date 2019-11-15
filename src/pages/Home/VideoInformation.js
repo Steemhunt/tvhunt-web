@@ -7,11 +7,12 @@ import numeral from "numeral";
 import moment from "moment";
 
 const VideoInformation = props => {
+  const { className } = props;
   const { likeUnlike } = useContext(VideoContext);
   const { player, currentVideo } = useContext(VideoContext).value;
 
   return (
-    <div className="title-container">
+    <div className={`title-container ${className}`}>
       <div className="row-align-center">
         {currentVideo && currentVideo.ranking && (
           <div className="row-align-center badge small">
@@ -25,7 +26,9 @@ const VideoInformation = props => {
             <div className="divider" />
             <div
               className="hover-link upvote"
-              onClick={() => likeUnlike(currentVideo.id)}
+              onClick={() =>
+                likeUnlike({ id: currentVideo.id, slug: currentVideo.slug })
+              }
             >
               <Icon type="caret-up" />
               <div>{numeral(currentVideo.vote_count).format("0,0")}</div>

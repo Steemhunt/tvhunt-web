@@ -145,6 +145,7 @@
   .hover-controls {
     position: absolute;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     z-index: 1;
@@ -170,6 +171,16 @@
       opacity: 1;
     }
 
+    .upvote-button {
+      margin-top: 1.75rem;
+      border-radius: 7px;
+      border: solid 1px #ff54ae;
+      background-color: rgba(17, 23, 36, 0.65);
+      color: $primary;
+      padding: 14px 32px;
+      cursor: pointer;
+    }
+
     .play-icon {
       margin: 0 90px;
     }
@@ -178,6 +189,9 @@
       font-size: 42px;
       color: #fff;
       cursor: pointer;
+    }
+
+    .upvote-button {
     }
   }
 

@@ -31,6 +31,7 @@ export const PLAYBACK_STATUS = {
 const Youtube = props => {
   const playerRef = useRef();
   const [ticker, setTicker] = useState(null);
+  const [hover, setHover] = useState(false);
   const [noise, showNoise] = useState(true);
   const [noiseFade, setNoiseFade] = useState(false);
   const [slider, setSlider] = useState(0);
@@ -63,6 +64,7 @@ const Youtube = props => {
           autoplay: 1,
           controls: 0,
           playsinline: 1,
+          autohide: 0,
           widget_referrer: process.env.REACT_APP_PUBLIC_URL
         },
         events: {
@@ -89,9 +91,8 @@ const Youtube = props => {
     let tick = () => {
       const currentTime = player.getCurrentTime();
       const duration = player.getDuration();
-      const volume = player.getVolume();
       setSlider((currentTime / duration) * 100);
-      updateState({ currentTime, duration, volume });
+      updateState({ currentTime, duration });
     };
 
     if (status === STATUS_PLAYING) {
@@ -111,9 +112,9 @@ const Youtube = props => {
     target.setSize = _.debounce(target.setSize, 100);
     target.seekTo = _.debounce(target.seekTo, 500);
     target.getDuration = _.debounce(target.getDuration, 100);
-    updateState({ player: target, volume: 0 });
-    target.playVideo();
     target.setVolume(0);
+    target.playVideo();
+    updateState({ player: target, volume: 0 });
   }
 
   function onPlayerStateChange({ data }) {
@@ -154,8 +155,15 @@ const Youtube = props => {
     height
   ]);
 
+  console.log("volume", volume);
+
   return (
-    <div className="youtube" style={{ width, backgroundColor: "#000" }}>
+    <div
+      className="youtube"
+      style={{ width, backgroundColor: "#000" }}
+      onMouseEnter={() => setHover(true)}
+      onMouseLeave={() => setHover(false)}
+    >
       <div id="youtube-iframe" ref={playerRef} />
       <div className="controls">
         <Slider
@@ -243,7 +251,8 @@ const Youtube = props => {
       </div>
 
       <div
-        className={`hover-controls ${status !== STATUS_PLAYING && "paused"}`}
+        className={`hover-controls ${(hover || status !== STATUS_PLAYING) &&
+          "paused"}`}
         onClick={playOnClick}
       >
         <div className="row-align-center middle-container">
@@ -251,6 +260,7 @@ const Youtube = props => {
           <Icon type={playIcon} className="play-icon" onClick={playOnClick} />
           <Icon type="step-forward" onClick={next} />
         </div>
+        <div className="upvote-button">Upvote this video</div>
       </div>
 
       {noise && (
@@ -260,14 +270,19 @@ const Youtube = props => {
       {volume === 0 && (
         <div
           className="tap-to-unmute hover-link"
-          onClick={() => player && player.setVolume(100)}
+          onClick={() => {
+            player && player.setVolume(100);
+            updateState({ volume: 100 });
+          }}
         >
           <img className="unmute-img" alt="" src={volumeMuteBlackImg} />
           <div>Click To Unmute</div>
         </div>
       )}
 
-      {status === STATUS_PAUSED && <VideoInformation />}
+      <VideoInformation
+        className={!(hover || status === STATUS_PAUSED) && "fade-in-out"}
+      />
     </div>
   );
 };
