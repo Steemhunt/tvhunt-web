@@ -72,6 +72,7 @@ const Youtube = props => {
           playsinline: 1,
           autohide: 0,
           muted: 1,
+          mute: 1,
           widget_referrer: process.env.REACT_APP_PUBLIC_URL
         },
         events: {
