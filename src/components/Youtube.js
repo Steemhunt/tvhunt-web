@@ -179,7 +179,7 @@ const Youtube = props => {
 
   return (
     <div
-      className={`youtube ${fullscreen && "fullscreen"}`}
+      className={`youtube ${mobile && "mobile"} ${fullscreen && "fullscreen"}`}
       style={{ width, backgroundColor: "#000" }}
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}

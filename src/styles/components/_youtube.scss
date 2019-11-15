@@ -15,6 +15,11 @@
     transition: all 250ms ease-in-out;
   }
 
+  &.mobile {
+    width: 100vw;
+    height: 100vh;
+  }
+
   &.fullscreen {
     @include responsive(mobile) {
       transform: translateX(0);
