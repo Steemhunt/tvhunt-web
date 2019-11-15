@@ -53,9 +53,11 @@ const Youtube = props => {
     liked
   } = value;
 
-  const width = w <= 500 || fullscreen ? w : w - 360;
+  const isMobile = w <= 500;
+
+  const width = isMobile || fullscreen ? w : w - 360;
   const headerHeight = 90;
-  const height = w <= 500 ? h - headerHeight - 20 : h - headerHeight - 80;
+  const height = isMobile ? h - headerHeight - 20 : h - headerHeight - 80;
 
   useEffect(() => {
     player && player.setSize(width, height);
@@ -226,16 +228,18 @@ const Youtube = props => {
                 className="sound-button"
                 onClick={() => {
                   if (volume === 0) {
+                    player && player.unMute();
                     player && player.setVolume(100);
                     updateState({ volume: 100 });
                   } else {
                     updateState({ volume: 0 });
+                    player && player.mute();
                     player && player.setVolume(0);
                   }
                 }}
               />
               <Slider
-                className="volume-slider"
+                className="volume-slider mobile-hidden"
                 value={volume}
                 onChange={volume => {
                   updateState({ volume });

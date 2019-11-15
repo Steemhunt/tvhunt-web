@@ -32,10 +32,6 @@ class SubmitProvider extends Component {
 
   submitVideo = async (user, cb) => {
     const { videoId, tags } = this.state;
-    if (tags.length === 0) {
-      handleErrorMessage({ message: "At least one tag is required" });
-      return;
-    }
 
     api
       .post("/videos", {
