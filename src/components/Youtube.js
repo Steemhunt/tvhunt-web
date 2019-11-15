@@ -55,7 +55,7 @@ const Youtube = props => {
 
   const width = w <= 500 || fullscreen ? w : w - 360;
   const headerHeight = 90;
-  const height = w <= 500 ? h - headerHeight - 40 : h - headerHeight - 80;
+  const height = w <= 500 ? h - headerHeight - 20 : h - headerHeight - 80;
 
   useEffect(() => {
     player && player.setSize(width, height);
