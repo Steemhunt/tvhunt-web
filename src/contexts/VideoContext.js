@@ -62,7 +62,7 @@ class VideoProvider extends Component {
   async refreshLikes() {
     let liked = getList("liked");
     if(!liked) liked = [];
-    
+
     this.updateState({ liked });
 
 
@@ -82,6 +82,11 @@ class VideoProvider extends Component {
   loadMyUploads = async () => {
     this.updateState({ mode: MODE_UPLOADED, loading: true });
     const videos = await readFile("my_videos.json");
+    if (!videos) {
+      this.populateList([]);
+      this.updateState({ loading: false });
+      return;
+    }
     const slugs = videos.join(",");
     api
       .get("/videos.json", { slugs })
