@@ -9,6 +9,7 @@ import {
   removeFromFile
 } from "utils/blockstackStorage";
 import { UserSession, AppConfig } from "blockstack";
+import isMobile from "ismobilejs";
 import _ from "lodash";
 
 const appConfig = new AppConfig();
@@ -62,10 +63,9 @@ class VideoProvider extends Component {
 
   async refreshLikes() {
     let liked = getList("liked");
-    if(!liked) liked = [];
+    if (!liked) liked = [];
 
     this.updateState({ liked });
-
 
     if (userSession.isUserSignedIn()) {
       const gaiaLiked = await readFile("votes.json");
@@ -121,26 +121,34 @@ class VideoProvider extends Component {
       _.countBy(videos.reduce((acc, video) => acc.concat(video.tags), []))
     ).sort((a, b) => b[1] - a[1]);
 
-    let currentVideo = null;
-    let tab = "all";
-
-    if (topic && slug) {
-      currentVideo = _.find(videos, ["slug", slug]);
-      tab = topic;
+    if (isMobile().phone) {
+      this.updateState({
+        playlist: videos,
+        tabs,
+        tab: "all"
+      });
     } else {
-      currentVideo = videos[0];
-    }
+      let currentVideo = null;
+      let tab = "all";
 
-    if (this.props.history.location.pathname === "/") {
-      this.props.history.push(`${tab}/${currentVideo.slug}`);
-    }
+      if (topic && slug) {
+        currentVideo = _.find(videos, ["slug", slug]);
+        tab = topic;
+      } else {
+        currentVideo = videos[0];
+      }
 
-    this.updateState({
-      playlist: videos,
-      currentVideo,
-      tabs,
-      tab
-    });
+      if (this.props.history.location.pathname === "/") {
+        this.props.history.push(`${tab}/${currentVideo.slug}`);
+      }
+
+      this.updateState({
+        playlist: videos,
+        currentVideo,
+        tabs,
+        tab
+      });
+    }
   };
 
   updateCurrentVideo = (topic, slug) => {

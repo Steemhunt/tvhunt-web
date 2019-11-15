@@ -3,6 +3,7 @@ import logo from "assets/images/logo-tvh.svg";
 
 const TvNoise = props => {
   const { width, height } = props;
+
   useEffect(() => {
     var canvas = document.querySelector(".tv"),
       context = canvas.getContext("gl") || canvas.getContext("2d"),
@@ -100,20 +101,16 @@ const TvNoise = props => {
     }
     window.onresize();
     window.requestAnimationFrame(render);
-  });
+  }, []); //eslint-disable-line
+
   return (
     <div className="tv-noise">
-      <div className="absolute-center" style={{width, height}}>
+      <div className="absolute-center" style={{ width, height }}>
         <img className="noise-logo" src={logo} alt="" />
       </div>
       <canvas className="tv" />
     </div>
   );
 };
-
-TvNoise.defaultProps = {
-  width: 1,
-  height: 1
-}
 
 export default TvNoise;

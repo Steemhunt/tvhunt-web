@@ -7,7 +7,7 @@ import badge from "assets/images/badge.svg";
 import numeral from "numeral";
 import moment from "moment";
 import isMobile from "ismobilejs";
-import { STATUS_PAUSED } from "./index";
+import { STATUS_PAUSED } from "./Video";
 
 const VideoInformation = props => {
   const { likeUnlike } = useContext(VideoContext);

@@ -1,6 +1,5 @@
 .youtube-container {
   position: relative;
-  background-color: #000;
 
   -webkit-touch-callout: none;
   -webkit-user-select: none;
@@ -23,13 +22,14 @@
 
   transition: width 250ms ease-in-out;
 
-  .noise {
+  .noise-container {
     position: absolute;
     top: 0;
     z-index: 3;
     opacity: 1;
     background-color: #000;
-    transition: opacity 0.5s linear;
+    transition: all 0.5s linear;
+    pointer-events: none;
 
     &.fade-out {
       opacity: 0;

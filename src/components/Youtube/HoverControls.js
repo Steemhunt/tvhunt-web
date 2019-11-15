@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { Icon } from "antd";
 import VideoContext from "contexts/VideoContext";
 import SubmitContext from "contexts/SubmitContext";
-import { STATUS_BUFFERING, STATUS_PLAYING } from "./index";
+import { STATUS_BUFFERING, STATUS_PLAYING } from "./Video";
 
 const HoverControls = props => {
   const { value, prev, next, likeUnlike } = useContext(VideoContext);
