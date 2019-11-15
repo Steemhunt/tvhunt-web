@@ -47,8 +47,8 @@ MetaHelmet.propTypes = {
 };
 
 MetaHelmet.defaultProps = {
-     title: "TV Hunt - Daily top ranking chart for videos",
-     description: "TV Hunt is a daily top ranking chart for videos.",
+     title: "TV Hunt - Daily top chart for videos",
+     description: "TV Hunt is a daily top chart for videos. Anyone can simply share a cool video that they found today. No sign-ups are required.",
      image: `${process.env.REACT_APP_PUBLIC_URL}/og-image-1200.png`,
      url: process.env.REACT_APP_PUBLIC_URL,
      script: [],
