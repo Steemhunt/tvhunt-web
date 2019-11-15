@@ -155,8 +155,6 @@ const Youtube = props => {
     height
   ]);
 
-  console.log("volume", volume);
-
   return (
     <div
       className="youtube"
