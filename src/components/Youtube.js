@@ -119,7 +119,7 @@ const Youtube = props => {
     target.seekTo = _.debounce(target.seekTo, 500);
     target.getDuration = _.debounce(target.getDuration, 100);
     target.setVolume(0);
-    target.playVideo();
+    // target.playVideo();
     updateState({ player: target, volume: 0 });
   }
 

@@ -5,6 +5,7 @@
   padding: 1.625rem 0.9375rem;
 
   @include responsive(mobile) {
+    top: 80px;
     padding: 20px 10px;
   }
 
