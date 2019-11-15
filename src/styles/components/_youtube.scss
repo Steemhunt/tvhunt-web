@@ -120,7 +120,7 @@
     z-index: 2;
     padding: 1.25rem;
 
-    @include responsive(mobile) {
+    &.mobile {
       padding: 0px 10px 20px;
     }
 
@@ -181,8 +181,7 @@
     opacity: 0;
     transition: opacity 250ms ease-in-out;
 
-    &.paused,
-    &:hover {
+    &.paused {
       opacity: 1;
     }
 

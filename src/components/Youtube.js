@@ -11,6 +11,7 @@ import TvNoise from "components/TvNoise";
 import numeral from "numeral";
 import useWindowSize from "hooks/useWindowSize";
 import VideoInformation from "pages/Home/VideoInformation";
+import isMobile from "ismobilejs";
 import _ from "lodash";
 
 export const STATUS_UNSTARTED = "unstarted";
@@ -53,11 +54,13 @@ const Youtube = props => {
     liked
   } = value;
 
-  const isMobile = w <= 500;
+  const mobile = isMobile().phone;
 
-  const width = isMobile || fullscreen ? w : w - 360;
+  const width = mobile || fullscreen ? w : w - 360;
   const headerHeight = 90;
-  const height = isMobile ? h - headerHeight - 20 : h - headerHeight - 80;
+  const height = mobile
+    ? h - headerHeight - 20
+    : h - headerHeight - 80;
 
   useEffect(() => {
     player && player.setSize(width, height);
@@ -181,14 +184,16 @@ const Youtube = props => {
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
     >
-      <div className="mobile-visible show-ranking-mobile">
-        <Icon
-          type="menu-unfold"
-          onClick={() => updateState({ fullscreen: false })}
-        />
-      </div>
+      {mobile && (
+        <div className="show-ranking-mobile">
+          <Icon
+            type="menu-unfold"
+            onClick={() => updateState({ fullscreen: false })}
+          />
+        </div>
+      )}
       <div id="youtube-iframe" ref={playerRef} />
-      <div className="controls">
+      <div className={`controls ${mobile && "mobile"}`}>
         <Slider
           className="slider"
           value={slider}

@@ -4,10 +4,10 @@ import { scrollTop } from "utils/scroller";
 import Youtube from "components/Youtube";
 import SideBar from "./SideBar";
 import SubmitDrawer from "./SubmitDrawer";
-import VideoInformation from "./VideoInformation";
 import ShowRankingButton from "./ShowRankingButton";
 import LoginModal from "components/LoginModal";
 import MetaHelmet from "components/MetaHelmet";
+import isMobile from "ismobilejs";
 
 const Home = props => {
   useEffect(() => {
@@ -18,7 +18,10 @@ const Home = props => {
     <div className="home">
       <MetaHelmet />
       <div className="row-space-between">
-        <div className="content">
+        <div
+          className="content"
+          style={{ paddingTop: isMobile().phone ? 0 : 80 }}
+        >
           <div className="main-player">
             <Youtube />
           </div>
