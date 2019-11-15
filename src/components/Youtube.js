@@ -37,7 +37,9 @@ const Youtube = props => {
   const [slider, setSlider] = useState(0);
   const { width: w, height: h } = useWindowSize();
 
-  const { value, prev, next, updateState } = useContext(VideoContext);
+  const { value, prev, next, likeUnlike, updateState } = useContext(
+    VideoContext
+  );
   const { videoId } = useContext(SubmitContext);
 
   const {
@@ -47,7 +49,8 @@ const Youtube = props => {
     duration,
     currentTime,
     currentVideo,
-    fullscreen
+    fullscreen,
+    liked
   } = value;
 
   const width = w <= 500 || fullscreen ? w : w - 360;
@@ -155,6 +158,8 @@ const Youtube = props => {
     height
   ]);
 
+  const alreadyVoted = currentVideo && liked.includes(currentVideo.slug);
+
   return (
     <div
       className="youtube"
@@ -258,7 +263,17 @@ const Youtube = props => {
           <Icon type={playIcon} className="play-icon" onClick={playOnClick} />
           <Icon type="step-forward" onClick={next} />
         </div>
-        <div className="upvote-button">Upvote this video</div>
+        {!videoId && currentVideo && currentVideo.ranking && (
+          <div
+            className={`upvote-button ${alreadyVoted && "voted"}`}
+            onClick={e => {
+              e.stopPropagation();
+              likeUnlike({ id: currentVideo.id, slug: currentVideo.slug });
+            }}
+          >
+            {alreadyVoted ? "Unvote this video" : "Upvote this video"}
+          </div>
+        )}
       </div>
 
       {noise && (
@@ -278,9 +293,11 @@ const Youtube = props => {
         </div>
       )}
 
-      <VideoInformation
-        className={!(hover || status === STATUS_PAUSED) && "fade-in-out"}
-      />
+      {!videoId && (
+        <VideoInformation
+          className={!(hover || status === STATUS_PAUSED) && "fade-in-out"}
+        />
+      )}
     </div>
   );
 };

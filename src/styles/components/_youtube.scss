@@ -179,6 +179,11 @@
       color: $primary;
       padding: 14px 32px;
       cursor: pointer;
+
+      &.voted {
+        background-color: $primary;
+        color: #fff;
+      }
     }
 
     .play-icon {
@@ -189,9 +194,6 @@
       font-size: 42px;
       color: #fff;
       cursor: pointer;
-    }
-
-    .upvote-button {
     }
   }
 

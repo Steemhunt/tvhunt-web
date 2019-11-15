@@ -20,7 +20,15 @@ const SubmitDrawer = props => {
       visible={showDrawer}
       mask={false}
       width={sideBarWidth}
-      onClose={() => updateState({ showDrawer: false, step: 0, tags: [] })}
+      onClose={() =>
+        updateState({
+          showDrawer: false,
+          step: 0,
+          tags: [],
+          videoId: null,
+          videoURL: ""
+        })
+      }
       drawerStyle={{ backgroundColor: "#111724" }}
       bodyStyle={{ padding: 0 }}
     >

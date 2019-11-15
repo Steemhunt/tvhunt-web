@@ -6,7 +6,7 @@ import { Tag, Input, Tooltip, Icon, Button } from "antd";
 import tv from "assets/images/tv@3x.png";
 
 const TagStep = props => {
-  const { loadVideos } = useContext(VideoContext);
+  const { loadVideos, updateState } = useContext(VideoContext);
   const { submitVideo, videoInfo, videoURL, videoId } = useContext(
     SubmitContext
   );
@@ -24,11 +24,7 @@ const TagStep = props => {
       <div className="input-desc text-white">Wanting to share</div>
 
       <div className="input-container tag-step">
-        <a
-          href={videoURL}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
+        <a href={videoURL} target="_blank" rel="noopener noreferrer">
           <img
             className="thumbnail"
             src={`https://img.youtube.com/vi/${videoId}/hqdefault.jpg`}
@@ -46,7 +42,13 @@ const TagStep = props => {
       <div className="add-tags small text">Add tags (up to 3 tags)</div>
 
       <EditableTags />
-      <Button onClick={() => submitVideo(user, loadVideos)}>HUNT NOW</Button>
+      <Button
+        onClick={() => {
+          submitVideo(user, loadVideos);
+        }}
+      >
+        HUNT NOW
+      </Button>
     </div>
   );
 };
