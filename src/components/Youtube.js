@@ -157,9 +157,9 @@ const Youtube = props => {
     playOnClick = () => player.playVideo();
   }
 
-  const Noise = useMemo(() => <TvNoise width={width} height={height} />, [
-    width,
-    height
+  const Noise = useMemo(() => <TvNoise width={w} height={h} />, [
+    w,
+    h
   ]);
 
   const alreadyVoted =
