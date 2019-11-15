@@ -61,9 +61,10 @@ class VideoProvider extends Component {
 
   async refreshLikes() {
     let liked = getList("liked");
+    if(!liked) liked = [];
+    
     this.updateState({ liked });
 
-    console.log("refreshing likes", liked);
 
     if (userSession.isUserSignedIn()) {
       const gaiaLiked = await readFile("votes.json");
