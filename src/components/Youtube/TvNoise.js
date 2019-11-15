@@ -111,4 +111,9 @@ const TvNoise = props => {
   );
 };
 
+TvNoise.defaultProps = {
+  width: 1,
+  height: 1
+}
+
 export default TvNoise;

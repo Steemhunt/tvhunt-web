@@ -30,7 +30,8 @@ const INITIAL_STATE = {
   currentTime: 0,
   duration: 0,
   volume: 0,
-  fullscreen: false
+  fullscreen: false,
+  hover: false
 };
 
 const VideoContext = React.createContext(INITIAL_STATE);
@@ -109,7 +110,7 @@ class VideoProvider extends Component {
   loadVideos = (topic, slug) => {
     this.updateState({ loading: true });
     api
-      .get("/videos.json", { days_ago: 0 })
+      .get("/videos.json", { days_ago: 2 })
       .then(({ total_count, videos }) => this.populateList(videos, topic, slug))
       .catch(handleErrorMessage)
       .finally(() => this.updateState({ loading: false }));

@@ -1,19 +1,29 @@
 import React, { useContext } from "react";
-import { Icon, Button } from "antd";
+import { Icon } from "antd";
 import VideoContext from "contexts/VideoContext";
+import SubmitContext from "contexts/SubmitContext";
 import IconTag from "components/IconTag";
 import badge from "assets/images/badge.svg";
 import numeral from "numeral";
 import moment from "moment";
 import isMobile from "ismobilejs";
+import { STATUS_PAUSED } from "./index";
 
 const VideoInformation = props => {
-  const { className } = props;
   const { likeUnlike } = useContext(VideoContext);
-  const { player, currentVideo } = useContext(VideoContext).value;
+  const { videoId } = useContext(SubmitContext);
+  const { player, status, hover, currentVideo } = useContext(
+    VideoContext
+  ).value;
+
+  if (videoId) return null;
 
   return (
-    <div className={`title-container ${isMobile().phone && "mobile"} ${className}`}>
+    <div
+      className={`title-container ${isMobile().phone &&
+        "mobile"} fade-in-out ${(hover || status === STATUS_PAUSED) &&
+        "hover"}`}
+    >
       <div className="row-align-center">
         {currentVideo && currentVideo.ranking && (
           <div className="row-align-center badge small">
