@@ -228,8 +228,20 @@ input[type="text"] {
 .fade-in-out {
   opacity: 0;
   transition: opacity 250ms ease-in-out;
-  
   &.hover {
     opacity: 1;
+  }
+}
+
+.mobile-visible {
+  display: none;
+  @include responsive(mobile) {
+    display: flex;
+  }
+}
+
+.mobile-hidden {
+  @include responsive(mobile) {
+    display: none;
   }
 }

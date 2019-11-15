@@ -54,9 +54,12 @@ const Youtube = props => {
   } = value;
 
   const width = w <= 500 || fullscreen ? w : w - 360;
-  // const height = Math.min(h, width * 0.7);
   const headerHeight = 90;
   const height = h - headerHeight - 80;
+
+  useEffect(() => {
+    player && player.setSize(width, height);
+  }, [width, height])
 
   useEffect(() => {
     if (window.YT) {
@@ -158,7 +161,7 @@ const Youtube = props => {
     height
   ]);
 
-  const alreadyVoted = currentVideo && liked.includes(currentVideo.slug);
+  const alreadyVoted = currentVideo && liked && liked.includes(currentVideo.slug);
 
   return (
     <div

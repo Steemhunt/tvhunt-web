@@ -38,10 +38,20 @@
     padding: 26px 20px;
     font-size: 0.875rem;
 
+    @include responsive(mobile) {
+      padding: 26px 10px;
+    }
+
     i {
       color: $secondary;
       font-size: 24px;
       margin-right: 10px;
+    }
+
+    .logo {
+      width: 80px;
+      height: 25px;
+      object-fit: contain;
     }
 
     .hide-ranking {
@@ -50,6 +60,10 @@
 
     .primary-button {
       align-self: flex-end;
+    }
+
+    .add-circle {
+      color: $primary;
     }
   }
 }

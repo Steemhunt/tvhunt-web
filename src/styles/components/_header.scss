@@ -16,8 +16,9 @@
     object-fit: contain;
 
     @include responsive(mobile) {
-       width: 80px;
-       height: 25px;
+      display: none;
+      width: 80px;
+      height: 25px;
     }
   }
 }
