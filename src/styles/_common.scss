@@ -9,6 +9,18 @@ body,
   padding: 0;
 }
 
+html {
+  position: relative;
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  position: relative;
+  height: 100%;
+  overflow: auto;
+}
+
 h1,
 h2,
 h3,
@@ -35,13 +47,6 @@ h6 {
 
 p {
   font-size: 14px;
-}
-
-html,
-body,
-.root,
-.app-container {
-  overscroll-behavior-y: none;
 }
 
 hr {

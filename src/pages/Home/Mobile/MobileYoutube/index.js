@@ -7,6 +7,7 @@ import Youtube from "components/Youtube";
 const MobileYoutube = props => {
   const { value, updateState } = useContext(VideoContext);
   const { currentVideo } = value;
+
   return (
     <div className={`mobile-youtube-container ${currentVideo && "fullscreen"}`}>
       <div className="mobile-youtube-header">

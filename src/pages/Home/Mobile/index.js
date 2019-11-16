@@ -25,7 +25,7 @@ const MobileHome = props => {
   }, [topic, slug]); //eslint-disable-line
 
   return (
-    <div className="home mobile-home">
+    <div className="mobile-home home">
       <SideBar />
       <MobileYoutube />
       <SubmitDrawer />
