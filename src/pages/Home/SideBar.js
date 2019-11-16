@@ -2,7 +2,6 @@ import React, { useContext } from "react";
 import { Icon, Button } from "antd";
 import VideoContext from "contexts/VideoContext";
 import SubmitContext from "contexts/SubmitContext";
-import useWindowSize from "hooks/useWindowSize";
 import RankingList from "./RankingList";
 import User from "./User";
 import logo from "assets/images/logo-tvh.svg";

@@ -10,11 +10,9 @@ import isMobile from "ismobilejs";
 import { STATUS_PAUSED } from "./Video";
 
 const VideoInformation = props => {
-  const { likeUnlike } = useContext(VideoContext);
+  const { likeUnlike, value } = useContext(VideoContext);
   const { videoId } = useContext(SubmitContext);
-  const { player, status, hover, currentVideo } = useContext(
-    VideoContext
-  ).value;
+  const { player, status, hover, currentVideo } = value;
 
   if (videoId) return null;
 
@@ -37,9 +35,10 @@ const VideoInformation = props => {
             <div className="divider" />
             <div
               className="hover-link upvote"
-              onClick={() =>
-                likeUnlike({ id: currentVideo.id, slug: currentVideo.slug })
-              }
+              onClick={() => {
+                if (!hover) return;
+                likeUnlike({ id: currentVideo.id, slug: currentVideo.slug });
+              }}
             >
               <Icon type="caret-up" />
               <div>{numeral(currentVideo.vote_count).format("0,0")}</div>
