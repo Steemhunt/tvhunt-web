@@ -148,18 +148,23 @@ class VideoProvider extends Component {
   };
 
   populateList = (videos, topic, slug, days_ago) => {
-    const { tabs, playlist, daysPlaylist } = this.state.value;
+    const {
+      tabs,
+      playlist,
+      daysPlaylist,
+      currentVideo: curr
+    } = this.state.value;
     const newTabs = Object.entries(
       _.countBy(videos.reduce((acc, video) => acc.concat(video.tags), []))
     ).sort((a, b) => b[1] - a[1]);
 
-    let currentVideo = null;
+    let currentVideo = curr;
     let tab = topic || "all";
 
-    if (slug) {
+    if (!this.state.value.currentVidoe && slug) {
       currentVideo = _.find(videos, ["slug", slug]);
     } else {
-      if (!isMobile().phone) {
+      if (!isMobile().phone && !curr) {
         currentVideo = videos.filter(v => {
           if (tab === "all") return true;
           return v.tags.includes(tab);
@@ -167,7 +172,7 @@ class VideoProvider extends Component {
       }
     }
 
-    if (!isMobile().phone && currentVideo && !this.state.value.currentVideo) {
+    if (!isMobile().phone && currentVideo && !curr) {
       this.props.history.replace(`${tab}/${currentVideo.slug}`);
     }
 
