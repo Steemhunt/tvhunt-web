@@ -149,6 +149,7 @@ class VideoProvider extends Component {
 
   populateList = (videos, topic, slug, days_ago) => {
     const {
+      tab: t,
       tabs,
       playlist,
       daysPlaylist,
@@ -159,7 +160,7 @@ class VideoProvider extends Component {
     ).sort((a, b) => b[1] - a[1]);
 
     let currentVideo = curr;
-    let tab = topic || "all";
+    let tab = topic || t || "all";
 
     if (!this.state.value.currentVidoe && slug) {
       currentVideo = _.find(videos, ["slug", slug]);
