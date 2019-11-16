@@ -30,8 +30,7 @@ const HoverControls = props => {
 
   return (
     <div
-      className={`hover-controls ${(hover || status !== STATUS_PLAYING) &&
-        "paused"}`}
+      className={`hover-controls ${hover && "paused"}`}
       onClick={playOnClick}
     >
       <div className="row-align-center middle-container">

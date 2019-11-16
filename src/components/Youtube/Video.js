@@ -93,12 +93,7 @@ const Video = props => {
   return (
     <>
       <div id="youtube-iframe" ref={playerRef} />
-      <div
-        className={`noise-container ${status !== STATUS_BUFFERING &&
-          "fade-out"}`}
-      >
-        <TvNoise width={w} height={h} />
-      </div>
+      <TvNoise width={width} height={h} />
     </>
   );
 };

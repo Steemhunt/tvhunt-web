@@ -55,6 +55,8 @@
 }
 
 .rank-item {
+  display: flex;
+  justify-content: space-between;
   width: 100%;
   margin: 10px 0;
   cursor: pointer;
@@ -86,6 +88,7 @@
   }
 
   .video-detail {
+    display: flex;
     flex: 1;
     overflow: hidden;
     @include responsive(tiny) {

@@ -1,8 +1,11 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useContext } from "react";
+import VideoContext from "contexts/VideoContext";
 import logo from "assets/images/logo-tvh.svg";
+import { STATUS_BUFFERING } from "./Video";
 
 const TvNoise = props => {
   const { width, height } = props;
+  const { status } = useContext(VideoContext).value;
 
   useEffect(() => {
     var canvas = document.querySelector(".tv"),
@@ -104,11 +107,15 @@ const TvNoise = props => {
   }, []); //eslint-disable-line
 
   return (
-    <div className="tv-noise">
-      <div className="absolute-center" style={{ width, height }}>
-        <img className="noise-logo" src={logo} alt="" />
+    <div
+      className={`noise-container ${status !== STATUS_BUFFERING && "fade-out"}`}
+    >
+      <div className="tv-noise">
+        <div className="absolute-center" style={{ width, height }}>
+          <img className="noise-logo" src={logo} alt="" />
+        </div>
+        <canvas className="tv" />
       </div>
-      <canvas className="tv" />
     </div>
   );
 };
