@@ -97,7 +97,7 @@ const Video = props => {
         <TvNoise width={width} height={mobile ? h - 50 : h} />
       </div>
     ),
-    [width, h] //eslint-disable-line
+    [width, h, fullscreen] //eslint-disable-line
   );
 };
 

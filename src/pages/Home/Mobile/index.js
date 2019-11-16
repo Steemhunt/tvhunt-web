@@ -2,7 +2,10 @@ import React, { useEffect, useContext } from "react";
 import VideoContext from "contexts/VideoContext";
 import { withRouter } from "react-router";
 import SideBar from "pages/Home/SideBar";
+import SubmitDrawer from "pages/Home/SubmitDrawer";
+import LoginModal from "components/LoginModal";
 import MobileYoutube from "./MobileYoutube";
+import { scrollTop } from "utils/scroller";
 
 const MobileHome = props => {
   const { loadVideos, updateCurrentVideo } = useContext(VideoContext);
@@ -13,17 +16,20 @@ const MobileHome = props => {
   } = props;
 
   useEffect(() => {
+    scrollTop();
     loadVideos(topic, slug);
-  }, []);
+  }, []); //eslint-disable-line
 
   useEffect(() => {
-    // updateCurrentVideo(topic, slug);
-  }, [topic, slug]);
+    updateCurrentVideo(topic, slug);
+  }, [topic, slug]); //eslint-disable-line
 
   return (
     <div className="home mobile-home">
       <SideBar />
       <MobileYoutube />
+      <SubmitDrawer />
+      <LoginModal />
     </div>
   );
 };

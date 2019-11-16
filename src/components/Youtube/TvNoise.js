@@ -106,22 +106,18 @@ const TvNoise = props => {
     window.requestAnimationFrame(render);
   }, []); //eslint-disable-line
 
-  return useMemo(
-    () => (
-      <div
-        className={`noise-container ${status !== STATUS_BUFFERING &&
-          "fade-out"}`}
-        style={style}
-      >
-        <div className="tv-noise">
-          <div className="absolute-center" style={{ width, height }}>
-            <img className="noise-logo" src={logo} alt="" />
-          </div>
-          <canvas className="tv" />
+  return (
+    <div
+      className={`noise-container ${status !== STATUS_BUFFERING && "fade-out"}`}
+      style={style}
+    >
+      <div className="tv-noise">
+        <div className="absolute-center" style={{ width, height }}>
+          <img className="noise-logo" src={logo} alt="" />
         </div>
+        <canvas className="tv" />
       </div>
-    ),
-    [status]
+    </div>
   );
 };
 

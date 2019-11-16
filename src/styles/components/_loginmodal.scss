@@ -43,10 +43,6 @@
   .ant-modal {
     width: 720px !important;
     max-width: 100vw;
-
-    @include responsive(mobile) {
-      top: 0;
-    }
   }
 
   .ant-modal-content {
@@ -72,6 +68,5 @@
     margin-top: 20px;
     text-decoration: underline;
     text-decoration-color: $text;
-
   }
 }

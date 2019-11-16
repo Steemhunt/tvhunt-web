@@ -4,9 +4,8 @@
   overflow: hidden;
   position: fixed;
   top: 0;
-  z-index: 1001;
+  z-index: 99;
   opacity: 1;
-  background-color: #000;
   transition: opacity 0.5s linear;
   pointer-events: none;
 

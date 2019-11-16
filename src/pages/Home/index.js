@@ -20,15 +20,12 @@ const Home = props => {
 
   useEffect(() => {
     scrollTop();
-  }, []);
-
-  useEffect(() => {
     loadVideos(topic, slug);
-  }, []);
+  }, []); //eslint-disable-line
 
   useEffect(() => {
     updateCurrentVideo(topic, slug);
-  }, [topic, slug]);
+  }, [topic, slug]); //eslint-disable-line
 
   return (
     <div className="home">
