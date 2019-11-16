@@ -36,7 +36,6 @@ const VideoInformation = props => {
             <div
               className="hover-link upvote"
               onClick={() => {
-                if (!hover) return;
                 likeUnlike({ id: currentVideo.id, slug: currentVideo.slug });
               }}
             >

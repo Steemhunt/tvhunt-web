@@ -55,8 +55,6 @@ const Video = props => {
         }
       });
     }
-
-    return () => destroyPlayer();
   }, []); //eslint-disable-line
 
   useEffect(() => {
@@ -90,14 +88,11 @@ const Video = props => {
     }
   }, [width, height, player]);
 
-  return useMemo(
-    () => (
-      <div className="video-container">
-        <div id="youtube-iframe" ref={playerRef} />
-        <TvNoise width={width} height={mobile ? h - 50 : h} />
-      </div>
-    ),
-    [width, h, fullscreen] //eslint-disable-line
+  return (
+    <div className="video-container">
+      <div id="youtube-iframe" ref={playerRef} />
+      <TvNoise width={width} height={mobile ? h - 50 : h} />
+    </div>
   );
 };
 
