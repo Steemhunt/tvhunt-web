@@ -14,21 +14,11 @@ const RankingList = props => {
     }
   } = props;
 
-  const { value, loadVideos, updateState, updateCurrentVideo } = useContext(
-    VideoContext
-  );
+  const { value, loadVideos, updateState } = useContext(VideoContext);
   const { mode, tabs, tab, playlist, loading } = value;
 
   const sortedFilteredList =
     tab === "all" ? playlist : playlist.filter(v => v.tags.includes(tab));
-
-  useEffect(() => {
-    loadVideos(topic, slug);
-  }, []); //eslint-disable-line
-
-  useEffect(() => {
-    updateCurrentVideo(topic, slug);
-  }, [topic, slug]); //eslint-disable-line
 
   let videoCount = 0;
 

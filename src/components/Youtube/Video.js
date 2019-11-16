@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useContext, useState } from "react";
+import React, { useRef, useEffect, useContext } from "react";
 import { withRouter } from "react-router";
 import VideoContext from "contexts/VideoContext";
 import SubmitContext from "contexts/SubmitContext";
@@ -24,18 +24,14 @@ export const PLAYBACK_STATUS = {
 
 const Video = props => {
   const playerRef = useRef();
-  const [noise, setNoise] = useState(false);
   const { width: w, height: h } = useWindowSize();
 
-  const { value, updateState } = useContext(VideoContext);
+  const { value, updateState, destroyPlayer } = useContext(VideoContext);
   const { videoId } = useContext(SubmitContext);
-
   const { player, status, currentVideo, fullscreen } = value;
 
   const mobile = isMobile().phone;
-
   const headerHeight = 90;
-
   const width = mobile ? w : fullscreen ? w : w - 360;
   const height = mobile ? h - headerHeight - 20 : h - headerHeight - 80;
 
@@ -59,6 +55,8 @@ const Video = props => {
         }
       });
     }
+
+    return () => destroyPlayer();
   }, []); //eslint-disable-line
 
   useEffect(() => {
@@ -99,7 +97,7 @@ const Video = props => {
         className={`noise-container ${status !== STATUS_BUFFERING &&
           "fade-out"}`}
       >
-        <TvNoise width={width} height={height} />
+        <TvNoise width={w} height={h} />
       </div>
     </>
   );

@@ -24,7 +24,6 @@ export const PLAYBACK_STATUS = {
 };
 
 const Controls = props => {
-  const [ticker, setTicker] = useState(null);
   const [slider, setSlider] = useState(0);
 
   const { value, next, updateState } = useContext(VideoContext);
@@ -34,24 +33,23 @@ const Controls = props => {
   const mobile = isMobile().phone;
 
   useEffect(() => {
+    let ticker = null;
+
     let tick = () => {
       const currentTime = player.getCurrentTime();
       const duration = player.getDuration();
       setSlider((currentTime / duration) * 100);
       updateState({ currentTime, duration });
+      console.log("tick");
     };
 
-    if (status === STATUS_PLAYING) {
+    if (player && status === STATUS_PLAYING) {
       tick();
-      setTicker(setInterval(tick, 1000));
-    } else {
-      ticker && clearInterval(ticker);
+      ticker = setInterval(tick, 1000);
     }
 
-    player && updateState({ currentTime: player.getCurrentTime() });
-
     return () => ticker && clearInterval(ticker);
-  }, [status]); //eslint-disable-line
+  }, [player, status]); //eslint-disable-line
 
   let playIcon = null;
   let playOnClick = null;
@@ -83,7 +81,6 @@ const Controls = props => {
           const duration = player.getDuration();
           const currentTime = duration * (value / 100);
           player.seekTo(duration * (value / 100));
-          clearInterval(ticker);
           updateState({ currentTime });
         }}
       />

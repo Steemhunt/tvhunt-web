@@ -1,5 +1,7 @@
 .youtube-container {
   position: relative;
+  background-color: #000;
+  overflow: hidden;
 
   -webkit-touch-callout: none;
   -webkit-user-select: none;
@@ -203,6 +205,10 @@
 
     .play-icon {
       margin: 0 90px;
+
+      &.mobile {
+        margin: 0 40px;
+      }
     }
 
     i {
@@ -223,6 +229,7 @@
     padding: 8px 15px;
     font-weight: bold;
     color: #000;
+    z-index: 5;
 
     @include responsive(mobile) {
       left: 10px;

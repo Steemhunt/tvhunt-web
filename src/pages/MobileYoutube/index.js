@@ -1,11 +1,17 @@
 import React from "react";
+import { withRouter } from "react-router";
+import { Icon } from "antd";
+import Youtube from "components/Youtube";
 
-const Component = props => {
+const MobileYoutube = props => {
   return (
-    <div className="text-white" style={{ color: "#fff" }}>
-      aowiejfoiweja
+    <div className="mobile-youtube-container">
+      <div className="mobile-youtube-header">
+        <Icon onClick={() => props.history.push("/")} type="menu-unfold" />
+      </div>
+      <Youtube />
     </div>
   );
 };
 
-export default Component;
+export default withRouter(MobileYoutube);

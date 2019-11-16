@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { Icon } from "antd";
 import VideoContext from "contexts/VideoContext";
 import SubmitContext from "contexts/SubmitContext";
+import isMobile from "ismobilejs";
 import { STATUS_BUFFERING, STATUS_PLAYING } from "./Video";
 
 const HoverControls = props => {
@@ -25,6 +26,8 @@ const HoverControls = props => {
   const alreadyVoted =
     currentVideo && liked && liked.includes(currentVideo.slug);
 
+  const mobile = isMobile().phone;
+
   return (
     <div
       className={`hover-controls ${(hover || status !== STATUS_PLAYING) &&
@@ -33,7 +36,11 @@ const HoverControls = props => {
     >
       <div className="row-align-center middle-container">
         <Icon type="step-backward" onClick={prev} />
-        <Icon type={playIcon} className="play-icon" onClick={playOnClick} />
+        <Icon
+          type={playIcon}
+          className={`play-icon ${mobile && "mobile"}`}
+          onClick={playOnClick}
+        />
         <Icon type="step-forward" onClick={next} />
       </div>
       {!videoId && currentVideo && currentVideo.ranking && (

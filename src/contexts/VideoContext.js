@@ -53,13 +53,34 @@ class VideoProvider extends Component {
       likeUnlike: this.likeUnlike,
       loadMyUploads: this.loadMyUploads,
       loadMyVotes: this.loadMyVotes,
+      setCurrentVideo: this.setCurrentVideo,
+      destroyPlayer: this.destroyPlayer,
       loading: false
     };
   }
 
   componentDidMount() {
     this.refreshLikes();
+    const {
+      match: {
+        params: { topic, slug }
+      }
+    } = this.props;
+
+    this.loadVideos(topic, slug);
   }
+
+  destroyPlayer = () => {
+    console.log("destroying player");
+    const { player } = this.state.value;
+    player.destroy();
+    this.updateState({
+      player: null,
+      currentVideo: null,
+      status: null,
+      currentTime: null
+    });
+  };
 
   async refreshLikes() {
     let liked = getList("liked");
@@ -121,42 +142,31 @@ class VideoProvider extends Component {
       _.countBy(videos.reduce((acc, video) => acc.concat(video.tags), []))
     ).sort((a, b) => b[1] - a[1]);
 
-    if (isMobile().phone) {
-      this.updateState({
-        playlist: videos,
-        tabs,
-        tab: "all"
-      });
+    let currentVideo = null;
+    let tab = "all";
+
+    if (topic && slug) {
+      currentVideo = _.find(videos, ["slug", slug]);
+      tab = topic;
     } else {
-      let currentVideo = null;
-      let tab = "all";
-
-      if (topic && slug) {
-        currentVideo = _.find(videos, ["slug", slug]);
-        tab = topic;
-      } else {
-        currentVideo = videos[0];
-      }
-
-      if (this.props.history.location.pathname === "/") {
-        this.props.history.push(`${tab}/${currentVideo.slug}`);
-      }
-
-      this.updateState({
-        playlist: videos,
-        currentVideo,
-        tabs,
-        tab
-      });
+      currentVideo = videos[0];
     }
+
+    if (!isMobile().phone && this.props.history.location.pathname === "/") {
+      this.props.history.push(`${tab}/${currentVideo.slug}`);
+    }
+
+    this.updateState({
+      playlist: videos,
+      currentVideo,
+      tabs,
+      tab
+    });
   };
 
-  updateCurrentVideo = (topic, slug) => {
-    const { playlist, currentVideo } = this.state.value;
-    const foundVideo = _.find(playlist, ["slug", slug]);
-    if (foundVideo && !_.isEqual(foundVideo, currentVideo)) {
-      this.updateState({ currentVideo: foundVideo });
-    }
+  setCurrentVideo = (topic, data) => {
+    this.updateState({ currentVideo: data });
+    this.props.history.push(`/${topic}/${data.slug}`);
   };
 
   updateTags = (id, tags) => {

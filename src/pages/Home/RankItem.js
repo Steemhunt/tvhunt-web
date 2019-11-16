@@ -1,14 +1,15 @@
 import React, { useContext } from "react";
 import { withRouter } from "react-router";
 import VideoContext from "contexts/VideoContext";
-import isMobile from "ismobilejs";
 
 import { Icon, Button } from "antd";
 
 const RankItem = props => {
   const { rank, data } = props;
   const { title, vote_count, unique_id, slug } = data;
-  const { likeUnlike, updateState, value } = useContext(VideoContext);
+  const { likeUnlike, setCurrentVideo, value } = useContext(
+    VideoContext
+  );
   const { liked, tab } = value;
 
   return (
@@ -16,8 +17,7 @@ const RankItem = props => {
       <div
         className="row-align-center"
         onClick={() => {
-          props.history.push(`/${tab}/${slug}`);
-          updateState({ currentVideo: data, fullscreen: isMobile().phone });
+          setCurrentVideo(tab, data);
         }}
       >
         <div className="secondary rank small">{rank}</div>
