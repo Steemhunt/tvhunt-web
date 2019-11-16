@@ -1,10 +1,10 @@
-import React, { useEffect, useContext } from "react";
+import React, { useEffect, useContext, useMemo } from "react";
 import VideoContext from "contexts/VideoContext";
 import logo from "assets/images/logo-tvh.svg";
 import { STATUS_BUFFERING } from "./Video";
 
 const TvNoise = props => {
-  const { width, height } = props;
+  const { width, height, style } = props;
   const { status } = useContext(VideoContext).value;
 
   useEffect(() => {
@@ -106,18 +106,27 @@ const TvNoise = props => {
     window.requestAnimationFrame(render);
   }, []); //eslint-disable-line
 
-  return (
-    <div
-      className={`noise-container ${status !== STATUS_BUFFERING && "fade-out"}`}
-    >
-      <div className="tv-noise">
-        <div className="absolute-center" style={{ width, height }}>
-          <img className="noise-logo" src={logo} alt="" />
+  return useMemo(
+    () => (
+      <div
+        className={`noise-container ${status !== STATUS_BUFFERING &&
+          "fade-out"}`}
+        style={style}
+      >
+        <div className="tv-noise">
+          <div className="absolute-center" style={{ width, height }}>
+            <img className="noise-logo" src={logo} alt="" />
+          </div>
+          <canvas className="tv" />
         </div>
-        <canvas className="tv" />
       </div>
-    </div>
+    ),
+    [status]
   );
+};
+
+TvNoise.defaultProps = {
+  style: {}
 };
 
 export default TvNoise;

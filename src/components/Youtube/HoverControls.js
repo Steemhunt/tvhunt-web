@@ -3,7 +3,7 @@ import { Icon } from "antd";
 import VideoContext from "contexts/VideoContext";
 import SubmitContext from "contexts/SubmitContext";
 import isMobile from "ismobilejs";
-import { STATUS_BUFFERING, STATUS_PLAYING } from "./Video";
+import { STATUS_BUFFERING, STATUS_PLAYING, STATUS_PAUSED } from "./Video";
 
 const HoverControls = props => {
   const { value, prev, next, likeUnlike } = useContext(VideoContext);
@@ -30,7 +30,8 @@ const HoverControls = props => {
 
   return (
     <div
-      className={`hover-controls ${hover && "paused"}`}
+      className={`hover-controls ${(hover || status === STATUS_PAUSED) &&
+        "paused"}`}
       onClick={playOnClick}
     >
       <div className="row-align-center middle-container">

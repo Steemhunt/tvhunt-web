@@ -61,14 +61,15 @@ class VideoProvider extends Component {
 
   componentDidMount() {
     this.refreshLikes();
-    const {
-      match: {
-        params: { topic, slug }
-      }
-    } = this.props;
-
-    this.loadVideos(topic, slug);
   }
+
+  updateCurrentVideo = (topic, slug) => {
+    const { playlist, currentVideo } = this.state.value;
+    const foundVideo = _.find(playlist, ["slug", slug]);
+    if (foundVideo && !_.isEqual(foundVideo, currentVideo)) {
+      this.updateState({ currentVideo: foundVideo });
+    }
+  };
 
   destroyPlayer = () => {
     console.log("destroying player");
@@ -145,11 +146,15 @@ class VideoProvider extends Component {
     let currentVideo = null;
     let tab = "all";
 
+    console.log("topic, slug", topic, slug);
+
     if (topic && slug) {
       currentVideo = _.find(videos, ["slug", slug]);
       tab = topic;
     } else {
-      currentVideo = videos[0];
+      if (!isMobile().phone) {
+        currentVideo = videos[0];
+      }
     }
 
     if (!isMobile().phone && this.props.history.location.pathname === "/") {

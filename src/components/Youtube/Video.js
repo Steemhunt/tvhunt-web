@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useContext } from "react";
+import React, { useRef, useEffect, useContext, useMemo } from "react";
 import { withRouter } from "react-router";
 import VideoContext from "contexts/VideoContext";
 import SubmitContext from "contexts/SubmitContext";
@@ -28,7 +28,7 @@ const Video = props => {
 
   const { value, updateState, destroyPlayer } = useContext(VideoContext);
   const { videoId } = useContext(SubmitContext);
-  const { player, status, currentVideo, fullscreen } = value;
+  const { player, currentVideo, fullscreen } = value;
 
   const mobile = isMobile().phone;
   const headerHeight = 90;
@@ -90,11 +90,14 @@ const Video = props => {
     }
   }, [width, height, player]);
 
-  return (
-    <>
-      <div id="youtube-iframe" ref={playerRef} />
-      <TvNoise width={width} height={h} />
-    </>
+  return useMemo(
+    () => (
+      <div className="video-container">
+        <div id="youtube-iframe" ref={playerRef} />
+        <TvNoise width={width} height={mobile ? h - 50 : h} />
+      </div>
+    ),
+    [width, h] //eslint-disable-line
   );
 };
 

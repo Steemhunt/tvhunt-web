@@ -1,4 +1,5 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useContext } from "react";
+import VideoContext from "contexts/VideoContext";
 import { withRouter } from "react-router";
 import { scrollTop } from "utils/scroller";
 import Youtube from "components/Youtube";
@@ -10,17 +11,30 @@ import MetaHelmet from "components/MetaHelmet";
 import isMobile from "ismobilejs";
 
 const Home = props => {
+  const { loadVideos, updateCurrentVideo } = useContext(VideoContext);
+  const {
+    match: {
+      params: { topic, slug }
+    }
+  } = props;
+
   useEffect(() => {
     scrollTop();
   }, []);
+
+  useEffect(() => {
+    loadVideos(topic, slug);
+  }, []);
+
+  useEffect(() => {
+    updateCurrentVideo(topic, slug);
+  }, [topic, slug]);
 
   return (
     <div className="home">
       <MetaHelmet />
       <div className="row-space-between">
-        <div
-          style={{ paddingTop: isMobile().phone ? 0 : 80 }}
-        >
+        <div style={{ paddingTop: isMobile().phone ? 0 : 80 }}>
           <Youtube />
         </div>
         <SideBar />

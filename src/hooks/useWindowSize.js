@@ -18,7 +18,6 @@ export default function useWindowSize() {
     }
 
     function handleResize() {
-      console.log("orientation change", getSize());
       setWindowSize(getSize());
     }
 
