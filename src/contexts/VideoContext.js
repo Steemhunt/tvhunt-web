@@ -132,7 +132,7 @@ class VideoProvider extends Component {
   loadVideos = (topic, slug) => {
     this.updateState({ loading: true });
     api
-      .get("/videos.json", { days_ago: 2 })
+      .get("/videos.json", {})
       .then(({ total_count, videos }) => this.populateList(videos, topic, slug))
       .catch(handleErrorMessage)
       .finally(() => this.updateState({ loading: false }));

@@ -9,6 +9,7 @@
   height: 100vh;
   background-color: #111724;
   transition: all 250ms ease-in-out;
+  overflow: scroll;
 
   &.mobile {
     width: 100vw;

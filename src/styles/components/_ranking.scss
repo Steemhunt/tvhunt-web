@@ -1,8 +1,9 @@
 .ranking-list {
   padding: 20px;
 
-  @include responsive(mobile) {
+  &.mobile {
     padding: 10px;
+    padding-bottom: 20vh;
   }
 
   .title {

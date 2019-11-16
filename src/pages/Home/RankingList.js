@@ -1,8 +1,9 @@
-import React, { useEffect, useContext, useMemo } from "react";
+import React, { useContext } from "react";
 import { withRouter } from "react-router";
 import { Icon, Tabs } from "antd";
 import VideoContext, { MODE_TV } from "contexts/VideoContext";
 import RankItem from "./RankItem";
+import isMobile from "ismobilejs";
 import _ from "lodash";
 
 const { TabPane } = Tabs;
@@ -30,8 +31,10 @@ const RankingList = props => {
     });
   }
 
+  const mobile = isMobile().phone;
+
   return (
-    <div className="ranking-list">
+    <div className={`ranking-list ${mobile && "mobile"}`}>
       {mode === MODE_TV ? (
         <>
           <Tabs
@@ -62,10 +65,12 @@ const RankingList = props => {
         </div>
       )}
 
-      {loading && <Icon type="loading" />}
-      {sortedFilteredList.map((item, index) => {
-        return <RankItem key={index} rank={index + 1} data={item} />;
-      })}
+      <div className="list">
+        {loading && <Icon type="loading" />}
+        {sortedFilteredList.map((item, index) => {
+          return <RankItem key={index} rank={index + 1} data={item} />;
+        })}
+      </div>
     </div>
   );
 };
