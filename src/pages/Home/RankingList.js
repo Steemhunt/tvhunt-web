@@ -42,7 +42,7 @@ const RankingList = props => {
   } = props;
 
   const { value, loadVideos, updateState } = useContext(VideoContext);
-  const { mode, tabs, tab, daysPlaylist, playlist, loading } = value;
+  const { mode, tabs, tab, daysPlaylist, loading } = value;
 
   const mobile = isMobile().phone;
 
@@ -57,8 +57,8 @@ const RankingList = props => {
               onChange={tab => updateState({ tab })}
             >
               <TabPane tab={"All"} key={"all"} />
-              {tabs.map(tab => {
-                return <TabPane tab={_.capitalize(tab[0])} key={tab[0]} />;
+              {tabs.map((tab, index) => {
+                return <TabPane tab={_.capitalize(tab)} key={tab} />;
               })}
             </Tabs>
           </>
@@ -83,6 +83,7 @@ const RankingList = props => {
               const list = daysPlaylist[days_ago];
               const sortedFilteredList =
                 tab === "all" ? list : list.filter(v => v.tags.includes(tab));
+              if (sortedFilteredList.length === 0) return null;
               return (
                 <div key={days_ago}>
                   <div className="title secondary">
@@ -110,7 +111,7 @@ const RankingList = props => {
         </div>
       </div>
     ),
-    [daysPlaylist, mode]
+    [daysPlaylist, mode, tab]
   );
 };
 

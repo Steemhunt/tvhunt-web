@@ -40,7 +40,6 @@ const Controls = props => {
       const duration = player.getDuration();
       setSlider((currentTime / duration) * 100);
       updateState({ currentTime, duration });
-      console.log("tick");
     };
 
     if (player && status === STATUS_PLAYING) {

@@ -167,7 +167,7 @@ class VideoProvider extends Component {
       }
     }
 
-    if (!isMobile().phone && currentVideo && !this.state.currentVideo) {
+    if (!isMobile().phone && currentVideo && !this.state.value.currentVideo) {
       this.props.history.replace(`${tab}/${currentVideo.slug}`);
     }
 
@@ -183,7 +183,7 @@ class VideoProvider extends Component {
       daysPlaylist: clonedDaysPlaylist,
       playlist: playlist.concat(videos),
       currentVideo,
-      tabs: tabs.concat(newTabs),
+      tabs: _.uniq(tabs.concat(_.flatten(newTabs))),
       tab,
       loading: false
     });
