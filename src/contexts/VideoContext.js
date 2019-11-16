@@ -24,6 +24,7 @@ const INITIAL_STATE = {
   tabs: [],
   player: null,
   status: null,
+  daysPlaylist: {},
   playlist: [],
   liked: [],
   currentIndex: 0,
@@ -114,8 +115,7 @@ class VideoProvider extends Component {
     api
       .get("/videos.json", { slugs })
       .then(({ total_count, videos }) => this.populateList(videos))
-      .catch(handleErrorMessage)
-      .finally(() => this.updateState({ loading: false }));
+      .catch(handleErrorMessage);
   };
 
   loadMyVotes = async () => {
@@ -125,47 +125,67 @@ class VideoProvider extends Component {
     api
       .get("/videos.json", { slugs })
       .then(({ total_count, videos }) => this.populateList(videos))
-      .catch(handleErrorMessage)
-      .finally(() => this.updateState({ loading: false }));
+      .catch(handleErrorMessage);
   };
 
-  loadVideos = (topic, slug) => {
+  loadVideos = (topic, slug, days_ago = 0, top = false, cb) => {
+    const { daysPlaylist } = this.state.value;
     this.updateState({ loading: true });
     api
-      .get("/videos.json", {})
-      .then(({ total_count, videos }) => this.populateList(videos, topic, slug))
-      .catch(handleErrorMessage)
-      .finally(() => this.updateState({ loading: false }));
+      .get("/videos.json", { days_ago, top })
+      .then(({ total_count, videos }) => {
+        if (
+          daysPlaylist[days_ago] &&
+          daysPlaylist[days_ago].length === total_count
+        ) {
+          cb && cb(false);
+        } else {
+          cb && cb(true);
+          this.populateList(videos, topic, slug, days_ago);
+        }
+      })
+      .catch(handleErrorMessage);
   };
 
-  populateList = (videos, topic, slug) => {
-    const tabs = Object.entries(
+  populateList = (videos, topic, slug, days_ago) => {
+    const { tabs, playlist, daysPlaylist } = this.state.value;
+    const newTabs = Object.entries(
       _.countBy(videos.reduce((acc, video) => acc.concat(video.tags), []))
     ).sort((a, b) => b[1] - a[1]);
 
     let currentVideo = null;
-    let tab = "all";
+    let tab = topic || "all";
 
-    console.log("topic, slug", topic, slug);
-
-    if (topic && slug) {
+    if (slug) {
       currentVideo = _.find(videos, ["slug", slug]);
-      tab = topic;
     } else {
       if (!isMobile().phone) {
-        currentVideo = videos[0];
+        currentVideo = videos.filter(v => {
+          if (tab === "all") return true;
+          return v.tags.includes(tab);
+        })[0];
       }
     }
 
-    if (!isMobile().phone && this.props.history.location.pathname === "/") {
-      this.props.history.push(`${tab}/${currentVideo.slug}`);
+    if (!isMobile().phone && currentVideo && !this.state.currentVideo) {
+      this.props.history.replace(`${tab}/${currentVideo.slug}`);
+    }
+
+    const clonedDaysPlaylist = _.clone(daysPlaylist);
+    if (videos.length > 0) {
+      if (!clonedDaysPlaylist[days_ago]) clonedDaysPlaylist[days_ago] = [];
+      clonedDaysPlaylist[days_ago] = clonedDaysPlaylist[days_ago].concat(
+        videos
+      );
     }
 
     this.updateState({
-      playlist: videos,
+      daysPlaylist: clonedDaysPlaylist,
+      playlist: playlist.concat(videos),
       currentVideo,
-      tabs,
-      tab
+      tabs: tabs.concat(newTabs),
+      tab,
+      loading: false
     });
   };
 
@@ -207,7 +227,7 @@ class VideoProvider extends Component {
       .catch(e => {
         handleErrorMessage(e);
       })
-      .finally(cb && cb());
+      .then(cb && cb());
   };
 
   prev = () => {

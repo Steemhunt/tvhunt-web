@@ -1,10 +1,36 @@
-import React, { useContext } from "react";
+import React, { useContext, useMemo } from "react";
 import { withRouter } from "react-router";
 import { Icon, Tabs } from "antd";
 import VideoContext, { MODE_TV } from "contexts/VideoContext";
 import RankItem from "./RankItem";
+import ShowMoreItems from "./ShowMoreItems";
 import isMobile from "ismobilejs";
+import moment from "moment";
 import _ from "lodash";
+
+function daysAgoToString(daysAgo) {
+  if (daysAgo === 0) {
+    return "Today";
+  }
+  if (daysAgo === 1) {
+    return "Yesterday";
+  }
+  const date = new Date(new Date() - 86400000 * daysAgo);
+  // Return weekday if less than a week
+  if (daysAgo < 7) {
+    const weekdays = [
+      "Sunday",
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday"
+    ];
+    return weekdays[date.getDay()];
+  }
+  return moment(date).format("MMMM Do");
+}
 
 const { TabPane } = Tabs;
 
@@ -16,62 +42,75 @@ const RankingList = props => {
   } = props;
 
   const { value, loadVideos, updateState } = useContext(VideoContext);
-  const { mode, tabs, tab, playlist, loading } = value;
-
-  const sortedFilteredList =
-    tab === "all" ? playlist : playlist.filter(v => v.tags.includes(tab));
-
-  let videoCount = 0;
-
-  if (tab === "all") {
-    videoCount = playlist.length;
-  } else {
-    tabs.forEach(t => {
-      if (t[0] === tab) videoCount = t[1];
-    });
-  }
+  const { mode, tabs, tab, daysPlaylist, playlist, loading } = value;
 
   const mobile = isMobile().phone;
 
-  return (
-    <div className={`ranking-list ${mobile && "mobile"}`}>
-      {mode === MODE_TV ? (
-        <>
-          <Tabs
-            className="tabs"
-            activeKey={tab}
-            onChange={tab => updateState({ tab })}
+  return useMemo(
+    () => (
+      <div className={`ranking-list ${mobile && "mobile"}`}>
+        {mode === MODE_TV ? (
+          <>
+            <Tabs
+              className="tabs"
+              activeKey={tab}
+              onChange={tab => updateState({ tab })}
+            >
+              <TabPane tab={"All"} key={"all"} />
+              {tabs.map(tab => {
+                return <TabPane tab={_.capitalize(tab[0])} key={tab[0]} />;
+              })}
+            </Tabs>
+          </>
+        ) : (
+          <div
+            className="secondary small hover-link"
+            onClick={() => {
+              loadVideos(topic, slug);
+              updateState({ mode: MODE_TV });
+            }}
           >
-            <TabPane tab={"All"} key={"all"} />
-            {tabs.map(tab => {
-              return <TabPane tab={_.capitalize(tab[0])} key={tab[0]} />;
-            })}
-          </Tabs>
-          <div className="title secondary">TODAY</div>
-          <div className="text small compete-text">
-            Total {videoCount} videos are competing
+            <Icon type="left" style={{ marginRight: 4 }} />
+            BACK TO RANKING
           </div>
-        </>
-      ) : (
-        <div
-          className="secondary small hover-link"
-          onClick={() => {
-            loadVideos(topic, slug);
-            updateState({ mode: MODE_TV });
-          }}
-        >
-          <Icon type="left" style={{ marginRight: 4 }} />
-          BACK TO RANKING
-        </div>
-      )}
+        )}
 
-      <div className="list">
-        {loading && <Icon type="loading" />}
-        {sortedFilteredList.map((item, index) => {
-          return <RankItem key={index} rank={index + 1} data={item} />;
-        })}
+        <div className="list">
+          {loading && <Icon className="primary" type="loading" />}
+          {Object.keys(daysPlaylist)
+            .sort()
+            .map(days_ago => {
+              const list = daysPlaylist[days_ago];
+              const sortedFilteredList =
+                tab === "all" ? list : list.filter(v => v.tags.includes(tab));
+              return (
+                <div key={days_ago}>
+                  <div className="title secondary">
+                    {daysAgoToString(days_ago)}
+                  </div>
+                  <div className="text small compete-text">
+                    Total {list.length} videos competed
+                  </div>
+                  {sortedFilteredList.map((item, index) => (
+                    <RankItem key={index} rank={index + 1} data={item} />
+                  ))}
+                  {list.length === 10 && (
+                    <ShowMoreItems
+                      nextDay={days_ago}
+                      text="Show more from this day"
+                    />
+                  )}
+                </div>
+              );
+            })}
+          <ShowMoreItems
+            nextDay={Object.keys(daysPlaylist).length + 1}
+            text={"Load previous day"}
+          />
+        </div>
       </div>
-    </div>
+    ),
+    [daysPlaylist, mode]
   );
 };
 
