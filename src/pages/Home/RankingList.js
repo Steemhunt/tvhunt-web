@@ -62,12 +62,10 @@ const RankingList = props => {
         </div>
       )}
 
-      <div className="list">
-        {loading && <Icon type="loading" />}
-        {sortedFilteredList.map((item, index) => {
-          return <RankItem key={index} rank={index + 1} data={item} />;
-        })}
-      </div>
+      {loading && <Icon type="loading" />}
+      {sortedFilteredList.map((item, index) => {
+        return <RankItem key={index} rank={index + 1} data={item} />;
+      })}
     </div>
   );
 };

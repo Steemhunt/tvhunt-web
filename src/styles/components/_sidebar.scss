@@ -9,11 +9,9 @@
   height: 100vh;
   background-color: #111724;
   transition: all 250ms ease-in-out;
-  pointer-events: auto;
 
   &.mobile {
     width: 100vw;
-    height: 100vh;
     transition: none;
   }
 

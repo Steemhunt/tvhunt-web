@@ -18,36 +18,42 @@ const SideBar = props => {
       className={`side-bar ${mobile && "mobile"} ${fullscreen && "fullscreen"}`}
     >
       <div className="top-header">
-        <img className="logo mobile-visible" src={logo} alt="logo" />
-        <div className="row-align-center hide-ranking mobile-hidden">
-          <div
-            className="row-align-center"
-            onClick={() =>
-              videoContext.updateState({ fullscreen: !fullscreen })
-            }
-          >
-            <Icon type="menu-unfold" />
+        {mobile && <img className="logo" src={logo} alt="logo" />}
+        {!mobile && (
+          <div className="row-align-center hide-ranking">
+            <div
+              className="row-align-center"
+              onClick={() =>
+                videoContext.updateState({ fullscreen: !fullscreen })
+              }
+            >
+              <Icon type="menu-unfold" />
+            </div>
+            <User />
           </div>
-          <User />
-        </div>
+        )}
 
-        <div className="mobile-hidden">
-          <Button
-            onClick={() => submitContext.updateState({ showDrawer: true })}
-            className="primary-button"
-          >
-            HUNT VIDEO
-          </Button>
-        </div>
+        {!mobile && (
+          <div>
+            <Button
+              onClick={() => submitContext.updateState({ showDrawer: true })}
+              className="primary-button"
+            >
+              HUNT VIDEO
+            </Button>
+          </div>
+        )}
 
-        <div className="mobile-visible">
-          <User />
-          <Icon
-            className="add-circle"
-            type="plus-circle"
-            onClick={() => submitContext.updateState({ showDrawer: true })}
-          />
-        </div>
+        {mobile && (
+          <div className="row-align-center">
+            <User />
+            <Icon
+              className="add-circle"
+              type="plus-circle"
+              onClick={() => submitContext.updateState({ showDrawer: true })}
+            />
+          </div>
+        )}
       </div>
 
       <RankingList />

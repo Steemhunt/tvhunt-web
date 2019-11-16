@@ -18,18 +18,14 @@ const HoverControls = props => {
   } else if (status === STATUS_PLAYING) {
     playIcon = "pause";
     playOnClick = e => {
-      if (hover) {
-        e.stopPropagation();
-        player.pauseVideo();
-      }
+      e.stopPropagation();
+      player.pauseVideo();
     };
   } else {
     playIcon = "caret-right";
     playOnClick = e => {
-      if (hover) {
-        e.stopPropagation();
-        player.playVideo();
-      }
+      e.stopPropagation();
+      player.playVideo();
     };
   }
 
@@ -45,19 +41,18 @@ const HoverControls = props => {
       onClick={playOnClick}
     >
       <div className="row-align-center middle-container">
-        <Icon type="step-backward" onClick={hover && prev} />
+        <Icon type="step-backward" onClick={prev} />
         <Icon
           type={playIcon}
           className={`play-icon ${mobile && "mobile"}`}
           onClick={playOnClick}
         />
-        <Icon type="step-forward" onClick={hover && next} />
+        <Icon type="step-forward" onClick={next} />
       </div>
       {!videoId && currentVideo && currentVideo.ranking && (
         <div
           className={`upvote-button ${alreadyVoted && "voted"}`}
           onClick={e => {
-            if (!hover) return;
             e.stopPropagation();
             likeUnlike({ id: currentVideo.id, slug: currentVideo.slug });
           }}

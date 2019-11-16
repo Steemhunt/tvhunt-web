@@ -1,7 +1,4 @@
 .ranking-list {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
   padding: 20px;
 
   @include responsive(mobile) {
@@ -15,13 +12,6 @@
 
   .compete-text {
     margin-bottom: 30px;
-  }
-
-  .list {
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-    overflow: scroll;
   }
 
   .ant-tabs-bar {

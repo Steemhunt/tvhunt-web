@@ -1,8 +1,6 @@
 .home {
   width: 100vw;
-  height: 100vh;
   background-color: #000;
-  overflow: hidden;
 
   .show-ranking {
     position: absolute;
@@ -49,14 +47,16 @@
 }
 
 .mobile-home {
+  width: 100vw;
+  overflow-x: hidden;
+
   .mobile-youtube-container {
     position: relative;
     z-index: 999;
     width: 100vw;
-    height: 100vh;
     background-color: #000;
     transform: translateX(100vw);
-    transition: all 250ms ease-in-out;
+    transition: transform 250ms linear;
 
     &.fullscreen {
       transform: translateX(0);
