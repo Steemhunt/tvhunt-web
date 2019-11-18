@@ -56,9 +56,9 @@ const RankingList = props => {
               activeKey={tab}
               onChange={tab => updateState({ tab })}
             >
-              <TabPane tab={"All"} key={"all"} />
+              <TabPane tab={"all"} key={"all"} />
               {tabs.map((tab, index) => {
-                return <TabPane tab={_.capitalize(tab)} key={tab} />;
+                return <TabPane tab={`#${tab}`} key={tab} />;
               })}
             </Tabs>
           </>
