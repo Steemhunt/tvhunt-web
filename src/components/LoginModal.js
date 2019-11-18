@@ -18,7 +18,7 @@ const LoginModal = props => {
       wrapClassName="login-modal"
     >
       <div className="content">
-        <img className="logo" src={logo} alt="" />
+        <img className="logo" src={logo} alt="TV Hunt Logo" />
         <div className="row-align-center dash-container">
           <img className="circle-image" src={tvhCircle} alt="" />
           <div className="dashed-dots" />

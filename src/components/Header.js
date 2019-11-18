@@ -5,10 +5,10 @@ import isMobile from "ismobilejs";
 
 const Header = props => {
   if (isMobile().phone) return null;
-  
+
   return (
     <div className={`header`}>
-      <img className="logo" src={logo} alt="logo" />
+      <a href="/"><img className="logo" src={logo} alt="TV Hunt Logo" /></a>
     </div>
   );
 };

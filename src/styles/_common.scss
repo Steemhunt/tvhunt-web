@@ -59,7 +59,7 @@ a {
 }
 
 input[type="text"] {
-  @include placeholder(red);
+  @include placeholder(#313c52);
 }
 
 .primary-button {

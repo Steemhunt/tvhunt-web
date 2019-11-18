@@ -23,11 +23,15 @@ const VideoInformation = props => {
         "hover"}`}
     >
       <div className="row-align-center">
-        {currentVideo && currentVideo.ranking && (
+        {currentVideo && (
           <div className="row-align-center badge small">
             <img src={badge} alt="" />
             <div>
-              <div className="secondary">#{currentVideo.ranking} Video</div>
+              {currentVideo.ranking ?
+                <div className="secondary">#{currentVideo.ranking} Video</div>
+              :
+                <div className="secondary">Featured on</div>
+              }
               <div className="text">
                 {moment(currentVideo.created_at).format("MMMM DD, YYYY")}
               </div>
