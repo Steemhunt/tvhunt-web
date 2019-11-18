@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useContext, useMemo } from "react";
+import React, { useRef, useEffect, useContext } from "react";
 import { withRouter } from "react-router";
 import VideoContext from "contexts/VideoContext";
 import SubmitContext from "contexts/SubmitContext";
@@ -26,7 +26,7 @@ const Video = props => {
   const playerRef = useRef();
   const { width: w, height: h } = useWindowSize();
 
-  const { value, updateState, destroyPlayer } = useContext(VideoContext);
+  const { value, updateState } = useContext(VideoContext);
   const { videoId } = useContext(SubmitContext);
   const { player, currentVideo, fullscreen } = value;
 

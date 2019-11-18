@@ -6,7 +6,7 @@ import { Tag, Input, Tooltip, Icon, Button } from "antd";
 import tv from "assets/images/tv@3x.png";
 
 const TagStep = props => {
-  const { loadVideos, updateState } = useContext(VideoContext);
+  const { loadVideos } = useContext(VideoContext);
   const { submitVideo, videoInfo, videoURL, videoId } = useContext(
     SubmitContext
   );

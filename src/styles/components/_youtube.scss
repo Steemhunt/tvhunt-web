@@ -1,8 +1,10 @@
+@import "../constants";
+
 .youtube-container {
   display: flex;
   flex-direction: column;
   position: relative;
-  background-color: #000;
+  background-color: $dark_background;
 
   -webkit-touch-callout: none;
   -webkit-user-select: none;
@@ -205,7 +207,7 @@
     border-radius: 6px;
     padding: 8px 15px;
     font-weight: bold;
-    color: #000;
+    color: $dark_background;
     z-index: 5;
 
     @include responsive(mobile) {

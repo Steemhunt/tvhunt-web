@@ -1,10 +1,12 @@
+@import "./constants";
+
 html,
 body,
 .ant-list {
   font-family: "Roboto", sans-serif;
   font-size: 16px;
   font-weight: 300;
-  background: #000;
+  background: $dark_background;
   margin: 0;
   padding: 0;
   position: relative;

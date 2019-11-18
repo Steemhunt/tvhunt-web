@@ -3,8 +3,6 @@ import { Icon, Drawer } from "antd";
 import SubmitContext from "contexts/SubmitContext";
 import SubmitStep from "./SubmitStep";
 import TagStep from "./TagStep";
-import BudgetStep from "./BudgetStep";
-import PaymentStep from "./PaymentStep";
 import useWindowSize from "hooks/useWindowSize";
 
 const SubmitDrawer = props => {
@@ -34,8 +32,6 @@ const SubmitDrawer = props => {
     >
       {step === 0 && <SubmitStep />}
       {step === 1 && <TagStep />}
-      {step === 2 && <BudgetStep />}
-      {step === 3 && <PaymentStep />}
       {step > 1 && (
         <div className="submit-footer">
           <div className="prev" onClick={() => updateState({ step: step - 1 })}>

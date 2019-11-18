@@ -6,7 +6,6 @@ import RankItem from "./RankItem";
 import ShowMoreItems from "./ShowMoreItems";
 import isMobile from "ismobilejs";
 import moment from "moment";
-import _ from "lodash";
 
 function daysAgoToString(daysAgo) {
   if (daysAgo === 0) {

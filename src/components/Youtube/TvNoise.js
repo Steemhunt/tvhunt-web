@@ -1,4 +1,4 @@
-import React, { useEffect, useContext, useMemo } from "react";
+import React, { useEffect, useContext } from "react";
 import VideoContext from "contexts/VideoContext";
 import logo from "assets/images/logo-tvh.svg";
 import { STATUS_BUFFERING } from "./Video";
