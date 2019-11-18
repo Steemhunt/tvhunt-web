@@ -36,7 +36,7 @@ const INITIAL_STATE = {
   volume: 0,
   fullscreen: false,
   hover: false,
-  loading: false,
+  loading: false
 };
 
 const VideoContext = React.createContext(INITIAL_STATE);
@@ -58,7 +58,7 @@ class VideoProvider extends Component {
       loadMyUploads: this.loadMyUploads,
       loadMyVotes: this.loadMyVotes,
       setCurrentVideo: this.setCurrentVideo,
-      destroyPlayer: this.destroyPlayer,
+      destroyPlayer: this.destroyPlayer
     };
   }
 
@@ -191,11 +191,14 @@ class VideoProvider extends Component {
 
     const clonedDaysPlaylist = _.clone(daysPlaylist);
     if (!clonedDaysPlaylist[days_ago]) clonedDaysPlaylist[days_ago] = [];
-    clonedDaysPlaylist[days_ago] = clonedDaysPlaylist[days_ago].concat(videos);
+    clonedDaysPlaylist[days_ago] = _.uniqBy(
+      clonedDaysPlaylist[days_ago].concat(videos),
+      "slug"
+    );
 
     this.updateState({
       daysPlaylist: clonedDaysPlaylist,
-      playlist: playlist.concat(videos),
+      playlist: _.uniqBy(playlist.concat(videos), "slug"),
       currentVideo,
       tabs: _.uniq(tabs.concat(_.flatten(newTabs))),
       tab,
