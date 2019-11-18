@@ -88,11 +88,9 @@
   }
 
   .text {
-    overflow: hidden;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
     margin-right: 1.25rem;
+
+    @include overflowLine(1.5rem, 2);
   }
 
   .primary-button {

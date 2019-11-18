@@ -1,4 +1,5 @@
 @import "./constants";
+@import "./mixins";
 
 html,
 body,
@@ -58,21 +59,7 @@ a {
 }
 
 input[type="text"] {
-  &::placeholder {
-    /* Chrome, Firefox, Opera, Safari 10.1+ */
-    color: #313c52;
-    opacity: 1; /* Firefox */
-  }
-
-  &:-ms-input-placeholder {
-    /* Internet Explorer 10-11 */
-    color: #313c52;
-  }
-
-  &::-ms-input-placeholder {
-    /* Microsoft Edge */
-    color: #313c52;
-  }
+  @include placeholder(red);
 }
 
 .primary-button {
