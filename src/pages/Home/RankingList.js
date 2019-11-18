@@ -38,13 +38,7 @@ function daysAgoToString(daysAgo) {
 const { TabPane } = Tabs;
 
 const RankingList = props => {
-  const {
-    match: {
-      params: { topic, slug }
-    }
-  } = props;
-
-  const { value, loadVideos, updateState } = useContext(VideoContext);
+  const { value, updateState } = useContext(VideoContext);
   const { mode, tabs, tab, daysPlaylist, uploads, votes, loading } = value;
 
   const mobile = isMobile().phone;
@@ -69,7 +63,6 @@ const RankingList = props => {
           <div
             className="secondary small hover-link"
             onClick={() => {
-              loadVideos(topic, slug);
               updateState({ mode: MODE_TV });
             }}
           >
@@ -119,14 +112,16 @@ const RankingList = props => {
               <RankItem key={index} rank={index + 1} data={item} />
             ))}
 
-          <ShowMoreItems
-            nextDay={Object.keys(daysPlaylist).length + 1}
-            text={"Load previous day"}
-          />
+          {mode === MODE_TV && (
+            <ShowMoreItems
+              nextDay={Object.keys(daysPlaylist).length + 1}
+              text={"Load previous day"}
+            />
+          )}
         </div>
       </div>
     ),
-    [daysPlaylist, mode, tab] //eslint-disable-line
+    [daysPlaylist, mode, tab, uploads, votes] //eslint-disable-line
   );
 };
 

@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import VideoContext from "contexts/VideoContext";
 import { withRouter } from "react-router";
 import { scrollTop } from "utils/scroller";
@@ -11,7 +11,16 @@ import MetaHelmet from "components/MetaHelmet";
 import isMobile from "ismobilejs";
 
 const Home = props => {
-  const { loadVideos, updateCurrentVideo } = useContext(VideoContext);
+  const {
+    loadVideos,
+    loadMyUploads,
+    loadMyVotes,
+    updateCurrentVideo,
+    value
+  } = useContext(VideoContext);
+
+  const { currentVideo } = value;
+
   const {
     match: {
       params: { topic, slug }
@@ -20,16 +29,27 @@ const Home = props => {
 
   useEffect(() => {
     scrollTop();
-    loadVideos(topic, slug);
+    if (topic === "uploads") loadMyUploads();
+    else if (topic === "votes") loadMyVotes();
+    else loadVideos(topic, slug);
   }, []); //eslint-disable-line
 
   useEffect(() => {
     updateCurrentVideo(topic, slug);
   }, [topic, slug]); //eslint-disable-line
 
+  let metaTitle = "";
+
+  if (topic === "uploads") metaTitle = "My Uploads - TV Hunt";
+  else if (topic === "votes") metaTitle = "My Votes - TV Hunt";
+  else
+    metaTitle =
+      (currentVideo && `${currentVideo.title} - TV Hunt`) ||
+      "TV Hunt - Daily top chart for videos";
+
   return (
     <div className="home">
-      <MetaHelmet />
+      <MetaHelmet title={metaTitle} />
       <div className="row-space-between">
         <div style={{ paddingTop: isMobile().phone ? 0 : 80 }}>
           <Youtube />
