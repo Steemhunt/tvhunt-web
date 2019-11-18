@@ -87,7 +87,7 @@ const RankingList = props => {
               return (
                 <div key={days_ago}>
                   <div className="title secondary">
-                    {daysAgoToString(days_ago)}
+                    {daysAgoToString(parseInt(days_ago))}
                   </div>
                   <div className="text small compete-text">
                     Total {list.length} videos competed
