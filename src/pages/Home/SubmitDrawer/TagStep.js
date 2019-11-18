@@ -4,6 +4,7 @@ import VideoContext from "contexts/VideoContext";
 import AuthContext from "contexts/AuthContext";
 import { Tag, Input, Tooltip, Icon, Button } from "antd";
 import tv from "assets/images/tv@3x.png";
+import _ from "lodash";
 
 const TagStep = props => {
   const { loadVideos } = useContext(VideoContext);
@@ -72,7 +73,7 @@ const EditableTags = props => {
     if (tagInput.includes(" ") || tagInput.includes(",")) {
       handleInputConfirm();
     } else {
-      updateState({ tagInput: e.target.value });
+      updateState({ tagInput: e.target.value.toLowerCase() });
     }
   };
 
@@ -87,7 +88,9 @@ const EditableTags = props => {
   };
 
   useEffect(() => {
-    if (inputVisible) input.current.focus();
+    if (inputVisible) {
+      input.current.focus();
+    }
   }, [inputVisible]);
 
   return (

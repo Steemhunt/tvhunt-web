@@ -107,7 +107,7 @@ class VideoProvider extends Component {
 
   loadMyUploads = async () => {
     this.props.history.push("/uploads");
-    this.updateState({ mode: MODE_UPLOADED, loading: true });
+    this.updateState({ mode: MODE_UPLOADED, loading: true, uploads: [] });
     const videos = await readFile("my_videos.json");
     if (!videos) {
       this.populateList([]);
@@ -125,7 +125,7 @@ class VideoProvider extends Component {
 
   loadMyVotes = async () => {
     this.props.history.push("/votes");
-    this.updateState({ mode: MODE_VOTED, loading: true });
+    this.updateState({ mode: MODE_VOTED, loading: true, votes: [] });
     const videos = await readFile("votes.json");
     const slugs = videos.join(",");
     api
