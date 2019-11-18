@@ -161,9 +161,13 @@ class VideoProvider extends Component {
       daysPlaylist,
       currentVideo: curr
     } = this.state.value;
+
+    //sorts tabs by popularity
     const newTabs = Object.entries(
       _.countBy(videos.reduce((acc, video) => acc.concat(video.tags), []))
-    ).sort((a, b) => b[1] - a[1]);
+    )
+      .sort((a, b) => b[1] - a[1])
+      .map(arr => arr[0]);
 
     let currentVideo = curr;
     let tab = topic || t || "all";
