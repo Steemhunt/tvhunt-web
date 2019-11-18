@@ -178,12 +178,8 @@ class VideoProvider extends Component {
     }
 
     const clonedDaysPlaylist = _.clone(daysPlaylist);
-    if (videos.length > 0) {
-      if (!clonedDaysPlaylist[days_ago]) clonedDaysPlaylist[days_ago] = [];
-      clonedDaysPlaylist[days_ago] = clonedDaysPlaylist[days_ago].concat(
-        videos
-      );
-    }
+    if (!clonedDaysPlaylist[days_ago]) clonedDaysPlaylist[days_ago] = [];
+    clonedDaysPlaylist[days_ago] = clonedDaysPlaylist[days_ago].concat(videos);
 
     this.updateState({
       daysPlaylist: clonedDaysPlaylist,

@@ -83,7 +83,7 @@ const RankingList = props => {
               const list = daysPlaylist[days_ago];
               const sortedFilteredList =
                 tab === "all" ? list : list.filter(v => v.tags.includes(tab));
-              if (sortedFilteredList.length === 0) return null;
+              // if (sortedFilteredList.length === 0) return null;
               return (
                 <div key={days_ago}>
                   <div className="title secondary">
@@ -111,7 +111,7 @@ const RankingList = props => {
         </div>
       </div>
     ),
-    [daysPlaylist, mode, tab]
+    [daysPlaylist, mode, tab] //eslint-disable-line
   );
 };
 
