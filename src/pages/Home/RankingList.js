@@ -1,11 +1,7 @@
 import React, { useContext, useMemo } from "react";
 import { withRouter } from "react-router";
 import { Icon, Tabs } from "antd";
-import VideoContext, {
-  MODE_TV,
-  MODE_UPLOADED,
-  MODE_VOTED
-} from "contexts/VideoContext";
+import VideoContext from "contexts/VideoContext";
 import RankItem from "./RankItem";
 import ShowMoreItems from "./ShowMoreItems";
 import isMobile from "ismobilejs";
@@ -46,78 +42,51 @@ const RankingList = props => {
   return useMemo(
     () => (
       <div className={`ranking-list ${mobile && "mobile"}`}>
-        {mode === MODE_TV ? (
-          <>
-            <Tabs
-              className="tabs"
-              activeKey={tab}
-              onChange={tab => updateState({ tab })}
-            >
-              <TabPane tab={"all"} key={"all"} />
-              {tabs.map((tab, index) => {
-                return <TabPane tab={`#${tab}`} key={tab} />;
-              })}
-            </Tabs>
-          </>
-        ) : (
-          <div
-            className="secondary small hover-link"
-            onClick={() => {
-              updateState({ mode: MODE_TV });
-            }}
-          >
-            <Icon type="left" style={{ marginRight: 4 }} />
-            BACK TO RANKING
-          </div>
-        )}
+        <Tabs
+          className="tabs"
+          activeKey={tab}
+          onChange={tab => updateState({ tab })}
+        >
+          <TabPane tab={"all"} key={"all"} />
+          {tabs.map((tab, index) => {
+            return <TabPane tab={`#${tab}`} key={tab} />;
+          })}
+        </Tabs>
 
         <div className="list">
-          {loading && <Icon className="primary" type="loading" />}
-          {mode === MODE_TV &&
-            Object.keys(daysPlaylist)
-              .sort()
-              .map(days_ago => {
-                const list = daysPlaylist[days_ago];
-                const sortedFilteredList =
-                  tab === "all" ? list : list.filter(v => v.tags.includes(tab));
-                // if (sortedFilteredList.length === 0) return null;
-                return (
-                  <div key={days_ago}>
-                    <div className="title secondary">
-                      {daysAgoToString(parseInt(days_ago))}
-                    </div>
-                    <div className="text small compete-text">
-                      Total {list.length} videos competed
-                    </div>
-                    {sortedFilteredList.map((item, index) => (
-                      <RankItem key={index} rank={index + 1} data={item} />
-                    ))}
-                    {list.length === 10 && (
-                      <ShowMoreItems
-                        nextDay={days_ago}
-                        text="Show more from this day"
-                      />
-                    )}
+          {loading && <Icon className="primary loading-circle" type="loading" />}
+          {Object.keys(daysPlaylist)
+            .sort()
+            .map(days_ago => {
+              const list = daysPlaylist[days_ago];
+              const sortedFilteredList =
+                tab === "all" ? list : list.filter(v => v.tags.includes(tab));
+              // if (sortedFilteredList.length === 0) return null;
+              return (
+                <div key={days_ago}>
+                  <div className="title secondary">
+                    {daysAgoToString(parseInt(days_ago))}
                   </div>
-                );
-              })}
+                  <div className="text small compete-text">
+                    Total {list.length} videos competed
+                  </div>
+                  {sortedFilteredList.map((item, index) => (
+                    <RankItem key={index} rank={index + 1} data={item} />
+                  ))}
+                  {list.length === 10 && (
+                    <ShowMoreItems
+                      nextDay={days_ago}
+                      text="Show more from this day"
+                    />
+                  )}
+                </div>
+              );
+            })}
 
-          {mode === MODE_UPLOADED &&
-            uploads.map((item, index) => (
-              <RankItem key={index} rank={index + 1} data={item} />
-            ))}
-
-          {mode === MODE_VOTED &&
-            votes.map((item, index) => (
-              <RankItem key={index} rank={index + 1} data={item} />
-            ))}
-
-          {mode === MODE_TV && (
-            <ShowMoreItems
-              nextDay={Object.keys(daysPlaylist).length + 1}
-              text={"Load previous day"}
-            />
-          )}
+          <ShowMoreItems
+            nextDay={Object.keys(daysPlaylist).length + 1}
+            text={"Load previous day"}
+          />
         </div>
       </div>
     ),

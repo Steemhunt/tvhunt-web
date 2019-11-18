@@ -1,8 +1,9 @@
 import React, { useContext } from "react";
 import { Icon, Button } from "antd";
-import VideoContext from "contexts/VideoContext";
+import VideoContext, { MODE_TV } from "contexts/VideoContext";
 import SubmitContext from "contexts/SubmitContext";
 import RankingList from "./RankingList";
+import UploadsAndVotes from "./UploadsAndVotes";
 import User from "./User";
 import logo from "assets/images/logo-tvh.svg";
 import isMobile from "ismobilejs";
@@ -10,7 +11,7 @@ import isMobile from "ismobilejs";
 const SideBar = props => {
   const videoContext = useContext(VideoContext);
   const submitContext = useContext(SubmitContext);
-  const { fullscreen } = videoContext.value;
+  const { fullscreen, mode } = videoContext.value;
   const mobile = isMobile().phone;
 
   return (
@@ -56,7 +57,7 @@ const SideBar = props => {
         )}
       </div>
 
-      <RankingList />
+      {mode === MODE_TV ? <RankingList /> : <UploadsAndVotes />}
     </div>
   );
 };

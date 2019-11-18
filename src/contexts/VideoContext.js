@@ -35,7 +35,8 @@ const INITIAL_STATE = {
   duration: 0,
   volume: 0,
   fullscreen: false,
-  hover: false
+  hover: false,
+  loading: false,
 };
 
 const VideoContext = React.createContext(INITIAL_STATE);
@@ -58,7 +59,6 @@ class VideoProvider extends Component {
       loadMyVotes: this.loadMyVotes,
       setCurrentVideo: this.setCurrentVideo,
       destroyPlayer: this.destroyPlayer,
-      loading: false
     };
   }
 
@@ -106,6 +106,7 @@ class VideoProvider extends Component {
   getVideoInfo = () => {};
 
   loadMyUploads = async () => {
+    this.props.history.push("/uploads");
     this.updateState({ mode: MODE_UPLOADED, loading: true });
     const videos = await readFile("my_videos.json");
     if (!videos) {
@@ -123,6 +124,7 @@ class VideoProvider extends Component {
   };
 
   loadMyVotes = async () => {
+    this.props.history.push("/votes");
     this.updateState({ mode: MODE_VOTED, loading: true });
     const videos = await readFile("votes.json");
     const slugs = videos.join(",");
