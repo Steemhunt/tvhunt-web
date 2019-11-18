@@ -1,7 +1,11 @@
 import React, { useContext, useMemo } from "react";
 import { withRouter } from "react-router";
 import { Icon, Tabs } from "antd";
-import VideoContext, { MODE_TV } from "contexts/VideoContext";
+import VideoContext, {
+  MODE_TV,
+  MODE_UPLOADED,
+  MODE_VOTED
+} from "contexts/VideoContext";
 import RankItem from "./RankItem";
 import ShowMoreItems from "./ShowMoreItems";
 import isMobile from "ismobilejs";
@@ -41,7 +45,7 @@ const RankingList = props => {
   } = props;
 
   const { value, loadVideos, updateState } = useContext(VideoContext);
-  const { mode, tabs, tab, daysPlaylist, loading } = value;
+  const { mode, tabs, tab, daysPlaylist, uploads, votes, loading } = value;
 
   const mobile = isMobile().phone;
 
@@ -76,33 +80,45 @@ const RankingList = props => {
 
         <div className="list">
           {loading && <Icon className="primary" type="loading" />}
-          {Object.keys(daysPlaylist)
-            .sort()
-            .map(days_ago => {
-              const list = daysPlaylist[days_ago];
-              const sortedFilteredList =
-                tab === "all" ? list : list.filter(v => v.tags.includes(tab));
-              // if (sortedFilteredList.length === 0) return null;
-              return (
-                <div key={days_ago}>
-                  <div className="title secondary">
-                    {daysAgoToString(parseInt(days_ago))}
+          {mode === MODE_TV &&
+            Object.keys(daysPlaylist)
+              .sort()
+              .map(days_ago => {
+                const list = daysPlaylist[days_ago];
+                const sortedFilteredList =
+                  tab === "all" ? list : list.filter(v => v.tags.includes(tab));
+                // if (sortedFilteredList.length === 0) return null;
+                return (
+                  <div key={days_ago}>
+                    <div className="title secondary">
+                      {daysAgoToString(parseInt(days_ago))}
+                    </div>
+                    <div className="text small compete-text">
+                      Total {list.length} videos competed
+                    </div>
+                    {sortedFilteredList.map((item, index) => (
+                      <RankItem key={index} rank={index + 1} data={item} />
+                    ))}
+                    {list.length === 10 && (
+                      <ShowMoreItems
+                        nextDay={days_ago}
+                        text="Show more from this day"
+                      />
+                    )}
                   </div>
-                  <div className="text small compete-text">
-                    Total {list.length} videos competed
-                  </div>
-                  {sortedFilteredList.map((item, index) => (
-                    <RankItem key={index} rank={index + 1} data={item} />
-                  ))}
-                  {list.length === 10 && (
-                    <ShowMoreItems
-                      nextDay={days_ago}
-                      text="Show more from this day"
-                    />
-                  )}
-                </div>
-              );
-            })}
+                );
+              })}
+
+          {mode === MODE_UPLOADED &&
+            uploads.map((item, index) => (
+              <RankItem key={index} rank={index + 1} data={item} />
+            ))}
+
+          {mode === MODE_VOTED &&
+            votes.map((item, index) => (
+              <RankItem key={index} rank={index + 1} data={item} />
+            ))}
+
           <ShowMoreItems
             nextDay={Object.keys(daysPlaylist).length + 1}
             text={"Load previous day"}
