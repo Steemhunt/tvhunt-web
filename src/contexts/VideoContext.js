@@ -27,6 +27,8 @@ const INITIAL_STATE = {
   daysPlaylist: {},
   playlist: [],
   liked: [],
+  votes: [],
+  uploads: [],
   currentIndex: 0,
   currentVideo: null,
   currentTime: 0,
@@ -114,7 +116,9 @@ class VideoProvider extends Component {
     const slugs = videos.join(",");
     api
       .get("/videos.json", { slugs })
-      .then(({ total_count, videos }) => this.populateList(videos))
+      .then(({ total_count, videos }) =>
+        this.updateState({ loading: false, uploads: videos })
+      )
       .catch(handleErrorMessage);
   };
 
@@ -124,7 +128,9 @@ class VideoProvider extends Component {
     const slugs = videos.join(",");
     api
       .get("/videos.json", { slugs })
-      .then(({ total_count, videos }) => this.populateList(videos))
+      .then(({ total_count, videos }) =>
+        this.updateState({ loading: false, votes: videos })
+      )
       .catch(handleErrorMessage);
   };
 
