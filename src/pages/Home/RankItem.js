@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { withRouter } from "react-router";
 import VideoContext from "contexts/VideoContext";
 import SubmitContext from "contexts/SubmitContext";
+import _ from "lodash";
 
 import { Icon, Button } from "antd";
 
@@ -29,7 +30,7 @@ const RankItem = props => {
             src={`https://img.youtube.com/vi/${unique_id}/hqdefault.jpg`}
             alt=""
           />
-          <div className="text small">{title}</div>
+          <div className="text small">{_.truncate(title, { length: 60 })}</div>
         </div>
       </div>
       <Button
