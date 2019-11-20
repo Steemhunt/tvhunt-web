@@ -15,6 +15,7 @@ const Home = props => {
     loadVideos,
     loadMyUploads,
     loadMyVotes,
+    loadVideosByTag,
     updateCurrentVideo,
     value
   } = useContext(VideoContext);
@@ -35,7 +36,12 @@ const Home = props => {
   }, []); //eslint-disable-line
 
   useEffect(() => {
-    updateCurrentVideo(topic, slug);
+    console.log(topic, slug);
+    if (topic === "tags") {
+      loadVideosByTag(slug);
+    } else {
+      updateCurrentVideo(topic, slug);
+    }
   }, [topic, slug]); //eslint-disable-line
 
   let metaTitle = "";

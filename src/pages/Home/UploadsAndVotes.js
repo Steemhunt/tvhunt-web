@@ -4,7 +4,8 @@ import { Icon, Button } from "antd";
 import VideoContext, {
   MODE_TV,
   MODE_UPLOADED,
-  MODE_VOTED
+  MODE_VOTED,
+  MODE_TAG
 } from "contexts/VideoContext";
 import RankItem from "./RankItem";
 import isMobile from "ismobilejs";
@@ -36,13 +37,14 @@ const EmptyMessage = props => {
 
 const UploadsAndVotes = props => {
   const { value, updateState } = useContext(VideoContext);
-  const { mode, uploads, votes, loading } = value;
+  const { mode, uploads, votes, tags, loading } = value;
 
   const mobile = isMobile().phone;
   let list = [];
 
   if (mode === MODE_UPLOADED) list = uploads;
   else if (mode === MODE_VOTED) list = votes;
+  else if (mode === MODE_TAG) list = tags;
 
   const back = () => {
     props.history.push("/");

@@ -1,22 +1,20 @@
 import React from "react";
-import PropTypes from "prop-types";
+import { withRouter } from "react-router";
 
 const IconTag = props => {
   const { style, src, text } = props;
   return (
-    <div className="icon-tag hover-link" style={style}>
+    <div
+      className="icon-tag hover-link"
+      style={style}
+      onClick={() => {
+        props.history.push(`/tags/${text}`);
+      }}
+    >
       <img src={src} alt="" />
       <div>{text}</div>
     </div>
   );
 };
 
-IconTag.propTypes = {
-  style: PropTypes.object
-};
-
-IconTag.defaultProps = {
-  style: {}
-};
-
-export default IconTag;
+export default withRouter(IconTag);

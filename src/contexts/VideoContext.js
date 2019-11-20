@@ -18,6 +18,8 @@ const userSession = new UserSession({ appConfig });
 export const MODE_TV = "MODE_TV";
 export const MODE_UPLOADED = "MODE_UPLOADED";
 export const MODE_VOTED = "MODE_VOTED";
+export const MODE_TAG = "MODE_TAG";
+
 const INITIAL_STATE = {
   mode: MODE_TV,
   tab: "all",
@@ -29,6 +31,7 @@ const INITIAL_STATE = {
   liked: [],
   votes: [],
   uploads: [],
+  tags: [],
   currentIndex: 0,
   currentVideo: null,
   currentTime: 0,
@@ -37,7 +40,7 @@ const INITIAL_STATE = {
   fullscreen: false,
   borderlessFullscreen: false,
   hover: false,
-  loading: false,
+  loading: true,
   lastDayLoaded: 0
 };
 
@@ -60,7 +63,8 @@ class VideoProvider extends Component {
       loadMyUploads: this.loadMyUploads,
       loadMyVotes: this.loadMyVotes,
       setCurrentVideo: this.setCurrentVideo,
-      destroyPlayer: this.destroyPlayer
+      destroyPlayer: this.destroyPlayer,
+      loadVideosByTag: this.loadVideosByTag
     };
   }
 
@@ -106,6 +110,16 @@ class VideoProvider extends Component {
   };
 
   getVideoInfo = () => {};
+
+  loadVideosByTag = tag => {
+    this.updateState({ loading: true, mode: MODE_TAG });
+    api
+      .get("/videos.json", { tag })
+      .then(({ total_count, videos }) => {
+        this.updateState({ loading: false, tags: videos });
+      })
+      .catch(handleErrorMessage);
+  };
 
   loadMyUploads = async () => {
     this.props.history.push("/uploads");
@@ -157,23 +171,10 @@ class VideoProvider extends Component {
   };
 
   populateList = (videos, topic, slug, days_ago, cb) => {
-    const {
-      tab: t,
-      tabs,
-      playlist,
-      daysPlaylist,
-      currentVideo: curr
-    } = this.state.value;
-
-    //sorts tabs by popularity
-    const newTabs = Object.entries(
-      _.countBy(videos.reduce((acc, video) => acc.concat(video.tags), []))
-    )
-      .sort((a, b) => b[1] - a[1])
-      .map(arr => arr[0]);
+    const { playlist, daysPlaylist, currentVideo: curr } = this.state.value;
 
     let currentVideo = curr;
-    let tab = topic || t || "all";
+    let tab = topic || "all";
 
     if (!this.state.value.currentVidoe && slug) {
       currentVideo = _.find(videos, ["slug", slug]);
@@ -204,7 +205,6 @@ class VideoProvider extends Component {
         daysPlaylist: clonedDaysPlaylist,
         playlist: newPlaylist,
         currentVideo,
-        tabs: _.uniq(tabs.concat(_.flatten(newTabs))),
         tab,
         loading: false
       },
@@ -220,7 +220,7 @@ class VideoProvider extends Component {
       currentVideo: data,
       currentIndex: _.findIndex(playlist, { slug: data.slug })
     });
-    this.props.history.push(`/${topic}/${data.slug}`);
+    this.props.history.push(`/${data.tags[0]}/${data.slug}`);
   };
 
   updateTags = (id, tags) => {
