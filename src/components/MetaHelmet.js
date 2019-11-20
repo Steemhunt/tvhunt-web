@@ -41,7 +41,7 @@ MetaHelmet.propTypes = {
 
 MetaHelmet.defaultProps = {
   title: "LOL Hunt - Daily top chart for videos",
-  description: "LOL Hunt is a daily top chart of funny Youtube clips. Anyone can simply share and upvote videos, and user data is stored privately via Blockstack blockchain system",
+  description: "LOL Hunt is a daily top chart for funny Youtube clips. Anyone can simply share and upvote videos, and user data is stored privately via Blockstack blockchain.",
   image: `${process.env.REACT_APP_PUBLIC_URL}/og-image-1200.png`,
   url: process.env.REACT_APP_PUBLIC_URL,
   script: [],
