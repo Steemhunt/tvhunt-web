@@ -197,23 +197,29 @@ class VideoProvider extends Component {
       "slug"
     );
 
+    const newPlaylist = _.uniqBy(playlist.concat(videos), "slug");
+
     this.updateState(
       {
         daysPlaylist: clonedDaysPlaylist,
-        playlist: _.uniqBy(playlist.concat(videos), "slug"),
+        playlist: newPlaylist,
         currentVideo,
         tabs: _.uniq(tabs.concat(_.flatten(newTabs))),
         tab,
         loading: false
       },
       () => {
-        cb && cb({ success: true });
+        cb && cb({ success: true, playlist: newPlaylist });
       }
     );
   };
 
   setCurrentVideo = (topic, data) => {
-    this.updateState({ currentVideo: data });
+    const { playlist } = this.state.value;
+    this.updateState({
+      currentVideo: data,
+      currentIndex: _.findIndex(playlist, { slug: data.slug })
+    });
     this.props.history.push(`/${topic}/${data.slug}`);
   };
 
@@ -265,9 +271,22 @@ class VideoProvider extends Component {
 
   next = () => {
     const { currentIndex, playlist, lastDayLoaded, mode } = this.state.value;
+
     const nextIndex = currentIndex + 1;
+    console.log(playlist.length, nextIndex);
     if (nextIndex > playlist.length - 1 && mode === MODE_TV) {
-      this.loadVideos(null, null, lastDayLoaded + 1);
+      this.loadVideos(
+        null,
+        null,
+        lastDayLoaded + 1,
+        true,
+        ({ playlist: newPlaylist }) => {
+          this.updateState({
+            currentIndex: nextIndex,
+            currentVideo: newPlaylist[nextIndex]
+          });
+        }
+      );
     } else {
       this.updateState({
         currentIndex: nextIndex,
