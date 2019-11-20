@@ -128,14 +128,13 @@ const Controls = props => {
           src={fullScreenImg}
           alt=""
           onClick={() => {
-            const iframe = document.getElementById("youtube-iframe");
-            var requestFullScreen =
-              iframe.requestFullScreen ||
-              iframe.mozRequestFullScreen ||
-              iframe.webkitRequestFullScreen;
-            if (requestFullScreen) {
-              requestFullScreen.bind(iframe)();
-            }
+            var el = document.documentElement,
+              rfs =
+                el.requestFullscreen ||
+                el.webkitRequestFullScreen ||
+                el.mozRequestFullScreen ||
+                el.msRequestFullscreen;
+            rfs.call(el);
           }}
         />
       </div>

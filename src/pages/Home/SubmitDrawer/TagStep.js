@@ -4,7 +4,6 @@ import VideoContext from "contexts/VideoContext";
 import AuthContext from "contexts/AuthContext";
 import { Tag, Input, Tooltip, Icon, Button } from "antd";
 import tv from "assets/images/tv@3x.png";
-import _ from "lodash";
 
 const TagStep = props => {
   const { loadVideos } = useContext(VideoContext);
