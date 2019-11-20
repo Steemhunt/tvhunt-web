@@ -57,7 +57,7 @@ const RankingList = props => {
                     {daysAgoToString(parseInt(days_ago))}
                   </div>
                   <div className="text small compete-text">
-                    Total {list.length} vid eos competed
+                    Total {list.length} videos competed
                   </div>
                   {sortedFilteredList.map((item, index) => (
                     <RankItem key={index} rank={index + 1} data={item} />
