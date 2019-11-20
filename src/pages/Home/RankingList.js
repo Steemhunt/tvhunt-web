@@ -57,7 +57,7 @@ const RankingList = props => {
                     {daysAgoToString(parseInt(days_ago))}
                   </div>
                   <div className="text small compete-text">
-                    Total {list.length} videos competed
+                    Total {list.length} vid eos competed
                   </div>
                   {sortedFilteredList.map((item, index) => (
                     <RankItem key={index} rank={index + 1} data={item} />
@@ -73,7 +73,7 @@ const RankingList = props => {
             })}
 
           <ShowMoreItems
-            nextDay={Object.keys(daysPlaylist).length + 1}
+            nextDay={Object.keys(daysPlaylist).length}
             text={"Load previous day"}
           />
         </div>
