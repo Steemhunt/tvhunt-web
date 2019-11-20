@@ -31,30 +31,19 @@ function daysAgoToString(daysAgo) {
   return moment(date).format("MMMM Do");
 }
 
-const { TabPane } = Tabs;
-
 const RankingList = props => {
-  const { value, updateState } = useContext(VideoContext);
-  const { mode, tabs, tab, daysPlaylist, uploads, votes, loading } = value;
+  const { value } = useContext(VideoContext);
+  const { mode, tab, daysPlaylist, uploads, votes, loading } = value;
 
   const mobile = isMobile().phone;
 
   return useMemo(
     () => (
       <div className={`ranking-list ${mobile && "mobile"}`}>
-        <Tabs
-          className="tabs"
-          activeKey={tab}
-          onChange={tab => updateState({ tab })}
-        >
-          <TabPane tab={"all"} key={"all"} />
-          {tabs.map((tab, index) => {
-            return <TabPane tab={`#${tab}`} key={tab} />;
-          })}
-        </Tabs>
-
         <div className="list">
-          {loading && <Icon className="primary loading-circle" type="loading" />}
+          {loading && (
+            <Icon className="primary loading-circle" type="loading" />
+          )}
           {Object.keys(daysPlaylist)
             .sort()
             .map(days_ago => {

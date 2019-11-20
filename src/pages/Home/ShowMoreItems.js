@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import {Icon} from 'antd';
+import { Icon } from "antd";
 import VideoContext from "contexts/VideoContext";
 
 const ShowMoreItems = props => {
@@ -15,7 +15,7 @@ const ShowMoreItems = props => {
       className="primary uppercase small show-more hover-link"
       onClick={() => {
         setLoading(true);
-        loadVideos(null, null, nextDay, true, success => {
+        loadVideos(null, null, nextDay, true, ({ success }) => {
           setLoading(false);
           if (!success) setVisible(false);
         });

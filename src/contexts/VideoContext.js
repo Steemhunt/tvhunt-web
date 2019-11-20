@@ -36,7 +36,8 @@ const INITIAL_STATE = {
   volume: 0,
   fullscreen: false,
   hover: false,
-  loading: false
+  loading: false,
+  lastDayLoaded: 0
 };
 
 const VideoContext = React.createContext(INITIAL_STATE);
@@ -99,8 +100,8 @@ class VideoProvider extends Component {
     }
   }
 
-  updateState = newState => {
-    this.setState({ value: { ...this.state.value, ...newState } });
+  updateState = (newState, cb) => {
+    this.setState({ value: { ...this.state.value, ...newState } }, cb);
   };
 
   getVideoInfo = () => {};
@@ -138,7 +139,7 @@ class VideoProvider extends Component {
 
   loadVideos = (topic, slug, days_ago = 0, top = false, cb) => {
     const { daysPlaylist } = this.state.value;
-    this.updateState({ loading: true });
+    this.updateState({ loading: true, lastDayLoaded: days_ago });
     api
       .get("/videos.json", { days_ago, top })
       .then(({ total_count, videos }) => {
@@ -146,16 +147,15 @@ class VideoProvider extends Component {
           daysPlaylist[days_ago] &&
           daysPlaylist[days_ago].length === total_count
         ) {
-          cb && cb(false);
+          cb && cb({ success: false });
         } else {
-          cb && cb(true);
-          this.populateList(videos, topic, slug, days_ago);
+          this.populateList(videos, topic, slug, days_ago, cb);
         }
       })
       .catch(handleErrorMessage);
   };
 
-  populateList = (videos, topic, slug, days_ago) => {
+  populateList = (videos, topic, slug, days_ago, cb) => {
     const {
       tab: t,
       tabs,
@@ -196,14 +196,19 @@ class VideoProvider extends Component {
       "slug"
     );
 
-    this.updateState({
-      daysPlaylist: clonedDaysPlaylist,
-      playlist: _.uniqBy(playlist.concat(videos), "slug"),
-      currentVideo,
-      tabs: _.uniq(tabs.concat(_.flatten(newTabs))),
-      tab,
-      loading: false
-    });
+    this.updateState(
+      {
+        daysPlaylist: clonedDaysPlaylist,
+        playlist: _.uniqBy(playlist.concat(videos), "slug"),
+        currentVideo,
+        tabs: _.uniq(tabs.concat(_.flatten(newTabs))),
+        tab,
+        loading: false
+      },
+      () => {
+        cb && cb({ success: true });
+      }
+    );
   };
 
   setCurrentVideo = (topic, data) => {
@@ -258,12 +263,16 @@ class VideoProvider extends Component {
   };
 
   next = () => {
-    const { currentIndex, playlist } = this.state.value;
-    const nextIndex = (currentIndex + 1) % playlist.length;
-    this.updateState({
-      currentIndex: nextIndex,
-      currentVideo: playlist[nextIndex]
-    });
+    const { currentIndex, playlist, lastDayLoaded, mode } = this.state.value;
+    const nextIndex = currentIndex + 1;
+    if (nextIndex > playlist.length - 1 && mode === MODE_TV) {
+      this.loadVideos(null, null, lastDayLoaded + 1);
+    } else {
+      this.updateState({
+        currentIndex: nextIndex,
+        currentVideo: playlist[nextIndex]
+      });
+    }
   };
 
   render() {
