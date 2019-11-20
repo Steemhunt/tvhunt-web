@@ -23,12 +23,47 @@ export const PLAYBACK_STATUS = {
   "5": STATUS_CUED
 };
 
+function openFullscreen() {
+  var elem = document.documentElement;
+  if (elem.requestFullscreen) {
+    elem.requestFullscreen();
+  } else if (elem.mozRequestFullScreen) {
+    /* Firefox */
+    elem.mozRequestFullScreen();
+  } else if (elem.webkitRequestFullscreen) {
+    /* Chrome, Safari & Opera */
+    elem.webkitRequestFullscreen();
+  } else if (elem.msRequestFullscreen) {
+    /* IE/Edge */
+    elem.msRequestFullscreen();
+  }
+}
+
+function closeFullscreen() {
+  if (document.exitFullscreen) {
+    document.exitFullscreen();
+  } else if (document.mozCancelFullScreen) {
+    document.mozCancelFullScreen();
+  } else if (document.webkitExitFullscreen) {
+    document.webkitExitFullscreen();
+  } else if (document.msExitFullscreen) {
+    document.msExitFullscreen();
+  }
+}
+
 const Controls = props => {
   const [slider, setSlider] = useState(0);
 
   const { value, next, updateState } = useContext(VideoContext);
 
-  const { player, volume, status, duration, currentTime } = value;
+  const {
+    player,
+    volume,
+    status,
+    duration,
+    currentTime,
+    borderlessFullscreen
+  } = value;
 
   const mobile = isMobile().phone;
 
@@ -98,9 +133,9 @@ const Controls = props => {
                   player && player.setVolume(100);
                   updateState({ volume: 100 });
                 } else {
-                  updateState({ volume: 0 });
                   player && player.mute();
                   player && player.setVolume(0);
+                  updateState({ volume: 0 });
                 }
               }}
             />
@@ -128,13 +163,13 @@ const Controls = props => {
           src={fullScreenImg}
           alt=""
           onClick={() => {
-            var el = document.documentElement,
-              rfs =
-                el.requestFullscreen ||
-                el.webkitRequestFullScreen ||
-                el.mozRequestFullScreen ||
-                el.msRequestFullscreen;
-            rfs.call(el);
+            if (borderlessFullscreen) {
+              updateState({ borderlessFullscreen: false });
+              closeFullscreen();
+            } else {
+              updateState({ borderlessFullscreen: true });
+              openFullscreen();
+            }
           }}
         />
       </div>

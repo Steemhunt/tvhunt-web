@@ -35,6 +35,7 @@ const INITIAL_STATE = {
   duration: 0,
   volume: 0,
   fullscreen: false,
+  borderlessFullscreen: false,
   hover: false,
   loading: false,
   lastDayLoaded: 0
