@@ -26,7 +26,7 @@ const Video = props => {
   const playerRef = useRef();
   const { width: w, height: h } = useWindowSize();
 
-  const { value, updateState } = useContext(VideoContext);
+  const { value, updateState, next } = useContext(VideoContext);
   const { videoId } = useContext(SubmitContext);
   const { player, currentVideo, fullscreen } = value;
 
@@ -79,6 +79,9 @@ const Video = props => {
 
   function onPlayerStateChange({ data }) {
     const status = PLAYBACK_STATUS[data];
+    if (status === STATUS_ENDED) {
+      next();
+    }
     updateState({ status });
   }
 
