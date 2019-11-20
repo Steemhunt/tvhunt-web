@@ -8,7 +8,7 @@ const Header = props => {
 
   return (
     <div className={`header`}>
-      <a href="/"><img className="logo" src={logo} alt="TV Hunt Logo" /></a>
+      <a href="/"><img className="logo" src={logo} alt="LOL Hunt Logo" /></a>
     </div>
   );
 };

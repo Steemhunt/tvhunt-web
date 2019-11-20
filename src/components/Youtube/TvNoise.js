@@ -113,7 +113,7 @@ const TvNoise = props => {
     >
       <div className="tv-noise">
         <div className="absolute-center" style={{ width, height }}>
-          <img className="noise-logo" src={logo} alt="TV Hunt Logo" />
+          <img className="noise-logo" src={logo} alt="LOL Hunt Logo" />
         </div>
         <canvas className="tv" />
       </div>

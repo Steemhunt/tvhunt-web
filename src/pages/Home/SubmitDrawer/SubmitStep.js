@@ -13,7 +13,7 @@ const SubmitStep = props => {
       <div className="title big">SUBMIT VIDEO</div>
       <img className="dog-img" src={tv} alt="" />
       <div className="desc text">
-        TV Hunt is a daily top chart for videos. You can simply share a cool
+        LOL Hunt is a daily top chart for videos. You can simply share a cool
         video that you’ve found today. The daily ranking is based on the
         upvotes.
       </div>

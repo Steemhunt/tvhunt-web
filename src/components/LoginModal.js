@@ -18,7 +18,7 @@ const LoginModal = props => {
       wrapClassName="login-modal"
     >
       <div className="content">
-        <img className="logo" src={logo} alt="TV Hunt Logo" />
+        <img className="logo" src={logo} alt="LOL Hunt Logo" />
         <div className="row-align-center dash-container">
           <img className="circle-image" src={tvhCircle} alt="" />
           <div className="dashed-dots" />
@@ -29,7 +29,7 @@ const LoginModal = props => {
           Authentic Trending Videos on BlockChain
         </div>
         <div className="text big desc">
-          TV Hunt does not control your upvoting or hunting video content. We
+          LOL Hunt does not control your upvoting or hunting video content. We
           use Blockstack, a revolutionary user authentication system that gives
           the user full controllability of his/her data usage.
         </div>

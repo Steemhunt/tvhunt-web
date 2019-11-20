@@ -40,12 +40,12 @@ const Home = props => {
 
   let metaTitle = "";
 
-  if (topic === "uploads") metaTitle = "My Uploads - TV Hunt";
-  else if (topic === "votes") metaTitle = "My Votes - TV Hunt";
+  if (topic === "uploads") metaTitle = "My Uploads - LOL Hunt";
+  else if (topic === "votes") metaTitle = "My Votes - LOL Hunt";
   else
     metaTitle =
-      (currentVideo && `${currentVideo.title} - TV Hunt`) ||
-      "TV Hunt - Daily top chart for videos";
+      (currentVideo && `${currentVideo.title} - LOL Hunt`) ||
+      "LOL Hunt - Daily top chart for videos";
 
   return (
     <div className="home">
