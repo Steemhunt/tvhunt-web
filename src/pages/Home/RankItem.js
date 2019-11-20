@@ -1,15 +1,15 @@
 import React, { useContext } from "react";
 import { withRouter } from "react-router";
 import VideoContext from "contexts/VideoContext";
+import SubmitContext from "contexts/SubmitContext";
 
 import { Icon, Button } from "antd";
 
 const RankItem = props => {
   const { rank, data } = props;
   const { title, vote_count, unique_id, slug } = data;
-  const { likeUnlike, setCurrentVideo, value } = useContext(
-    VideoContext
-  );
+  const { updateState } = useContext(SubmitContext);
+  const { likeUnlike, setCurrentVideo, value } = useContext(VideoContext);
   const { liked, tab } = value;
 
   return (
@@ -17,7 +17,9 @@ const RankItem = props => {
       <div
         className="row-align-center"
         onClick={() => {
-          setCurrentVideo(tab, data);
+          updateState({ videoId: null }, () => {
+            setCurrentVideo(tab, data);
+          });
         }}
       >
         <div className="secondary rank small">{rank}</div>

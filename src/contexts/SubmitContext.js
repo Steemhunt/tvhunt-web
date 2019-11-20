@@ -26,8 +26,8 @@ const INITIAL_STATE = {
 class SubmitProvider extends Component {
   state = INITIAL_STATE;
 
-  updateState = state => {
-    this.setState(state);
+  updateState = (state, cb) => {
+    this.setState(state, cb);
   };
 
   submitVideo = async (user, cb) => {
