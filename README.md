@@ -1,7 +1,8 @@
 # LOL Hunt
-LOL Hunt is a daily top chart for videos. Anyone can simply share a cool video that they found today.
+LOL Hunt is a daily top chart of funny Youtube clips.
+Anyone can simply share and upvote videos, and user data is stored privately via Blockstack blockchain system
 - No sign-ups are required for guest users
-- Your voting data is stored on your own [Gaia storage](https://github.com/blockstack/gaia) via [Blockstack](https://blockstack.org/).
+- Your data is stored privately on your own [Gaia storage](https://github.com/blockstack/gaia) via [Blockstack](https://blockstack.org/).
 
 Live Product: https://lol.hunt.town
 
