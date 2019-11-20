@@ -2,6 +2,7 @@ import React, { useEffect, useContext, useState } from "react";
 import { withRouter } from "react-router";
 import { Icon, Slider } from "antd";
 import fullScreenImg from "assets/images/full-screen.svg";
+import exitFullScreenImg from "assets/images/exit-fullscreen.svg";
 import volumeImg from "assets/images/volume-light.svg";
 import volumeMuteImg from "assets/images/volume-mute-light.svg";
 import VideoContext from "contexts/VideoContext";
@@ -160,7 +161,7 @@ const Controls = props => {
         </div>
         <img
           className="fullscreen-img hover-link"
-          src={fullScreenImg}
+          src={borderlessFullscreen ? exitFullScreenImg : fullScreenImg}
           alt=""
           onClick={() => {
             if (borderlessFullscreen) {
