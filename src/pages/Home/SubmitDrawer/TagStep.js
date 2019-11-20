@@ -69,7 +69,11 @@ const EditableTags = props => {
 
   const handleInputChange = e => {
     const tagInput = e.target.value;
-    if (tagInput.includes(" ") || tagInput.includes(",")) {
+    if (
+      tagInput.includes(" ") ||
+      tagInput.includes(",") ||
+      tagInput.includes("\t")
+    ) {
       handleInputConfirm();
     } else {
       updateState({ tagInput: e.target.value.toLowerCase() });
