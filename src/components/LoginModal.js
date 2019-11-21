@@ -29,9 +29,10 @@ const LoginModal = props => {
           Authentic Trending Videos on BlockChain
         </div>
         <div className="text big desc">
-          LOL Hunt does not control your upvoting or hunting video content. We
-          use Blockstack, a revolutionary user authentication system that gives
-          the user full controllability of his/her data usage.
+          LOL Hunt does not save your upvoting or hunting activities on the
+          server. Instead, it uses Blockstack, a revolutionary user
+          authentication and decentralized storage system that gives you full
+          control of your data.
         </div>
 
         <Button className="primary-button inverse" onClick={login}>
