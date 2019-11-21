@@ -112,11 +112,16 @@ class VideoProvider extends Component {
   getVideoInfo = () => {};
 
   loadVideosByTag = tag => {
+    const { currentVideo } = this.state.value;
     this.updateState({ loading: true, mode: MODE_TAG });
     api
       .get("/videos.json", { tags: tag })
       .then(({ total_count, videos }) => {
-        this.updateState({ loading: false, tags: videos });
+        this.updateState({
+          loading: false,
+          tags: videos,
+          currentVideo: currentVideo || videos[0]
+        });
       })
       .catch(handleErrorMessage);
   };
