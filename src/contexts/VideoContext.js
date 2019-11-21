@@ -192,10 +192,6 @@ class VideoProvider extends Component {
       }
     }
 
-    if (!isMobile().phone && currentVideo && !curr) {
-      this.props.history.push(`/${currentVideo.tags[0]}/${currentVideo.slug}`);
-    }
-
     const clonedDaysPlaylist = _.clone(daysPlaylist);
     if (!clonedDaysPlaylist[days_ago]) clonedDaysPlaylist[days_ago] = [];
     clonedDaysPlaylist[days_ago] = _.uniqBy(
