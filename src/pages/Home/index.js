@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useContext } from "react";
 import VideoContext from "contexts/VideoContext";
 import { withRouter } from "react-router";
 import { scrollTop } from "utils/scroller";

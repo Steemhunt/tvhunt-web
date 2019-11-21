@@ -1,6 +1,6 @@
 import React, { useContext, useMemo } from "react";
 import { withRouter } from "react-router";
-import { Icon, Tabs } from "antd";
+import { Icon } from "antd";
 import VideoContext from "contexts/VideoContext";
 import RankItem from "./RankItem";
 import ShowMoreItems from "./ShowMoreItems";
