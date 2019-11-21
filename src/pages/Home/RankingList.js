@@ -65,7 +65,7 @@ const RankingList = props => {
                   {list.length === 10 && (
                     <ShowMoreItems
                       nextDay={days_ago}
-                      text="Show more from this day"
+                      text="Show More"
                     />
                   )}
                 </div>
