@@ -115,7 +115,7 @@ class VideoProvider extends Component {
     const { currentVideo } = this.state.value;
     this.updateState({ loading: true, mode: MODE_TAG });
     api
-      .get("/videos.json", { tags: tag })
+      .get("/videos.json", { tag })
       .then(({ total_count, videos }) => {
         this.updateState({
           loading: false,
@@ -193,7 +193,7 @@ class VideoProvider extends Component {
     }
 
     if (!isMobile().phone && currentVideo && !curr) {
-      this.props.history.replace(`${tab}/${currentVideo.slug}`);
+      this.props.history.push(`/${currentVideo.tags[0]}/${currentVideo.slug}`);
     }
 
     const clonedDaysPlaylist = _.clone(daysPlaylist);
@@ -236,9 +236,8 @@ class VideoProvider extends Component {
   };
 
   likeUnlike = ({ id, slug }, cb) => {
-    const { playlist } = this.state.value;
-    const likedList = getList("liked");
-    let method = likedList && likedList.includes(slug) ? "unlike" : "like";
+    const { playlist, liked } = this.state.value;
+    let method = liked && liked.includes(slug) ? "unlike" : "like";
 
     api
       .patch(`/videos/${id}/${method}.json`)

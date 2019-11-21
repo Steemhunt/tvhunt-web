@@ -1,11 +1,8 @@
 .ranking-list {
-  padding: 0 1.25rem;
 
-  @include responsive(mobile) {
-    padding: 0.625rem;
-    padding-bottom: 20vh;
+  .section-container {
+    padding: 0 1.25rem;
   }
-
 
   .empty-list-message {
     margin-top: 1.25rem;
@@ -66,14 +63,28 @@
   display: flex;
   justify-content: space-between;
   width: 100%;
-  margin: 0.625rem 0;
+  padding: 0.625rem 1.25rem;
   cursor: pointer;
+  transition: all 450ms ease-in-out;
+
+  @include responsive(mobile) {
+    padding: 0.625rem;
+    padding-bottom: 20vh;
+  }
+
+  &.selected {
+    background-color: #1a2955;
+  }
 
   .rank {
     width: 2.625rem;
 
     @include responsive(tiny) {
       width: 2rem;
+    }
+
+    img {
+      margin-left: -8px;
     }
   }
 

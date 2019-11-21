@@ -32,7 +32,15 @@ function daysAgoToString(daysAgo) {
 
 const RankingList = props => {
   const { value } = useContext(VideoContext);
-  const { mode, tab, daysPlaylist, uploads, votes, loading } = value;
+  const {
+    mode,
+    tab,
+    daysPlaylist,
+    uploads,
+    votes,
+    loading,
+    currentVideo
+  } = value;
 
   return useMemo(
     () => (
@@ -50,14 +58,16 @@ const RankingList = props => {
               // if (sortedFilteredList.length === 0) return null;
               return (
                 <div key={days_ago}>
-                  <div
-                    className="title secondary"
-                    style={index === 0 ? { marginTop: 16 } : {}}
-                  >
-                    {daysAgoToString(parseInt(days_ago))}
-                  </div>
-                  <div className="text small compete-text">
-                    Total {list.length} videos competed
+                  <div className="section-container">
+                    <div
+                      className="title secondary"
+                      style={index === 0 ? { marginTop: 16 } : {}}
+                    >
+                      {daysAgoToString(parseInt(days_ago))}
+                    </div>
+                    <div className="text small compete-text">
+                      Total {list.length} videos competed
+                    </div>
                   </div>
                   {sortedFilteredList.map((item, index) => (
                     <RankItem key={index} rank={index + 1} data={item} />
@@ -76,7 +86,7 @@ const RankingList = props => {
         </div>
       </div>
     ),
-    [daysPlaylist, mode, tab, uploads, votes] //eslint-disable-line
+    [currentVideo, daysPlaylist, mode, tab, uploads, votes] //eslint-disable-line
   );
 };
 
