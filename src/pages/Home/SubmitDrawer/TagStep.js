@@ -74,20 +74,22 @@ const EditableTags = props => {
       tagInput.includes(",") ||
       tagInput.includes("\t")
     ) {
-      handleInputConfirm();
+      handleInputConfirm(true);
     } else {
       updateState({ tagInput: e.target.value.toLowerCase() });
     }
   };
 
-  const handleInputConfirm = () => {
+  const handleInputConfirm = (showInput = false) => {
     let newTags = tags;
     if (tagInput && tags.indexOf(tagInput) === -1) {
       newTags = [...tags, tagInput];
     }
-    updateState({ tags: newTags });
-    setInputVisible(false);
-    updateState({ tagInput: "" });
+    updateState({ tags: newTags, tagInput: "" });
+    setInputVisible(showInput);
+    if (inputVisible) {
+      input.current.focus();
+    }
   };
 
   useEffect(() => {
