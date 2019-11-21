@@ -7,6 +7,7 @@ import VideoContext, {
   MODE_VOTED,
   MODE_TAG
 } from "contexts/VideoContext";
+import SubmitContext from "contexts/SubmitContext";
 import RankItem from "./RankItem";
 import isMobile from "ismobilejs";
 
@@ -14,8 +15,8 @@ const EmptyMessage = props => {
   let title = "";
   let action = "";
   if (props.type === MODE_UPLOADED) {
-    title = "UPLOADS";
-    action = "uploaded";
+    title = "SHARED VIDEOS";
+    action = "shared";
   } else if (props.type === MODE_VOTED) {
     title = "VOTES";
     action = "upvoted";
@@ -26,10 +27,10 @@ const EmptyMessage = props => {
       <div className="title secondary">{title}</div>
       <div className="description text">
         Opps! Haven’t {action} any videos yet? You can see all the videos that
-        you’ve {action} here. Please join the ranking curation now!
+        you’ve {action} here. Share a 😂video you discovered today!
       </div>
       <Button className="primary-button inverse" onClick={props.onClick}>
-        CHECK NOW
+        UPLOAD NOW
       </Button>
     </div>
   );
@@ -37,6 +38,7 @@ const EmptyMessage = props => {
 
 const UploadsAndVotes = props => {
   const { value, updateState } = useContext(VideoContext);
+  const submitContext = useContext(SubmitContext);
   const { mode, uploads, votes, tags, loading } = value;
 
   const mobile = isMobile().phone;
@@ -53,14 +55,17 @@ const UploadsAndVotes = props => {
 
   return (
     <div className={`ranking-list ${mobile && "mobile"}`}>
+      <div className="secondary small hover-link" onClick={back}>
+        <Icon type="left" style={{ marginRight: 4 }} />
+        BACK TO RANKING
+      </div>
       {!loading && list.length === 0 ? (
-        <EmptyMessage type={mode} onClick={back} />
+        <EmptyMessage
+          type={mode}
+          onClick={() => submitContext.updateState({ showDrawer: true })}
+        />
       ) : (
         <>
-          <div className="secondary small hover-link" onClick={back}>
-            <Icon type="left" style={{ marginRight: 4 }} />
-            BACK TO RANKING
-          </div>
           <div className="list">
             {loading && (
               <Icon className="primary loading-circle" type="loading" />
