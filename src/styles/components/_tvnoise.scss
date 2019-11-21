@@ -27,6 +27,11 @@
     height: 100vh;
     top: 0;
     left: 0;
+
+    @include responsive(mobile) {
+      width: 100vw;
+    }
+
     img {
       width: 30vw;
       min-width: 250px;

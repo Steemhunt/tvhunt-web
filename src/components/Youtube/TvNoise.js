@@ -125,8 +125,4 @@ const TvNoise = props => {
   );
 };
 
-TvNoise.defaultProps = {
-  style: {}
-};
-
 export default TvNoise;

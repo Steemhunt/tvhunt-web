@@ -39,7 +39,7 @@ const Youtube = props => {
 
       <div className="video-container">
         <Video />
-        <TvNoise width={100} height={100} />
+        <TvNoise />
       </div>
       <Controls />
       <HoverControls />

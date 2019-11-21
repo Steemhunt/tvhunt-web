@@ -38,7 +38,9 @@
     transform: translateX(0);
 
     .video-container {
-      width: 100vw;
+      @include responsive(mobile) {
+        width: 100vw;
+      }
     }
   }
 
