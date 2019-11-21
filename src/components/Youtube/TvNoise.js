@@ -5,7 +5,7 @@ import { STATUS_BUFFERING } from "./Video";
 
 const TvNoise = props => {
   const { width, height, style } = props;
-  const { status } = useContext(VideoContext).value;
+  const { status, currentVideo } = useContext(VideoContext).value;
 
   useEffect(() => {
     var canvas = document.querySelector(".tv"),
@@ -108,7 +108,7 @@ const TvNoise = props => {
 
   return (
     <div
-      className={`noise-container ${status !== STATUS_BUFFERING && "fade-out"}`}
+      className={`noise-container ${currentVideo && status !== STATUS_BUFFERING && "fade-out"}`}
       style={style}
     >
       <div className="tv-noise">
