@@ -51,7 +51,8 @@ const HoverControls = props => {
       </div>
       {!videoId && currentVideo && currentVideo.ranking && (
         <div
-          className={`upvote-button ${alreadyVoted && "voted"}`}
+          className={`upvote-button mobile-landscape-hidden ${alreadyVoted &&
+            "voted"}`}
           onClick={e => {
             e.stopPropagation();
             likeUnlike({ id: currentVideo.id, slug: currentVideo.slug });

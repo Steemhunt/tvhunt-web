@@ -3,8 +3,8 @@
   max-height: 100vh;
   overflow: hidden;
   position: fixed;
-  top: 0;
-  z-index: 99;
+  bottom: 0;
+  z-index: 9999;
   opacity: 1;
   transition: opacity 0.5s linear;
   pointer-events: none;
@@ -23,9 +23,10 @@
     top: 0;
     left: 0;
     img {
-      width: 400px;
-      max-width: 90vw;
+      width: 30vw;
+      min-width: 250px;
       height: auto;
+      object-fit: contain;
     }
   }
 }

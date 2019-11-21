@@ -109,7 +109,6 @@ const TvNoise = props => {
   return (
     <div
       className={`noise-container ${currentVideo && status !== STATUS_BUFFERING && "fade-out"}`}
-      style={style}
     >
       <div className="tv-noise">
         <div className="absolute-center" style={{ width, height }}>

@@ -3,7 +3,6 @@ import { withRouter } from "react-router";
 import VideoContext from "contexts/VideoContext";
 import SubmitContext from "contexts/SubmitContext";
 import useWindowSize from "hooks/useWindowSize";
-import isMobile from "ismobilejs";
 import TvNoise from "./TvNoise.js";
 import _ from "lodash";
 
@@ -30,10 +29,21 @@ const Video = props => {
   const { videoId } = useContext(SubmitContext);
   const { player, currentVideo, fullscreen } = value;
 
-  const mobile = isMobile().phone;
+  const mobile = w <= 640;
   const headerHeight = 90;
-  const width = mobile ? w : fullscreen ? w : w - 360;
-  const height = mobile ? h - headerHeight - 20 : h - headerHeight - 80;
+
+  let width = w,
+    height = h;
+  width = mobile || fullscreen ? w : w - 360;
+
+  const landscape = h <= 600;
+  if (landscape && fullscreen) {
+    height = mobile ? h - 110 : h - 70;
+  } else if (landscape) {
+    height = h - 70;
+  } else {
+    height = mobile ? h - 110 : h - headerHeight - 70;
+  }
 
   useEffect(() => {
     if (window.YT) {
@@ -94,7 +104,7 @@ const Video = props => {
   return (
     <div className="video-container">
       <div id="youtube-iframe" ref={playerRef} />
-      <TvNoise width={width} height={mobile ? h - 50 : h} />
+      <TvNoise key={width} width={width} height={mobile ? h - 60 : h} />
     </div>
   );
 };

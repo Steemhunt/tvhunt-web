@@ -9,7 +9,6 @@ import VideoContext, {
 } from "contexts/VideoContext";
 import SubmitContext from "contexts/SubmitContext";
 import RankItem from "./RankItem";
-import isMobile from "ismobilejs";
 
 const EmptyMessage = props => {
   let title = "";
@@ -41,7 +40,6 @@ const UploadsAndVotes = props => {
   const submitContext = useContext(SubmitContext);
   const { mode, uploads, votes, tags, loading } = value;
 
-  const mobile = isMobile().phone;
   let list = [];
 
   if (mode === MODE_UPLOADED) list = uploads;
@@ -54,7 +52,7 @@ const UploadsAndVotes = props => {
   };
 
   return (
-    <div className={`ranking-list ${mobile && "mobile"}`}>
+    <div className={`ranking-list`}>
       <div className="secondary small hover-link" onClick={back}>
         <Icon type="left" style={{ marginRight: 4 }} />
         BACK TO RANKING

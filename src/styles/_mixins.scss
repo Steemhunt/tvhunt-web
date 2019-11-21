@@ -1,45 +1,62 @@
 @mixin placeholder($color) {
-  &::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+  &::placeholder {
+    /* Chrome, Firefox, Opera, Safari 10.1+ */
     color: $color;
     opacity: 1; /* Firefox */
   }
 
-  &:-ms-input-placeholder { /* Internet Explorer 10-11 */
+  &:-ms-input-placeholder {
+    /* Internet Explorer 10-11 */
     color: $color;
   }
 
-  &::-ms-input-placeholder { /* Microsoft Edge */
+  &::-ms-input-placeholder {
+    /* Microsoft Edge */
     color: $color;
   }
 }
 
-@mixin overflowLine ($lineHeight, $numLine) {
+@mixin overflowLine($lineHeight, $numLine) {
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: $numLine; /* number of lines to show */
   line-height: $lineHeight; /* fallback */
-  max-height: $lineHeight*$numLine; /* fallback */
+  max-height: $lineHeight * $numLine; /* fallback */
 }
 
 @mixin responsive($media) {
   @if $media == tiny {
-    @media only screen and (max-width: 330px) { @content; }
-  }
-  @else if $media == mobile {
-    @media only screen and (max-width: 500px) { @content; }
-  }
-  @else if $media == tablet { // 1 column
-    @media only screen and (max-width: 1023px) { @content; }
-  }
-  @else if $media == ipadpro { // 2 columns
-    @media only screen and (max-width: 1400px) { @content; }
-  }
-  @else if $media == bigscreen { // 2 columns
-    @media only screen and (min-width: 1600px) { @content; }
-  }
-  @else {
-    @media only screen and (max-width: $media) { @content; }
+    @media only screen and (max-width: 330px) {
+      @content;
+    }
+  } @else if $media == mobile {
+    @media only screen and (max-width: 500px) {
+      @content;
+    }
+  } @else if $media == mobile-landscape {
+    @media only screen and (max-height: 600px) {
+      @content;
+    }
+  } @else if $media == tablet {
+    // 1 column
+    @media only screen and (max-width: 1023px) {
+      @content;
+    }
+  } @else if $media == ipadpro {
+    // 2 columns
+    @media only screen and (max-width: 1400px) {
+      @content;
+    }
+  } @else if $media == bigscreen {
+    // 2 columns
+    @media only screen and (min-width: 1600px) {
+      @content;
+    }
+  } @else {
+    @media only screen and (max-width: $media) {
+      @content;
+    }
   }
 }

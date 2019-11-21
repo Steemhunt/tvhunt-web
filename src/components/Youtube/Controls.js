@@ -6,8 +6,8 @@ import exitFullScreenImg from "assets/images/exit-fullscreen.svg";
 import volumeImg from "assets/images/volume-light.svg";
 import volumeMuteImg from "assets/images/volume-mute-light.svg";
 import VideoContext from "contexts/VideoContext";
-import numeral from "numeral";
 import isMobile from "ismobilejs";
+import numeral from "numeral";
 
 export const STATUS_UNSTARTED = "unstarted";
 export const STATUS_ENDED = "ended";
@@ -61,12 +61,11 @@ const Controls = props => {
     player,
     volume,
     status,
+    fullscreen,
     duration,
     currentTime,
     borderlessFullscreen
   } = value;
-
-  const mobile = isMobile().phone;
 
   useEffect(() => {
     let ticker = null;
@@ -99,7 +98,7 @@ const Controls = props => {
   }
 
   return (
-    <div className={`controls ${mobile && "mobile"}`}>
+    <div className="controls">
       <Slider
         className="slider"
         value={slider}
@@ -140,7 +139,7 @@ const Controls = props => {
                 }
               }}
             />
-            {!mobile && (
+            <div className="mobile-portrait-hidden mobile-landscape-hidden">
               <Slider
                 className="volume-slider"
                 value={volume}
@@ -149,7 +148,7 @@ const Controls = props => {
                   player && player.setVolume(volume);
                 }}
               />
-            )}
+            </div>
           </div>
           <div className="small">
             {currentTime ? numeral(currentTime).format("00:00:00") : "00:00:00"}
@@ -161,15 +160,27 @@ const Controls = props => {
         </div>
         <img
           className="fullscreen-img hover-link"
-          src={borderlessFullscreen ? exitFullScreenImg : fullScreenImg}
+          src={
+            (isMobile().phone && fullscreen) || borderlessFullscreen
+              ? exitFullScreenImg
+              : fullScreenImg
+          }
           alt=""
           onClick={() => {
-            if (borderlessFullscreen) {
-              updateState({ borderlessFullscreen: false });
-              closeFullscreen();
+            if (isMobile().phone) {
+              if (fullscreen) {
+                updateState({ fullscreen: false });
+              } else {
+                updateState({ fullscreen: true });
+              }
             } else {
-              updateState({ borderlessFullscreen: true });
-              openFullscreen();
+              if (borderlessFullscreen) {
+                updateState({ borderlessFullscreen: false });
+                closeFullscreen();
+              } else {
+                updateState({ borderlessFullscreen: true });
+                openFullscreen();
+              }
             }
           }}
         />

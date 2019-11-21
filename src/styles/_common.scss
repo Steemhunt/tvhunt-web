@@ -218,15 +218,28 @@ input[type="text"] {
   }
 }
 
-.mobile-visible {
+.mobile-portrait-visible {
   display: none;
   @include responsive(mobile) {
     display: flex;
   }
 }
 
-.mobile-hidden {
+.mobile-portrait-hidden {
   @include responsive(mobile) {
     display: none;
+  }
+}
+
+.mobile-landscape-visible {
+  display: none;
+  @include responsive(mobile-landscape) {
+    display: flex;
+  }
+}
+
+.mobile-landscape-hidden {
+  @include responsive(mobile-landscape) {
+    display: none !important;
   }
 }

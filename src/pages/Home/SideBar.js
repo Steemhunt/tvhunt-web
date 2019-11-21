@@ -6,55 +6,45 @@ import RankingList from "./RankingList";
 import UploadsAndVotes from "./UploadsAndVotes";
 import User from "./User";
 import logo from "assets/images/logo-tvh.svg";
-import isMobile from "ismobilejs";
 
 const SideBar = props => {
   const videoContext = useContext(VideoContext);
   const submitContext = useContext(SubmitContext);
   const { fullscreen, mode } = videoContext.value;
-  const mobile = isMobile().phone;
 
   return (
-    <div
-      className={`side-bar ${mobile && "mobile"} ${fullscreen && "fullscreen"}`}
-    >
+    <div className={`side-bar ${fullscreen && "fullscreen"}`}>
       <div className="top-header">
-        {mobile && <img className="logo" src={logo} alt="logo" />}
-        {!mobile && (
-          <div className="row-align-center hide-ranking">
-            <div
-              className="row-align-center"
-              onClick={() =>
-                videoContext.updateState({ fullscreen: !fullscreen })
-              }
-            >
-              <Icon type="menu-unfold" />
-            </div>
-            <User />
+        <img className="logo mobile-portrait-visible" src={logo} alt="logo" />
+        <div className="row-align-center hide-ranking mobile-portrait-hidden">
+          <div
+            className="row-align-center"
+            onClick={() =>
+              videoContext.updateState({ fullscreen: !fullscreen })
+            }
+          >
+            <Icon type="menu-unfold" />
           </div>
-        )}
+          <User />
+        </div>
 
-        {!mobile && (
-          <div>
-            <Button
-              onClick={() => submitContext.updateState({ showDrawer: true })}
-              className="primary-button"
-            >
-              HUNT VIDEO
-            </Button>
-          </div>
-        )}
+        <div className="mobile-portrait-hidden">
+          <Button
+            onClick={() => submitContext.updateState({ showDrawer: true })}
+            className="primary-button"
+          >
+            SHARE VIDEO
+          </Button>
+        </div>
 
-        {mobile && (
-          <div className="row-align-center">
-            <User />
-            <Icon
-              className="add-circle"
-              type="plus-circle"
-              onClick={() => submitContext.updateState({ showDrawer: true })}
-            />
-          </div>
-        )}
+        <div className="row-align-center mobile-portrait-visible">
+          <User />
+          <Icon
+            className="add-circle"
+            type="plus-circle"
+            onClick={() => submitContext.updateState({ showDrawer: true })}
+          />
+        </div>
       </div>
 
       {mode === MODE_TV ? <RankingList /> : <UploadsAndVotes />}

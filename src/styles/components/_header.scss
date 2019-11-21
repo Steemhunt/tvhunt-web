@@ -6,18 +6,13 @@
   align-items: center;
   padding: 20px 30px 30px;
 
-  @include responsive(mobile) {
-    padding-left: 15px;
-  }
-
-  .logo {
+  .header-logo {
     width: 91px;
     height: 68px;
     object-fit: contain;
 
     @include responsive(mobile) {
-      display: none;
-      width: 80px;
+      width: auto;
       height: 25px;
     }
   }

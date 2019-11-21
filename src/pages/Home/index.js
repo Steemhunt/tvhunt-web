@@ -8,7 +8,6 @@ import SubmitDrawer from "./SubmitDrawer";
 import ShowRankingButton from "./ShowRankingButton";
 import LoginModal from "components/LoginModal";
 import MetaHelmet from "components/MetaHelmet";
-import isMobile from "ismobilejs";
 
 const Home = props => {
   const {
@@ -57,7 +56,7 @@ const Home = props => {
     <div className="home">
       <MetaHelmet title={metaTitle} />
       <div className="row-space-between">
-        <div style={{ paddingTop: isMobile().phone ? 0 : 80 }}>
+        <div className="youtube-container">
           <Youtube />
         </div>
         <SideBar />

@@ -9,12 +9,17 @@
     display: flex;
     align-items: center;
     top: $header-height/4;
-    right: 30px;
+    right: 1.875rem;
     opacity: 0;
     transition: opacity 0ms linear;
     cursor: pointer;
     @include responsive(mobile) {
-      right: 15px;
+      right: 0.9375rem;
+    }
+
+    @include responsive(mobile-landscape) {
+      top: 1.25rem;
+      right: 0.9375rem;
     }
 
     i {
@@ -71,6 +76,7 @@
     align-items: center;
     width: 100vw;
     height: 50px;
+    z-index: 5;
     padding-left: 10px;
     color: $secondary;
     background-color: $dark_background;

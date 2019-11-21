@@ -1,10 +1,11 @@
 .ranking-list {
   padding: 0 1.25rem;
 
-  &.mobile {
+  @include responsive(mobile) {
     padding: 0.625rem;
     padding-bottom: 20vh;
   }
+
 
   .empty-list-message {
     margin-top: 1.25rem;

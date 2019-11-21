@@ -8,7 +8,7 @@ import useWindowSize from "hooks/useWindowSize";
 const SubmitDrawer = props => {
   const { step, showDrawer, updateState } = useContext(SubmitContext);
   const { width } = useWindowSize();
-  const sideBarWidth = width <= 500 ? width : 360;
+  const sideBarWidth = width <= 896 ? width : 360;
 
   return (
     <Drawer

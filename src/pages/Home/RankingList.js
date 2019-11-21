@@ -4,7 +4,6 @@ import { Icon } from "antd";
 import VideoContext from "contexts/VideoContext";
 import RankItem from "./RankItem";
 import ShowMoreItems from "./ShowMoreItems";
-import isMobile from "ismobilejs";
 import moment from "moment";
 
 function daysAgoToString(daysAgo) {
@@ -35,25 +34,26 @@ const RankingList = props => {
   const { value } = useContext(VideoContext);
   const { mode, tab, daysPlaylist, uploads, votes, loading } = value;
 
-  const mobile = isMobile().phone;
-
   return useMemo(
     () => (
-      <div className={`ranking-list ${mobile && "mobile"}`}>
+      <div className={`ranking-list`}>
         <div className="list">
           {loading && (
             <Icon className="primary loading-circle" type="loading" />
           )}
           {Object.keys(daysPlaylist)
             .sort()
-            .map(days_ago => {
+            .map((days_ago, index) => {
               const list = daysPlaylist[days_ago];
               const sortedFilteredList =
                 tab === "all" ? list : list.filter(v => v.tags.includes(tab));
               // if (sortedFilteredList.length === 0) return null;
               return (
                 <div key={days_ago}>
-                  <div className="title secondary">
+                  <div
+                    className="title secondary"
+                    style={index === 0 ? { marginTop: 16 } : {}}
+                  >
                     {daysAgoToString(parseInt(days_ago))}
                   </div>
                   <div className="text small compete-text">
@@ -63,10 +63,7 @@ const RankingList = props => {
                     <RankItem key={index} rank={index + 1} data={item} />
                   ))}
                   {list.length === 10 && (
-                    <ShowMoreItems
-                      nextDay={days_ago}
-                      text="Show More"
-                    />
+                    <ShowMoreItems nextDay={days_ago} text="Show More" />
                   )}
                 </div>
               );
