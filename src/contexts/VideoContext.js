@@ -114,7 +114,7 @@ class VideoProvider extends Component {
   loadVideosByTag = tag => {
     this.updateState({ loading: true, mode: MODE_TAG });
     api
-      .get("/videos.json", { tag })
+      .get("/videos.json", { tags: tag })
       .then(({ total_count, videos }) => {
         this.updateState({ loading: false, tags: videos });
       })
