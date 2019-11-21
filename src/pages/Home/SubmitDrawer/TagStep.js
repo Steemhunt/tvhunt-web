@@ -93,8 +93,8 @@ const EditableTags = props => {
   };
 
   useEffect(() => {
-    if (inputVisible) {
-      input.current.focus();
+    if (input && input.current) {
+      setTimeout(() => input.current.focus(), 10);
     }
   }, [inputVisible]);
 
@@ -123,6 +123,7 @@ const EditableTags = props => {
       {inputVisible && (
         <Input
           ref={input}
+          autoFocus
           type="text"
           size="small"
           style={{ width: 78 }}

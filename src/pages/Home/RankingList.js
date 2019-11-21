@@ -32,61 +32,48 @@ function daysAgoToString(daysAgo) {
 
 const RankingList = props => {
   const { value } = useContext(VideoContext);
-  const {
-    mode,
-    tab,
-    daysPlaylist,
-    uploads,
-    votes,
-    loading,
-    currentVideo
-  } = value;
+  const { tab, daysPlaylist, loading } = value;
 
-  return useMemo(
-    () => (
-      <div className={`ranking-list`}>
-        <div className="list">
-          {loading && (
-            <Icon className="primary loading-circle" type="loading" />
-          )}
-          {Object.keys(daysPlaylist)
-            .sort()
-            .map((days_ago, index) => {
-              const list = daysPlaylist[days_ago];
-              const sortedFilteredList =
-                tab === "all" ? list : list.filter(v => v.tags.includes(tab));
-              // if (sortedFilteredList.length === 0) return null;
-              return (
-                <div key={days_ago}>
-                  <div className="section-container">
-                    <div
-                      className="title secondary"
-                      style={index === 0 ? { marginTop: 16 } : {}}
-                    >
-                      {daysAgoToString(parseInt(days_ago))}
-                    </div>
-                    <div className="text small compete-text">
-                      Total {list.length} videos competed
-                    </div>
+  return (
+    <div className={`ranking-list`}>
+      <div className="list">
+        {loading && <Icon className="primary loading-circle" type="loading" />}
+        {Object.keys(daysPlaylist)
+          .sort()
+          .map((days_ago, index) => {
+            const list = daysPlaylist[days_ago];
+            const sortedFilteredList =
+              tab === "all" ? list : list.filter(v => v.tags.includes(tab));
+            // if (sortedFilteredList.length === 0) return null;
+            return (
+              <div key={days_ago}>
+                <div className="section-container">
+                  <div
+                    className="title secondary"
+                    style={index === 0 ? { marginTop: 16 } : {}}
+                  >
+                    {daysAgoToString(parseInt(days_ago))}
                   </div>
-                  {sortedFilteredList.map((item, index) => (
-                    <RankItem key={index} rank={index + 1} data={item} />
-                  ))}
-                  {list.length === 10 && (
-                    <ShowMoreItems nextDay={days_ago} text="Show More" />
-                  )}
+                  <div className="text small compete-text">
+                    Total {list.length} videos competed
+                  </div>
                 </div>
-              );
-            })}
+                {sortedFilteredList.map((item, index) => (
+                  <RankItem key={index} rank={index + 1} data={item} />
+                ))}
+                {list.length === 10 && (
+                  <ShowMoreItems nextDay={days_ago} text="Show More" />
+                )}
+              </div>
+            );
+          })}
 
-          <ShowMoreItems
-            nextDay={Object.keys(daysPlaylist).length}
-            text={"Load previous day"}
-          />
-        </div>
+        <ShowMoreItems
+          nextDay={Object.keys(daysPlaylist).length}
+          text={"Load previous day"}
+        />
       </div>
-    ),
-    [currentVideo, daysPlaylist, mode, tab, uploads, votes] //eslint-disable-line
+    </div>
   );
 };
 

@@ -53,34 +53,19 @@
   }
 }
 
-.mobile-home {
+.mobile-youtube-header {
+  display: none;
+  align-items: center;
   width: 100vw;
-  overflow: hidden;
+  height: 50px;
+  z-index: 5;
+  padding-left: 10px;
+  color: $secondary;
+  background-color: $dark_background;
+  font-size: 1.5rem;
 
-  .mobile-youtube-container {
-    position: relative;
-    z-index: 999;
-    width: 100vw;
-    height: 100vh;
-    background-color: $dark_background;
-    transform: translateX(100vw);
-    transition: transform 250ms linear;
-
-    &.fullscreen {
-      transform: translateX(0);
-    }
-  }
-
-  .mobile-youtube-header {
+  @include responsive(mobile) {
     display: flex;
-    align-items: center;
-    width: 100vw;
-    height: 50px;
-    z-index: 5;
-    padding-left: 10px;
-    color: $secondary;
-    background-color: $dark_background;
-    font-size: 1.5rem;
   }
 }
 

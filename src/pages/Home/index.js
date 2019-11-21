@@ -56,9 +56,7 @@ const Home = props => {
     <div className="home">
       <MetaHelmet title={metaTitle} />
       <div className="row-space-between">
-        <div className="youtube-container">
-          <Youtube />
-        </div>
+        <Youtube />
         <SideBar />
         <SubmitDrawer />
         <ShowRankingButton />

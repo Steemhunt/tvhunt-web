@@ -1,11 +1,14 @@
 import React, { useEffect, useContext } from "react";
 import VideoContext from "contexts/VideoContext";
+import SubmitContext from "contexts/SubmitContext";
 import logo from "assets/images/logo-tvh.svg";
+import useWindowSize from "hooks/useWindowSize";
 import { STATUS_BUFFERING } from "./Video";
 
 const TvNoise = props => {
-  const { width, height, style } = props;
-  const { status, currentVideo } = useContext(VideoContext).value;
+  const { width, height } = useWindowSize();
+  const { videoId } = useContext(SubmitContext);
+  const { status, fullscreen, currentVideo } = useContext(VideoContext).value;
 
   useEffect(() => {
     var canvas = document.querySelector(".tv"),
@@ -108,10 +111,12 @@ const TvNoise = props => {
 
   return (
     <div
-      className={`noise-container ${currentVideo && status !== STATUS_BUFFERING && "fade-out"}`}
+      className={`noise-container ${(videoId || currentVideo) &&
+        status !== STATUS_BUFFERING &&
+        "fade-out"}`}
     >
       <div className="tv-noise">
-        <div className="absolute-center" style={{ width, height }}>
+        <div className={`absolute-center ${fullscreen && "fullscreen"}`}>
           <img className="noise-logo" src={logo} alt="LOL Hunt Logo" />
         </div>
         <canvas className="tv" />

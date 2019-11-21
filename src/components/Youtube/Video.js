@@ -2,7 +2,6 @@ import React, { useRef, useEffect, useContext } from "react";
 import { withRouter } from "react-router";
 import VideoContext from "contexts/VideoContext";
 import SubmitContext from "contexts/SubmitContext";
-import useWindowSize from "hooks/useWindowSize";
 import TvNoise from "./TvNoise.js";
 import _ from "lodash";
 
@@ -23,33 +22,14 @@ export const PLAYBACK_STATUS = {
 
 const Video = props => {
   const playerRef = useRef();
-  const { width: w, height: h } = useWindowSize();
 
   const { value, updateState, next } = useContext(VideoContext);
   const { videoId } = useContext(SubmitContext);
-  const { player, currentVideo, fullscreen } = value;
-
-  const mobile = w <= 640;
-  const headerHeight = 90;
-
-  let width = w,
-    height = h;
-  width = mobile || fullscreen ? w : w - 360;
-
-  const landscape = h <= 600;
-  if (landscape && fullscreen) {
-    height = mobile ? h - 110 : h - 70;
-  } else if (landscape) {
-    height = h - 70;
-  } else {
-    height = mobile ? h - 110 : h - headerHeight - 70;
-  }
+  const { player, currentVideo } = value;
 
   useEffect(() => {
     if (window.YT) {
       new window.YT.Player(playerRef.current, {
-        height,
-        width,
         playerVars: {
           autoplay: 1,
           controls: 0,
@@ -83,6 +63,7 @@ const Video = props => {
     target.setSize = _.debounce(target.setSize, 100);
     target.seekTo = _.debounce(target.seekTo, 500);
     target.getDuration = _.debounce(target.getDuration, 100);
+    target.setSize = _.debounce(target.setSize, 100);
     target.setVolume(0);
     updateState({ player: target, volume: 0 });
   }
@@ -95,18 +76,7 @@ const Video = props => {
     updateState({ status });
   }
 
-  useEffect(() => {
-    if (player) {
-      player.setSize(width, height);
-    }
-  }, [width, height, player]);
-
-  return (
-    <div className="video-container">
-      <div id="youtube-iframe" ref={playerRef} />
-      <TvNoise key={width} width={width} height={mobile ? h - 60 : h} />
-    </div>
-  );
+  return <div id="youtube-iframe" ref={playerRef} />;
 };
 
 export default withRouter(Video);

@@ -1,47 +1,45 @@
 @import "../constants";
 
 .youtube-container {
-  display: flex;
-  flex-direction: column;
+  background-color: #000;
   position: fixed;
-  bottom: 10px;
-
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  -khtml-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
+  bottom: 0;
 
   @include responsive(mobile) {
     z-index: 1000;
+    transition: transform 250ms ease-in-out;
     transform: translateX(100vw);
-    transition: all 250ms ease-in-out;
-    bottom: 0;
-  }
-
-  &.fullscreen {
-    @include responsive(mobile) {
-      transform: translateX(0);
-    }
-  }
-
-  transition: width 250ms ease-in-out;
-
-  @keyframes rotate {
-    0% {
-      transform: rotate(0deg);
-    }
-    100% {
-      transform: rotate(359deg);
-    }
   }
 
   .video-container {
+    display: flex;
+    position: relative;
+    width: calc(100vw - 360px);
+    height: calc(100vh - 50px - 90px);
+
+    @include responsive(mobile) {
+      height: calc(100vh - 50px - 50px);
+    }
+
+    @include responsive(mobile-landscape) {
+      height: calc(100vh - 50px);
+    }
+
+    iframe {
+      left: 0;
+      top: 0;
+      height: 100%;
+      width: 100%;
+      position: absolute;
+    }
   }
 
-  .la-circle-notch {
-    animation: rotate 1s infinite linear;
+  &.fullscreen {
+    transform: translateX(0);
+
+    .video-container {
+      width: 100vw;
+    }
   }
 
   .fullscreen-img {
@@ -97,10 +95,10 @@
   .controls {
     position: relative;
     z-index: 2;
-    padding: 1.25rem;
+    height: 50px;
+    padding: 0 20px;
 
     @include responsive(mobile) {
-      height: 50px;
       padding: 0px 10px 0px;
     }
 
@@ -219,7 +217,7 @@
     }
 
     @include responsive(mobile-landscape) {
-      bottom: 3.125rem;
+      bottom: 3.75rem;
       left: 0.625rem;
     }
 

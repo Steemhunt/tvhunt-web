@@ -1,12 +1,12 @@
 .title-container {
-  display: relative;
-  z-index: 5;
   position: absolute;
+  z-index: 5;
   top: 40px;
   left: 0;
   padding: 1.625rem 0.9375rem;
 
   @include responsive(mobile) {
+    top: 80px;
     padding: 20px 10px;
   }
 

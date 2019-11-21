@@ -22,10 +22,8 @@ export default function useWindowSize() {
     }
 
     window.addEventListener("resize", handleResize);
-    window.addEventListener("orientationchange", handleResize);
     return () => {
       window.removeEventListener("resize", handleResize);
-      window.removeEventListener("orientationchange", handleResize);
     };
   }, []); // eslint-disable-line
   // NOTE: Empty array ensures that effect is only run on mount and unmount
