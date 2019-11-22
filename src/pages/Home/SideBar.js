@@ -45,7 +45,7 @@ const SideBar = props => {
             onClick={() => submitContext.updateState({ showDrawer: true })}
             className="primary-button"
           >
-            SHARE VIDEO
+            HUNT VIDEO
           </Button>
         </div>
 
