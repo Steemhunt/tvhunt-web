@@ -26,7 +26,7 @@ const LoginModal = props => {
         </div>
 
         <div className="secondary title">
-          Authentic Trending Videos on BlockChain
+          Save Your Data Privately
         </div>
         <div className="text big desc">
           LOL Hunt does not save your upvoting or hunting activities on the
