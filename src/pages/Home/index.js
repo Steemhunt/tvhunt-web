@@ -16,6 +16,7 @@ const Home = props => {
     loadMyVotes,
     loadVideosByTag,
     updateCurrentVideo,
+    infiniteLoad,
     value
   } = useContext(VideoContext);
 
@@ -32,11 +33,11 @@ const Home = props => {
     if (topic === "uploads") loadMyUploads();
     else if (topic === "votes") loadMyVotes();
     else if (topic) loadVideosByTag(topic, slug);
-    else loadVideos(topic, slug);
+    else if ((topic, slug)) loadVideos(topic, slug);
+    else infiniteLoad(0);
   }, []); //eslint-disable-line
 
   useEffect(() => {
-    console.log(topic, slug);
     if (topic === "tags") {
       loadVideosByTag(slug);
     } else {
@@ -46,7 +47,7 @@ const Home = props => {
 
   let metaTitle = "";
 
-  if (topic === "uploads") metaTitle = "My Uploads - LOL Hunt";
+  if (topic === "uploads") metaTitle = "My Shared Videos - LOL Hunt";
   else if (topic === "votes") metaTitle = "My Votes - LOL Hunt";
   else
     metaTitle =

@@ -1,4 +1,4 @@
-import React, { useContext, useMemo } from "react";
+import React, { useContext } from "react";
 import { withRouter } from "react-router";
 import { Icon } from "antd";
 import VideoContext from "contexts/VideoContext";
@@ -36,42 +36,40 @@ const RankingList = props => {
 
   return (
     <div className={`ranking-list`}>
-      <div className="list">
+      <div
+        className="list"
+        onScroll={e => {
+          console.log(e);
+        }}
+      >
         {loading && <Icon className="primary loading-circle" type="loading" />}
-        {Object.keys(daysPlaylist)
-          .sort()
-          .map((days_ago, index) => {
-            const list = daysPlaylist[days_ago];
-            const sortedFilteredList =
-              tab === "all" ? list : list.filter(v => v.tags.includes(tab));
-            // if (sortedFilteredList.length === 0) return null;
-            return (
-              <div key={days_ago}>
-                <div className="section-container">
-                  <div
-                    className="title secondary"
-                    style={index === 0 ? { marginTop: 16 } : {}}
-                  >
-                    {daysAgoToString(parseInt(days_ago))}
-                  </div>
-                  <div className="text small compete-text">
-                    Total {list.length} videos competed
-                  </div>
+        {Object.keys(daysPlaylist).map((days_ago, index) => {
+          const list = daysPlaylist[days_ago];
+          const sortedFilteredList =
+            tab === "all" ? list : list.filter(v => v.tags.includes(tab));
+          // if (sortedFilteredList.length === 0) return null;
+          return (
+            <div key={days_ago} onScroll={e => console.log(e)}>
+              <div className="section-container">
+                <div
+                  className="title secondary"
+                  style={index === 0 ? { marginTop: 16 } : {}}
+                >
+                  {daysAgoToString(parseInt(days_ago))}
                 </div>
-                {sortedFilteredList.map((item, index) => (
-                  <RankItem key={index} rank={index + 1} data={item} />
-                ))}
-                {list.length === 10 && (
-                  <ShowMoreItems nextDay={days_ago} text="Show More" />
-                )}
+                <div className="text small compete-text">
+                  Total {list.length} videos competed
+                </div>
               </div>
-            );
-          })}
-
-        <ShowMoreItems
-          nextDay={Object.keys(daysPlaylist).length}
-          text={"Load previous day"}
-        />
+              {sortedFilteredList.map((item, index) => (
+                <RankItem key={index} rank={index + 1} data={item} />
+              ))}
+              {list.length === 10 && (
+                <ShowMoreItems nextDay={days_ago} text="Show More" />
+              )}
+            </div>
+          );
+        })}
       </div>
     </div>
   );

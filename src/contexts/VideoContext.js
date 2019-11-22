@@ -64,7 +64,8 @@ class VideoProvider extends Component {
       loadMyVotes: this.loadMyVotes,
       setCurrentVideo: this.setCurrentVideo,
       destroyPlayer: this.destroyPlayer,
-      loadVideosByTag: this.loadVideosByTag
+      loadVideosByTag: this.loadVideosByTag,
+      infiniteLoad: this.infiniteLoad
     };
   }
 
@@ -111,10 +112,10 @@ class VideoProvider extends Component {
 
   getVideoInfo = () => {};
 
-  loadVideosByTag = (tag, slug) => {
+  loadVideosByTag = (tags, slug) => {
     this.updateState({ loading: true, mode: MODE_TAG });
     api
-      .get("/videos.json", { tag })
+      .get("/videos.json", { tags })
       .then(({ total_count, videos }) => {
         this.updateState({
           playlist: videos,
@@ -155,6 +156,32 @@ class VideoProvider extends Component {
         this.updateState({ loading: false, votes: videos })
       )
       .catch(handleErrorMessage);
+  };
+
+  infiniteLoad = async daysAgo => {
+    this.updateState({ loading: true, lastDayLoaded: daysAgo });
+    let i = 0;
+    let result = [];
+
+    const call = async (days_ago, cb) => {
+      const { videos, total_count } = await api.get("/videos.json", {
+        days_ago,
+        top: true
+      });
+      if (i >= 10 || days_ago - daysAgo > 10) {
+        console.log(result);
+        return;
+      } else if (total_count === 0) {
+        i++;
+      } else {
+        i = 0;
+      }
+      this.populateList(videos, null, null, days_ago, () => {
+        call(days_ago + 1);
+      });
+    };
+
+    await call(daysAgo);
   };
 
   loadVideos = (topic, slug, days_ago = 0, top = false, cb) => {
@@ -207,7 +234,8 @@ class VideoProvider extends Component {
         playlist: newPlaylist,
         currentVideo,
         tab,
-        loading: false
+        loading: false,
+        lastDayLoaded: days_ago
       },
       () => {
         cb && cb({ success: true, playlist: newPlaylist });
