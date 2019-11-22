@@ -8,6 +8,7 @@ const User = props => {
   const { logout, user } = useContext(AuthContext);
   const { loadMyUploads, loadMyVotes } = useContext(VideoContext);
   const { updateState } = useContext(AppContext);
+
   return user ? (
     <Tooltip
       className="login"
@@ -28,7 +29,7 @@ const User = props => {
       }
     >
       <div className="secondary">
-        {user.username.split(".")[0]}
+        {user.username ? user.username.split(".")[0] : 'Member'}
         <Icon type="caret-down" style={{ fontSize: 12, marginLeft: 4 }} />
       </div>
     </Tooltip>
