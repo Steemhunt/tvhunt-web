@@ -3,6 +3,9 @@
 
   .back-to-rank {
     margin: 0.625rem 1.25rem;
+    @include responsive(mobile) {
+      padding: 0 0.625rem;
+    }
   }
 
   .section-container {
@@ -15,17 +18,18 @@
 
   .empty-list-message {
     margin-top: 1.25rem;
+    padding: 0 1.25rem;
+
+    @include responsive(mobile) {
+      padding: 0 0.625rem;
+    }
 
     .title {
       margin: 0;
     }
 
-    .desc {
-      margin-top: 0.25rem;
-    }
-
-    .primary-button {
-      margin-top: 1.875rem;
+    .description {
+      margin-bottom: 1.875rem;
     }
   }
 

@@ -10,30 +10,43 @@ import VideoContext, {
 import SubmitContext from "contexts/SubmitContext";
 import RankItem from "./RankItem";
 
-const EmptyMessage = props => {
+const Message = withRouter(props => {
+  const { list, type } = props;
   let title = "";
   let action = "";
-  if (props.type === MODE_UPLOADED) {
+  if (type === MODE_UPLOADED) {
     title = "SHARED VIDEOS";
     action = "shared";
-  } else if (props.type === MODE_VOTED) {
+  } else if (type === MODE_VOTED) {
     title = "VOTES";
     action = "upvoted";
+  } else if (type === MODE_TAG) {
+    const {
+      match: {
+        params: { topic, slug }
+      }
+    } = props;
+    title = topic === "tags" ? slug : topic;
+    action = "tagged";
   }
 
   return (
     <div className="empty-list-message">
       <div className="title secondary">{title}</div>
       <div className="description text">
-        Opps! Haven’t {action} any videos yet? You can see all the videos that
-        you’ve {action} here. Share a 😂video you discovered today!
+        {list.length > 0
+          ? `Total ${list.length} ${action} videos`
+          : `Opps! Haven’t ${action} any videos yet? You can see all the videos that
+        you’ve ${action} here. Share a 😂video you discovered today!`}
       </div>
-      <Button className="primary-button inverse" onClick={props.onClick}>
-        UPLOAD NOW
-      </Button>
+      {list.length === 0 && (
+        <Button className="primary-button inverse" onClick={props.onClick}>
+          UPLOAD NOW
+        </Button>
+      )}
     </div>
   );
-};
+});
 
 const UploadsAndVotes = props => {
   const { value, updateState } = useContext(VideoContext);
@@ -57,23 +70,21 @@ const UploadsAndVotes = props => {
         <Icon type="left" style={{ marginRight: 4 }} />
         BACK TO RANKING
       </div>
-      {!loading && list.length === 0 ? (
-        <EmptyMessage
+
+      {!loading && (
+        <Message
           type={mode}
+          list={list}
           onClick={() => submitContext.updateState({ showDrawer: true })}
         />
-      ) : (
-        <>
-          <div className="list">
-            {loading && (
-              <Icon className="primary loading-circle" type="loading" />
-            )}
-            {list.map((item, index) => (
-              <RankItem key={index} rank={index + 1} data={item} />
-            ))}
-          </div>
-        </>
       )}
+
+      <div className="list">
+        {loading && <Icon className="primary loading-circle" type="loading" />}
+        {list.map((item, index) => (
+          <RankItem key={index} rank={index + 1} data={item} />
+        ))}
+      </div>
     </div>
   );
 };
