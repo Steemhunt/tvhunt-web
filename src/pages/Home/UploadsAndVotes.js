@@ -53,7 +53,7 @@ const UploadsAndVotes = props => {
 
   return (
     <div className={`ranking-list`}>
-      <div className="secondary small hover-link" onClick={back}>
+      <div className="secondary small hover-link back-to-rank" onClick={back}>
         <Icon type="left" style={{ marginRight: 4 }} />
         BACK TO RANKING
       </div>
