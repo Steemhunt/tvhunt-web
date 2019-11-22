@@ -52,7 +52,7 @@ const Home = props => {
   else
     metaTitle =
       (currentVideo && `${currentVideo.title} - LOL Hunt`) ||
-      "LOL Hunt - Daily top chart for videos";
+      "LOL Hunt - Daily top chart for funny Youtube clips";
 
   return (
     <div className="home">
