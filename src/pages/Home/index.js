@@ -31,7 +31,7 @@ const Home = props => {
     scrollTop();
     if (topic === "uploads") loadMyUploads();
     else if (topic === "votes") loadMyVotes();
-    else if (topic && slug) loadVideosByTag(topic, slug);
+    else if (topic) loadVideosByTag(topic, slug);
     else loadVideos(topic, slug);
   }, []); //eslint-disable-line
 
