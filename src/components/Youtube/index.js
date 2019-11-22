@@ -1,5 +1,4 @@
 import React, { useEffect, useContext } from "react";
-import { Icon } from "antd";
 import { withRouter } from "react-router";
 import VideoContext from "contexts/VideoContext";
 import VideoInformation from "./VideoInformation";
@@ -9,6 +8,7 @@ import Controls from "./Controls";
 import TapToUnmute from "./TapToUnmute";
 import HoverControls from "./HoverControls";
 import isMobile from "ismobilejs";
+import Header from "components/Header";
 
 const Youtube = props => {
   const { value, updateState } = useContext(VideoContext);
@@ -29,14 +29,7 @@ const Youtube = props => {
       onMouseEnter={() => updateState({ hover: true })}
       onMouseLeave={() => updateState({ hover: false })}
     >
-      <div className="mobile-youtube-header">
-        <Icon
-          className="secondary"
-          onClick={() => updateState({ currentVideo: null })}
-          type="menu-unfold"
-        />
-      </div>
-
+      <Header />
       <div className="video-container">
         <Video />
         <TvNoise />

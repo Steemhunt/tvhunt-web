@@ -1,9 +1,8 @@
 @import "../constants";
 
 .youtube-container {
+  position: relative;
   background-color: #000;
-  position: fixed;
-  bottom: 0;
 
   @include responsive(mobile) {
     z-index: 1000;
@@ -18,11 +17,11 @@
     height: calc(100vh - 50px - 90px);
 
     @include responsive(mobile) {
-      height: calc(100vh - 50px - 50px);
+      height: calc(100vh - 210px);
     }
 
     @include responsive(mobile-landscape) {
-      height: calc(100vh - 50px);
+      height: calc(100vh - 80px);
     }
 
     iframe {
@@ -39,6 +38,10 @@
 
     .video-container {
       @include responsive(mobile) {
+        width: 100vw;
+      }
+
+      @include responsive(mobile-landscape) {
         width: 100vw;
       }
     }
@@ -165,6 +168,10 @@
     opacity: 0;
     transition: opacity 250ms ease-in-out;
     pointer-events: none;
+
+    @include responsive(mobile) {
+      width: 100vw;
+    }
 
     &.paused {
       opacity: 1;

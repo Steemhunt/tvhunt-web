@@ -53,22 +53,6 @@
   }
 }
 
-.mobile-youtube-header {
-  display: none;
-  align-items: center;
-  width: 100vw;
-  height: 50px;
-  z-index: 5;
-  padding-left: 10px;
-  color: $secondary;
-  background-color: $dark_background;
-  font-size: 1.5rem;
-
-  @include responsive(mobile) {
-    display: flex;
-  }
-}
-
 .show-more {
   text-align: center;
 }

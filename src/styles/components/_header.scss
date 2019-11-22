@@ -1,10 +1,14 @@
 .header {
-  position: fixed;
   display: flex;
   height: 90px;
   justify-content: space-between;
   align-items: center;
   padding: 20px 20px 30px;
+
+  @include responsive(mobile) {
+    padding: 20px 10px;
+    height: 50px;
+  }
 
   .header-logo {
     width: 91px;
@@ -15,5 +19,20 @@
       width: auto;
       height: 25px;
     }
+  }
+}
+
+.mobile-youtube-header {
+  display: none;
+  align-items: center;
+  width: 100vw;
+  height: 50px;
+  z-index: 5;
+  color: $secondary;
+  background-color: $dark_background;
+  font-size: 1.5rem;
+
+  @include responsive(mobile) {
+    display: flex;
   }
 }
