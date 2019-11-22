@@ -12,7 +12,7 @@ import Header from "components/Header";
 
 const Youtube = props => {
   const { value, updateState } = useContext(VideoContext);
-  const { hover, fullscreen, currentVideo } = value;
+  const { hover, fullscreen } = value;
 
   useEffect(() => {
     const h =
@@ -24,8 +24,7 @@ const Youtube = props => {
 
   return (
     <div
-      className={`youtube-container no-select ${(fullscreen || currentVideo) &&
-        "fullscreen"}`}
+      className={`youtube-container no-select ${fullscreen && "fullscreen"}`}
       onMouseEnter={() => updateState({ hover: true })}
       onMouseLeave={() => updateState({ hover: false })}
     >

@@ -219,7 +219,8 @@ class VideoProvider extends Component {
     const { playlist } = this.state.value;
     this.updateState({
       currentVideo: data,
-      currentIndex: _.findIndex(playlist, { slug: data.slug })
+      currentIndex: _.findIndex(playlist, { slug: data.slug }),
+      fullscreen: isMobile().phone
     });
     this.props.history.push(`/${data.tags[0]}/${data.slug}`);
   };

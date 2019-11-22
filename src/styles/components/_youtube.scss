@@ -3,6 +3,12 @@
 .youtube-container {
   position: relative;
   background-color: #000;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 
   @include responsive(mobile) {
     z-index: 1000;
@@ -37,11 +43,8 @@
     transform: translateX(0);
 
     .video-container {
+      width: 100vw;
       @include responsive(mobile) {
-        width: 100vw;
-      }
-
-      @include responsive(mobile-landscape) {
         width: 100vw;
       }
     }

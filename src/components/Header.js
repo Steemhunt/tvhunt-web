@@ -11,7 +11,7 @@ const Header = props => {
       <div className="mobile-youtube-header">
         <Icon
           className="secondary"
-          onClick={() => updateState({ currentVideo: null })}
+          onClick={() => updateState({ currentVideo: null, fullscreen: false })}
           type="menu-unfold"
         />
       </div>
