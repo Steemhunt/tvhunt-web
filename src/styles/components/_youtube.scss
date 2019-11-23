@@ -1,7 +1,8 @@
 @import "../constants";
 
 .youtube-container {
-  position: relative;
+  position: absolute;
+  height: 100%;
   background-color: #000;
   -webkit-touch-callout: none;
   -webkit-user-select: none;
@@ -20,14 +21,14 @@
     display: flex;
     position: relative;
     width: calc(100vw - 360px);
-    height: calc(100vh - 50px - 90px);
+    height: calc(100% - 50px - 90px);
 
     @include responsive(mobile) {
-      height: calc(100vh - 210px);
+      height: calc(100% - 100px);
     }
 
     @include responsive(mobile-landscape) {
-      height: calc(100vh - 80px);
+      height: calc(100% - 50px);
     }
 
     iframe {

@@ -2,7 +2,6 @@ import React, { useRef, useEffect, useContext } from "react";
 import { withRouter } from "react-router";
 import VideoContext from "contexts/VideoContext";
 import SubmitContext from "contexts/SubmitContext";
-import TvNoise from "./TvNoise.js";
 import _ from "lodash";
 
 export const STATUS_UNSTARTED = "unstarted";
@@ -80,3 +79,4 @@ const Video = props => {
 };
 
 export default withRouter(Video);
+  
