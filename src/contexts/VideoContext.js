@@ -41,7 +41,6 @@ const INITIAL_STATE = {
   borderlessFullscreen: false,
   hover: false,
   loading: true,
-  sliding: false,
   lastDayLoaded: 0
 };
 
