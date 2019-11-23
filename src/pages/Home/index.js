@@ -55,7 +55,13 @@ const Home = props => {
   } else if (topic === "votes") {
     metaTitle = "My Votes - LOL Hunt";
     pathname = "/votes";
-  } else if (topic && currentVideo) {
+  } else if (topic === "tags" && slug) {
+    metaTitle = `Funny videos related to #${slug} - LOL Hunt`;
+    pathname = `/tags/${slug}`;
+  } else if (topic && !slug) {
+    metaTitle = `Funny videos related to #${topic} - LOL Hunt`;
+    pathname = `/${topic}`;
+  } else {
     metaTitle =
       `${currentVideo.title} - LOL Hunt` ||
       "LOL Hunt - Daily top chart for funny Youtube clips";
