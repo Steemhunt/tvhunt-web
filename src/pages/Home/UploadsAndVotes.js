@@ -9,17 +9,25 @@ import VideoContext, {
 } from "contexts/VideoContext";
 import SubmitContext from "contexts/SubmitContext";
 import RankItem from "./RankItem";
+import numeral from "numeral";
 
 const Message = withRouter(props => {
   const { list, type } = props;
   let title = "";
   let action = "";
+  let searchResult = "";
   if (type === MODE_UPLOADED) {
     title = "SHARED VIDEOS";
     action = "shared";
+    searchResult = `You have shared ${numeral(list.length).format(
+      "0,0"
+    )} videos so far`;
   } else if (type === MODE_VOTED) {
     title = "VOTES";
     action = "upvoted";
+    searchResult = `You have voted ${numeral(list.length).format(
+      "0,0"
+    )} videos so far`;
   } else if (type === MODE_TAG) {
     const {
       match: {
@@ -28,6 +36,9 @@ const Message = withRouter(props => {
     } = props;
     title = topic === "tags" ? slug : topic;
     action = "tagged";
+    searchResult = `${numeral(list.length).format(
+      "0,0"
+    )} videos  shared in #${title}`;
   }
 
   return (
@@ -35,8 +46,8 @@ const Message = withRouter(props => {
       <div className="title secondary">{title}</div>
       <div className="description text">
         {list.length > 0
-          ? `Total ${list.length} ${action} videos`
-          : `Opps! Haven’t ${action} any videos yet? You can see all the videos that
+          ? searchResult
+          : `Oops! Haven’t ${action} any videos yet? You can see all the videos that
         you’ve ${action} here. Share a 😂video you discovered today!`}
       </div>
       {list.length === 0 && (
