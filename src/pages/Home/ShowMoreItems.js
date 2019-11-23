@@ -15,7 +15,7 @@ const ShowMoreItems = props => {
       className="primary uppercase small show-more hover-link"
       onClick={() => {
         setLoading(true);
-        loadVideos(null, null, nextDay, true, ({ success }) => {
+        loadVideos(null, null, nextDay, false, ({ success }) => {
           setLoading(false);
           if (!success) setVisible(false);
         });
