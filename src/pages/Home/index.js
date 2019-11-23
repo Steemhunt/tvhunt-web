@@ -31,7 +31,7 @@ const Home = props => {
   useEffect(() => {
     scrollTop();
     infiniteLoad(0);
-    
+
     if (topic === "uploads") loadMyUploads();
     else if (topic === "votes") loadMyVotes();
     else if (topic) loadVideosByTag(topic, slug);
@@ -62,7 +62,7 @@ const Home = props => {
   } else if (topic && !slug) {
     metaTitle = `Funny videos related to #${topic} - LOL Hunt`;
     pathname = `/${topic}`;
-  } else if (currentVideo) {
+  } else if (topic && currentVideo) {
     metaTitle =
       `${currentVideo.title} - LOL Hunt` ||
       "LOL Hunt - Daily top chart for funny Youtube clips";
