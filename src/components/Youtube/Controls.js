@@ -54,6 +54,7 @@ function closeFullscreen() {
 
 const Controls = props => {
   const [slider, setSlider] = useState(0);
+  const [sliding, setSliding] = useState(false);
 
   const { value, next, updateState } = useContext(VideoContext);
 
@@ -77,13 +78,13 @@ const Controls = props => {
       updateState({ currentTime, duration });
     };
 
-    if (player && status === STATUS_PLAYING) {
+    if (player && status === STATUS_PLAYING && !sliding) {
       tick();
       ticker = setInterval(tick, 1000);
     }
 
     return () => ticker && clearInterval(ticker);
-  }, [player, status]); //eslint-disable-line
+  }, [player, status, sliding]); //eslint-disable-line
 
   let playIcon = null;
   let playOnClick = null;
@@ -109,6 +110,7 @@ const Controls = props => {
           }
         }}
         onChange={value => {
+          setSliding(true);
           setSlider(value);
         }}
         onAfterChange={value => {
@@ -116,6 +118,7 @@ const Controls = props => {
           const currentTime = duration * (value / 100);
           player.seekTo(duration * (value / 100));
           updateState({ currentTime });
+          setSliding(false);
         }}
       />
       <div className="slider-container">

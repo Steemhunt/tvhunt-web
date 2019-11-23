@@ -198,6 +198,8 @@ class VideoProvider extends Component {
         } else {
           this.populateList(videos, topic, slug, days_ago, cb);
         }
+
+        this.updateState({ loading: false });
       })
       .catch(handleErrorMessage);
   };
