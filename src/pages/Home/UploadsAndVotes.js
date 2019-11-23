@@ -44,7 +44,7 @@ const Message = withRouter(props => {
   return (
     <div className="empty-list-message">
       <div className="title secondary">{title}</div>
-      <div className="description text">
+      <div className="description text small">
         {list.length > 0
           ? searchResult
           : `Oops! Haven’t ${action} any videos yet? You can see all the videos that

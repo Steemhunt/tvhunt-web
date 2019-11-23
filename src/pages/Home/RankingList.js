@@ -36,12 +36,7 @@ const RankingList = props => {
 
   return (
     <div className={`ranking-list`}>
-      <div
-        className="list"
-        onScroll={e => {
-          console.log(e);
-        }}
-      >
+      <div className="list">
         {loading && <Icon className="primary loading-circle" type="loading" />}
         {Object.keys(daysPlaylist).map((days_ago, index) => {
           const list = daysPlaylist[days_ago];
@@ -49,7 +44,7 @@ const RankingList = props => {
             tab === "all" ? list : list.filter(v => v.tags.includes(tab));
           // if (sortedFilteredList.length === 0) return null;
           return (
-            <div key={days_ago} onScroll={e => console.log(e)}>
+            <div key={days_ago}>
               <div className="section-container">
                 <div
                   className="title secondary"
