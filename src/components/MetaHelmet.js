@@ -3,9 +3,17 @@ import Helmet from "react-helmet";
 import PropTypes from "prop-types";
 
 const MetaHelmet = props => {
-  const { title, description, image, url, script, onChangeClientState } = props;
+  const {
+    title = "LOL Hunt - Daily top chart for funny Youtube clips",
+    description = "LOL Hunt is a daily top chart for funny Youtube clips. Anyone can simply share and upvote videos, and user data is stored privately via Blockstack blockchain.",
+    image = `${process.env.REACT_APP_PUBLIC_URL}/og-image-1200.png`,
+    pathname
+  } = props;
+
+  let url = `${process.env.REACT_APP_PUBLIC_URL}${pathname}`;
+
   return (
-    <Helmet script={script} onChangeClientState={onChangeClientState}>
+    <Helmet>
       <title>{title}</title>
       {/* Search Engine */}
       <meta name="description" content={description} />
@@ -30,22 +38,6 @@ const MetaHelmet = props => {
       <meta property="og:type" content="website" />
     </Helmet>
   );
-};
-
-MetaHelmet.propTypes = {
-  title: PropTypes.string,
-  description: PropTypes.string,
-  image: PropTypes.string,
-  url: PropTypes.string
-};
-
-MetaHelmet.defaultProps = {
-  title: "LOL Hunt - Daily top chart for funny Youtube clips",
-  description: "LOL Hunt is a daily top chart for funny Youtube clips. Anyone can simply share and upvote videos, and user data is stored privately via Blockstack blockchain.",
-  image: `${process.env.REACT_APP_PUBLIC_URL}/og-image-1200.png`,
-  url: process.env.REACT_APP_PUBLIC_URL,
-  script: [],
-  onChangeClientState: () => {}
 };
 
 export default MetaHelmet;

@@ -45,18 +45,27 @@ const Home = props => {
     }
   }, [topic, slug]); //eslint-disable-line
 
-  let metaTitle = "";
+  let metaTitle = "LOL Hunt - Daily top chart for videos";
+  let pathname = "";
+  let image = `${process.env.REACT_APP_PUBLIC_URL}/og-image-1200.png`;
 
-  if (topic === "uploads") metaTitle = "My Shared Videos - LOL Hunt";
-  else if (topic === "votes") metaTitle = "My Votes - LOL Hunt";
-  else
+  if (topic === "uploads") {
+    metaTitle = "Shared Videos - LOL Hunt";
+    pathname = "/uploads";
+  } else if (topic === "votes") {
+    metaTitle = "My Votes - LOL Hunt";
+    pathname = "/votes";
+  } else if (topic && currentVideo) {
     metaTitle =
-      (currentVideo && `${currentVideo.title} - LOL Hunt`) ||
+      `${currentVideo.title} - LOL Hunt` ||
       "LOL Hunt - Daily top chart for funny Youtube clips";
+    pathname = `/${currentVideo.tags[0]}/${currentVideo.slug}`;
+    image = `https://img.youtube.com/vi/${currentVideo.unique_id}/hqdefault.jpg`;
+  }
 
   return (
     <div className="home">
-      <MetaHelmet title={metaTitle} />
+      <MetaHelmet title={metaTitle} pathname={pathname} image={image} />
       <div className="row-space-between">
         <Youtube />
         <SideBar />

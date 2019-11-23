@@ -20,9 +20,9 @@ const SideBar = props => {
         infiniteLoad(lastDayLoaded + 1);
       }
     },
-    0,
-    500
-  );
+    0, //offset
+    500 //debounce
+  )
 
   return (
     <div ref={scrollRef} className={`side-bar ${fullscreen && "fullscreen"}`}>
