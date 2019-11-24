@@ -184,6 +184,21 @@ class VideoProvider extends Component {
     await call(daysAgo);
   };
 
+  loadVideo = async slug => {
+    if (!slug) return;
+
+    let result = null;
+    try {
+      result = await api.get(`/videos/${slug}.json`, {});
+    } catch (e) {
+      handleErrorMessage(e);
+    }
+
+    console.log("result", result);
+
+    return result;
+  };
+
   loadVideos = (topic, slug, days_ago = 0, top = false, cb) => {
     const { daysPlaylist } = this.state.value;
     this.updateState({ loading: true, lastDayLoaded: days_ago });
@@ -204,13 +219,13 @@ class VideoProvider extends Component {
       .catch(handleErrorMessage);
   };
 
-  populateList = (videos, topic, slug, days_ago, cb) => {
+  populateList = async (videos, topic, slug, days_ago, cb) => {
     const { playlist, daysPlaylist, currentVideo: curr } = this.state.value;
 
     let currentVideo = curr;
     let tab = topic || "all";
 
-    if (!this.state.value.currentVidoe && slug) {
+    if (slug) {
       currentVideo = _.find(videos, ["slug", slug]);
     } else {
       if (!isMobile().phone && !curr) {
@@ -227,6 +242,10 @@ class VideoProvider extends Component {
       clonedDaysPlaylist[days_ago].concat(videos),
       "slug"
     );
+
+    if (!currentVideo) {
+      currentVideo = await this.loadVideo(slug);
+    }
 
     const newPlaylist = _.uniqBy(playlist.concat(videos), "slug");
 

@@ -8,7 +8,7 @@ const Routes = () => {
   return (
     <div id="content-body" className="content-body">
       <Switch>
-        <Route path="/:topic?/:slug?" component={Home} />
+        <Route path="/:topic?/:slug?/:params?" component={Home} />
       </Switch>
     </div>
   );

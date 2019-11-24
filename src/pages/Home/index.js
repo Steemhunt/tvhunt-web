@@ -24,7 +24,7 @@ const Home = props => {
 
   const {
     match: {
-      params: { topic, slug }
+      params: { topic, slug, params }
     }
   } = props;
 
@@ -34,7 +34,7 @@ const Home = props => {
 
     if (topic === "uploads") loadMyUploads();
     else if (topic === "votes") loadMyVotes();
-    else if (topic) loadVideosByTag(topic, slug);
+    else if (topic === "tags") loadVideosByTag(slug, params);
     else if ((topic, slug)) loadVideos(topic, slug);
   }, []); //eslint-disable-line
 

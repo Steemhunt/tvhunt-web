@@ -57,6 +57,7 @@ const VideoInformation = props => {
               <IconTag
                 key={t}
                 text={t}
+                url={`${t}/${currentVideo.slug}}`}
                 style={{ fontSize: 14, marginRight: 10 }}
               />
             );
