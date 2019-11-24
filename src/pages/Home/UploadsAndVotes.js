@@ -17,13 +17,13 @@ const Message = withRouter(props => {
   let action = "";
   let searchResult = "";
   if (type === MODE_UPLOADED) {
-    title = "HUNTED VIDEOS";
+    title = "MY HUNTS";
     action = "hunted";
     searchResult = `You have hunted ${numeral(list.length).format(
       "0,0"
     )} videos so far`;
   } else if (type === MODE_VOTED) {
-    title = "VOTES";
+    title = "MY VOTES";
     action = "upvoted";
     searchResult = `You have voted ${numeral(list.length).format(
       "0,0"

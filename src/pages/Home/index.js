@@ -51,7 +51,7 @@ const Home = props => {
   let image = `${process.env.REACT_APP_PUBLIC_URL}/og-image-1200.png`;
 
   if (topic === "uploads") {
-    metaTitle = "Hunted Videos - LOL Hunt";
+    metaTitle = "My Hunts - LOL Hunt";
     pathname = "/uploads";
   } else if (topic === "votes") {
     metaTitle = "My Votes - LOL Hunt";
