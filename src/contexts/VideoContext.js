@@ -140,33 +140,49 @@ class VideoProvider extends Component {
       this.updateState({ loading: false });
       return;
     }
-    const slugs = videos.join(",");
-    api
-      .get("/videos.json", { slugs })
-      .then(({ total_count, videos }) =>
-        this.updateState({
-          loading: false,
-          uploads: videos
-        })
-      )
-      .catch(handleErrorMessage);
+    const slugs = videos.map(({ slug }) => slug).join(",");
+    console.log("slugs", slugs);
+
+    if (!slugs) {
+      this.updateState({
+        loading: false,
+        uploads: []
+      });
+    } else {
+      api
+        .get("/videos.json", { slugs })
+        .then(({ total_count, videos }) =>
+          this.updateState({
+            loading: false,
+            uploads: videos
+          })
+        )
+        .catch(handleErrorMessage);
+    }
   };
 
   loadMyVotes = async () => {
     this.props.history.push("/votes");
     this.updateState({ mode: MODE_VOTED, loading: true, votes: [] });
-    const videos = await readFile("votes.json");
-    console.log("votes", videos);
-    const slugs = videos.join(",");
-    api
-      .get("/videos.json", { slugs })
-      .then(({ total_count, videos }) =>
-        this.updateState({
-          loading: false,
-          votes: videos
-        })
-      )
-      .catch(handleErrorMessage);
+    const vids = await readFile("votes.json");
+    const slugs = vids.map(({ slug }) => slug).join(",");
+    console.log("slugs", slugs);
+    if (!slugs) {
+      this.updateState({
+        loading: false,
+        votes: []
+      });
+    } else {
+      api
+        .get("/videos.json", { slugs })
+        .then(({ total_count, videos }) =>
+          this.updateState({
+            loading: false,
+            votes: videos
+          })
+        )
+        .catch(handleErrorMessage);
+    }
   };
 
   infiniteLoad = async daysAgo => {

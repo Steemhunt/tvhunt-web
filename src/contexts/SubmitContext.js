@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { handleErrorMessage } from "utils/errorMessage";
 import { appendToFile } from "utils/blockstackStorage";
 import api from "utils/api";
+import moment from "moment";
 
 const SubmitContext = React.createContext();
 const { Provider, Consumer } = SubmitContext;
@@ -41,7 +42,10 @@ class SubmitProvider extends Component {
       })
       .then(video => {
         this.updateState({ ...INITIAL_STATE, videoId });
-        appendToFile("my_videos.json", video.slug);
+        appendToFile("my_videos.json", {
+          slug: video.slug,
+          timestamp: moment().utc()
+        });
         cb && cb();
       })
       .catch(handleErrorMessage);
