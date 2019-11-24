@@ -140,7 +140,10 @@ class VideoProvider extends Component {
     api
       .get("/videos.json", { slugs })
       .then(({ total_count, videos }) =>
-        this.updateState({ loading: false, uploads: videos })
+        this.updateState({
+          loading: false,
+          uploads: videos
+        })
       )
       .catch(handleErrorMessage);
   };
@@ -149,11 +152,15 @@ class VideoProvider extends Component {
     this.props.history.push("/votes");
     this.updateState({ mode: MODE_VOTED, loading: true, votes: [] });
     const videos = await readFile("votes.json");
+    console.log("votes", videos);
     const slugs = videos.join(",");
     api
       .get("/videos.json", { slugs })
       .then(({ total_count, videos }) =>
-        this.updateState({ loading: false, votes: videos })
+        this.updateState({
+          loading: false,
+          votes: videos
+        })
       )
       .catch(handleErrorMessage);
   };
