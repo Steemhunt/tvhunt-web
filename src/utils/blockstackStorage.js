@@ -25,7 +25,11 @@ export async function removeFromFile(path, value, options = {}, cb = () => {}) {
   let list = await readFile(path, options);
   if (userSignedIn() && list) {
     userSession
-      .putFile(path, JSON.stringify(_.pull(list, value)), options)
+      .putFile(
+        path,
+        JSON.stringify(_.pullAllWith(list, [value], _.includes)),
+        options
+      )
       .then(cb);
   }
 }

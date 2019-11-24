@@ -11,6 +11,7 @@ import {
 import { UserSession, AppConfig } from "blockstack";
 import isMobile from "ismobilejs";
 import _ from "lodash";
+import moment from "moment";
 
 const appConfig = new AppConfig();
 const userSession = new UserSession({ appConfig });
@@ -99,9 +100,12 @@ class VideoProvider extends Component {
 
     this.updateState({ liked });
 
+    console.log("liked", liked);
+
     if (userSession.isUserSignedIn()) {
       const gaiaLiked = await readFile("votes.json");
       if (gaiaLiked) liked.concat(gaiaLiked);
+      console.log("liked", liked);
       this.updateState({ liked });
     }
   }
@@ -288,16 +292,19 @@ class VideoProvider extends Component {
       .catch(handleErrorMessage);
   };
 
-  likeUnlike = ({ id, slug }, cb) => {
+  likeUnlike = (data, cb) => {
+    const { id, slug } = data;
     const { playlist, liked } = this.state.value;
-    let method = liked && liked.includes(slug) ? "unlike" : "like";
+    let method =
+      liked && _.find(liked, ["slug", slug]) !== undefined ? "unlike" : "like";
 
     api
       .patch(`/videos/${id}/${method}.json`)
       .then(({ success, vote_count }) => {
+        let likeData = { slug, timestamp: moment().utc() };
         if (method === "like") {
-          appendToList("liked", slug);
-          appendToFile("votes.json", slug, {}, () => this.refreshLikes());
+          appendToList("liked", likeData);
+          appendToFile("votes.json", likeData, {}, () => this.refreshLikes());
         } else {
           removeFromList("liked", slug);
           removeFromFile("votes.json", slug, {}, () => this.refreshLikes());

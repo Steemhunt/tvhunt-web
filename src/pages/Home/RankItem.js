@@ -38,7 +38,10 @@ const RankItem = props => {
           <>
             {hover ? (
               <div className="secondary rank small">
-                <Icon type="caret-right" style={{ fontSize: 24, marginLeft: -8 }} />
+                <Icon
+                  type="caret-right"
+                  style={{ fontSize: 24, marginLeft: -8 }}
+                />
               </div>
             ) : (
               <div className="secondary rank small">{rank}</div>
@@ -56,7 +59,7 @@ const RankItem = props => {
       </div>
       <Button
         className={`primary-button upvote-button ${liked &&
-          liked.includes(slug) &&
+          _.find(liked, ["slug", slug]) &&
           "liked"}`}
         onClick={() => likeUnlike(data)}
       >

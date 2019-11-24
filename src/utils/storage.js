@@ -29,6 +29,8 @@ export function appendToList(key, value) {
 export function removeFromList(key, value) {
   let list = getList(key);
   if (list) {
-    return window.safeStorage.setItem(key, JSON.stringify(_.pull(list, value)));
+    const newList = JSON.stringify(_.pullAllWith(list, [value], _.includes));
+    console.log("new list", newList);
+    return window.safeStorage.setItem(key, newList);
   }
 }
