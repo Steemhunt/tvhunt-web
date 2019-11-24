@@ -17,9 +17,9 @@ const Message = withRouter(props => {
   let action = "";
   let searchResult = "";
   if (type === MODE_UPLOADED) {
-    title = "SHARED VIDEOS";
-    action = "shared";
-    searchResult = `You have shared ${numeral(list.length).format(
+    title = "HUNTED VIDEOS";
+    action = "hunted";
+    searchResult = `You have hunted ${numeral(list.length).format(
       "0,0"
     )} videos so far`;
   } else if (type === MODE_VOTED) {

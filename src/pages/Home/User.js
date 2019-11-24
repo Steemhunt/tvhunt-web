@@ -17,7 +17,7 @@ const User = props => {
       title={
         <div>
           <div onClick={loadMyUploads} className="tooltip-menu-item">
-            <Icon type="upload" style={{ marginRight: 4 }} /> Shared Videos
+            <Icon type="upload" style={{ marginRight: 4 }} /> Hunted Videos
           </div>
           <div onClick={loadMyVotes} className="tooltip-menu-item">
             <Icon type="caret-up" style={{ marginRight: 4 }} /> My Votes
