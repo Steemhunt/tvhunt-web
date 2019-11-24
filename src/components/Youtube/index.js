@@ -7,7 +7,6 @@ import TvNoise from "./TvNoise.js";
 import Controls from "./Controls";
 import TapToUnmute from "./TapToUnmute";
 import HoverControls from "./HoverControls";
-import isMobile from "ismobilejs";
 import Header from "components/Header";
 
 const Youtube = props => {
@@ -15,17 +14,14 @@ const Youtube = props => {
   const { hover, fullscreen } = value;
 
   useEffect(() => {
-    const h =
-      isMobile().phone &&
-      hover &&
-      setTimeout(() => updateState({ hover: false }), 1500);
+    const h = hover && setTimeout(() => updateState({ hover: false }), 5000);
     return () => h && clearTimeout(h);
   }, [hover]); //eslint-disable-line
 
   return (
     <div
       className={`youtube-container no-select ${fullscreen && "fullscreen"}`}
-      onMouseEnter={() => updateState({ hover: true })}
+      onMouseMove={() => updateState({ hover: true })}
       onMouseLeave={() => updateState({ hover: false })}
     >
       <Header />
