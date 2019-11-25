@@ -310,7 +310,7 @@ class VideoProvider extends Component {
 
   likeUnlike = (data, cb) => {
     const { id, slug } = data;
-    const { playlist, liked } = this.state.value;
+    const { playlist, liked, tags, uploads, votes, mode } = this.state.value;
     let method =
       liked && _.find(liked, ["slug", slug]) !== undefined ? "unlike" : "like";
 
@@ -325,12 +325,32 @@ class VideoProvider extends Component {
           removeFromList("liked", slug);
           removeFromFile("votes.json", slug, {}, () => this.refreshLikes());
         }
-        const clonedPlaylist = _.clone(playlist);
-        const video = _.find(clonedPlaylist, ["id", id]);
+
+        let key = "playlist";
+        let clonedPlaylist = [];
+        let video = null;
+
+        if (mode === MODE_UPLOADED) {
+          key = "uploads";
+          clonedPlaylist = _.clone(uploads);
+          video = _.find(clonedPlaylist, ["id", id]);
+        } else if (mode === MODE_VOTED) {
+          key = "votes";
+          clonedPlaylist = _.clone(votes);
+          video = _.find(clonedPlaylist, ["id", id]);
+        } else if (mode === MODE_TAG) {
+          key = "tags";
+          clonedPlaylist = _.clone(tags);
+          video = _.find(clonedPlaylist, ["id", id]);
+        } else {
+          clonedPlaylist = _.clone(playlist);
+          video = _.find(clonedPlaylist, ["id", id]);
+        }
+
         if (video) {
           video.vote_count = vote_count;
         }
-        this.updateState({ playlist: clonedPlaylist });
+        this.updateState({ [key]: clonedPlaylist });
         this.refreshLikes();
       })
       .catch(e => {
