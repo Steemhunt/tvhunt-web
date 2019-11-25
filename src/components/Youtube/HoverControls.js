@@ -4,6 +4,7 @@ import VideoContext from "contexts/VideoContext";
 import SubmitContext from "contexts/SubmitContext";
 import isMobile from "ismobilejs";
 import { STATUS_BUFFERING, STATUS_PLAYING, STATUS_PAUSED } from "./Video";
+import _ from "lodash";
 
 const HoverControls = props => {
   const { value, prev, next, likeUnlike } = useContext(VideoContext);
@@ -30,7 +31,9 @@ const HoverControls = props => {
   }
 
   const alreadyVoted =
-    currentVideo && liked && liked.includes(currentVideo.slug);
+    currentVideo &&
+    liked &&
+    _.find(liked, ["slug", currentVideo.slug]) !== undefined;
 
   const mobile = isMobile().phone;
 
