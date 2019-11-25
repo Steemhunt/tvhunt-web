@@ -41,7 +41,7 @@ const INITIAL_STATE = {
   fullscreen: false,
   borderlessFullscreen: false,
   hover: false,
-  loading: true,
+  loading: false,
   lastDayLoaded: 0
 };
 
@@ -66,7 +66,7 @@ class VideoProvider extends Component {
       setCurrentVideo: this.setCurrentVideo,
       destroyPlayer: this.destroyPlayer,
       loadVideosByTag: this.loadVideosByTag,
-      infiniteLoad: this.infiniteLoad
+      infiniteLoad: _.debounce(this.infiniteLoad, 300)
     };
   }
 
@@ -186,6 +186,8 @@ class VideoProvider extends Component {
   };
 
   infiniteLoad = async daysAgo => {
+    const { loading } = this.state.value;
+    if (loading) return;
     this.updateState({ loading: true, lastDayLoaded: daysAgo });
     let i = 0;
     let result = [];
