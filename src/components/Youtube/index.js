@@ -14,7 +14,7 @@ const Youtube = props => {
   const { hover, fullscreen } = value;
 
   useEffect(() => {
-    const h = hover && setTimeout(() => updateState({ hover: false }), 5000);
+    const h = hover && setTimeout(() => updateState({ hover: false }), 3600);
     return () => h && clearTimeout(h);
   }, [hover]); //eslint-disable-line
 
