@@ -20,3 +20,6 @@ export function login() {
   userSession.redirectToSignInWithAuthRequest(authRequest);
 }
 
+export function displayUsername(obj, fallback = 'anonymous') {
+  return obj.username ? `@${obj.username.split(".")[0]}` : fallback;
+}

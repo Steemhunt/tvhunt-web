@@ -8,6 +8,7 @@ import numeral from "numeral";
 import moment from "moment";
 import isMobile from "ismobilejs";
 import { STATUS_PAUSED } from "./Video";
+import { displayUsername } from "utils/authHelper";
 
 const VideoInformation = props => {
   const { likeUnlike, value } = useContext(VideoContext);
@@ -27,13 +28,9 @@ const VideoInformation = props => {
           <div className="row-align-center badge small">
             <img src={badge} alt="" />
             <div>
-              {currentVideo.ranking ?
-                <div className="secondary">#{currentVideo.ranking} Video</div>
-              :
-                <div className="secondary">Featured on</div>
-              }
+              <div className="secondary">Hunted by {displayUsername(currentVideo, 'a guest user')}</div>
               <div className="text">
-                {moment(currentVideo.created_at).format("MMMM DD, YYYY")}
+                {moment(currentVideo.created_at).fromNow()}
               </div>
             </div>
             <div className="divider" />

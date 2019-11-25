@@ -49,7 +49,7 @@ const HoverControls = props => {
         />
         <Icon type="step-forward" onClick={next} />
       </div>
-      {!videoId && currentVideo && currentVideo.ranking && (
+      {!videoId && currentVideo && (
         <div
           className={`upvote-button mobile-landscape-hidden ${alreadyVoted &&
             "voted"}`}

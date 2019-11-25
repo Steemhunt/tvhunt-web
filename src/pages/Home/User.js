@@ -3,6 +3,7 @@ import { Icon, Tooltip } from "antd";
 import AuthContext from "contexts/AuthContext";
 import VideoContext from "contexts/VideoContext";
 import AppContext from "contexts/AppContext";
+import { displayUsername } from "utils/authHelper";
 
 const User = props => {
   const { logout, user } = useContext(AuthContext);
@@ -29,7 +30,7 @@ const User = props => {
       }
     >
       <div className="secondary">
-        {user.username ? user.username.split(".")[0] : 'Member'}
+        {displayUsername(user, 'Member')}
         <Icon type="caret-down" style={{ fontSize: 12, marginLeft: 4 }} />
       </div>
     </Tooltip>
