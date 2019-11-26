@@ -42,7 +42,8 @@ const INITIAL_STATE = {
   borderlessFullscreen: false,
   hover: false,
   loading: false,
-  lastDayLoaded: 0
+  lastDayLoaded: 0,
+  endOfList: false
 };
 
 const VideoContext = React.createContext(INITIAL_STATE);
@@ -186,11 +187,10 @@ class VideoProvider extends Component {
   };
 
   infiniteLoad = async daysAgo => {
-    const { loading } = this.state.value;
-    if (loading) return;
+    const { loading, endOfList } = this.state.value;
+    if (loading || endOfList) return;
     this.updateState({ loading: true, lastDayLoaded: daysAgo });
     let i = 0;
-    let result = [];
 
     const call = async (days_ago, cb) => {
       const { videos, total_count } = await api.get("/videos.json", {
@@ -198,7 +198,7 @@ class VideoProvider extends Component {
         top: true
       });
       if (i >= 10 || days_ago - daysAgo > 10) {
-        console.log(result);
+        this.updateState({ endOfList: true });
         return;
       } else if (total_count === 0) {
         i++;
