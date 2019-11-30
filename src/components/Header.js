@@ -5,7 +5,8 @@ import VideoContext from "contexts/VideoContext";
 import logo from "assets/images/logo-tvh.svg";
 
 const Header = props => {
-  const { updateState } = useContext(VideoContext);
+  const { updateState, value } = useContext(VideoContext);
+  const { fullscreen } = value;
   return (
     <div className="header mobile-hidden mobile-landscape-hidden">
       <div className="mobile-youtube-header">
@@ -20,7 +21,7 @@ const Header = props => {
         <img className="header-logo" src={logo} alt="LOL Hunt Logo" />
       </a>
 
-      <a href="https://www.producthunt.com/posts/lol-hunt?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-lol-hunt" target="_blank" rel="noopener noreferrer">
+      {!fullscreen && <a href="https://www.producthunt.com/posts/lol-hunt?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-lol-hunt" target="_blank" rel="noopener noreferrer">
         <img
           src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=175492&theme=dark"
           alt="LOL Hunt - Daily hunt for funny Youtube clips, powered by Blockstack | Product Hunt Embed"
@@ -29,13 +30,9 @@ const Header = props => {
             height: '54px'
           }}
         />
-      </a>
+      </a>}
     </div>
   );
 };
-
-Header.propTypes = {};
-
-Header.defaultProps = {};
 
 export default withRouter(Header);
