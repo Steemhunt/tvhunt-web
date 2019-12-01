@@ -5,6 +5,7 @@ import fullScreenImg from "assets/images/full-screen.svg";
 import exitFullScreenImg from "assets/images/exit-fullscreen.svg";
 import volumeImg from "assets/images/volume-light.svg";
 import volumeMuteImg from "assets/images/volume-mute-light.svg";
+import theatreImg from "assets/images/rectangle.svg";
 import VideoContext from "contexts/VideoContext";
 import isMobile from "ismobilejs";
 import numeral from "numeral";
@@ -158,32 +159,42 @@ const Controls = props => {
             {duration ? numeral(duration).format("00:00:00") : "00:00:00"}
           </div>
         </div>
-        <img
-          className="fullscreen-img hover-link"
-          src={
-            (isMobile().phone && fullscreen) || borderlessFullscreen
-              ? exitFullScreenImg
-              : fullScreenImg
-          }
-          alt=""
-          onClick={() => {
-            if (isMobile().phone) {
-              if (fullscreen) {
-                updateState({ fullscreen: false });
-              } else {
-                updateState({ fullscreen: true });
-              }
-            } else {
-              if (borderlessFullscreen) {
-                updateState({ borderlessFullscreen: false });
-                closeFullscreen();
-              } else {
-                updateState({ borderlessFullscreen: true });
-                openFullscreen();
-              }
+        <div className="row-align-center">
+          <img
+            className="mobile-portrait-hidden theatre-img hover-link"
+            src={theatreImg}
+            alt=""
+            onClick={() => {
+              updateState({ fullscreen: !fullscreen });
+            }}
+          />
+          <img
+            className="fullscreen-img hover-link"
+            src={
+              (isMobile().phone && fullscreen) || borderlessFullscreen
+                ? exitFullScreenImg
+                : fullScreenImg
             }
-          }}
-        />
+            alt=""
+            onClick={() => {
+              if (isMobile().phone) {
+                if (fullscreen) {
+                  updateState({ fullscreen: false });
+                } else {
+                  updateState({ fullscreen: true });
+                }
+              } else {
+                if (borderlessFullscreen) {
+                  updateState({ borderlessFullscreen: false });
+                  closeFullscreen();
+                } else {
+                  updateState({ borderlessFullscreen: true });
+                  openFullscreen();
+                }
+              }
+            }}
+          />
+        </div>
       </div>
     </div>
   );

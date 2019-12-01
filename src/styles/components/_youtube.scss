@@ -51,10 +51,17 @@
     }
   }
 
+
+  .theatre-img,
   .fullscreen-img {
     width: 18px;
     height: 18px;
   }
+
+  .fullscreen-img {
+    margin-left: 16px;
+  }
+
 
   .play-button,
   .forward-button {

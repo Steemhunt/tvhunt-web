@@ -12,31 +12,21 @@ const SideBar = props => {
   const videoContext = useContext(VideoContext);
   const submitContext = useContext(SubmitContext);
   const { infiniteLoad, value } = videoContext;
-  const { fullscreen, mode, lastDayLoaded, loading } = value;
+  const { fullscreen, mode, lastDayLoaded } = value;
 
   const scrollRef = useBottomScrollListener(
     () => {
-      if (!loading) {
-        infiniteLoad(lastDayLoaded + 1);
-      }
+      infiniteLoad(lastDayLoaded + 1);
     },
     0, //offset
     500 //debounce
-  )
+  );
 
   return (
     <div ref={scrollRef} className={`side-bar ${fullscreen && "fullscreen"}`}>
       <div className="top-header">
         <img className="logo mobile-portrait-visible" src={logo} alt="logo" />
         <div className="row-align-center hide-ranking mobile-portrait-hidden">
-          <div
-            className="row-align-center"
-            onClick={() =>
-              videoContext.updateState({ fullscreen: !fullscreen })
-            }
-          >
-            <Icon type="menu-unfold" />
-          </div>
           <User />
         </div>
 
