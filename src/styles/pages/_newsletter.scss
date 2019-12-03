@@ -1,0 +1,43 @@
+.newsletter-page {
+  display: flex;
+  justify-content: center;
+
+  .content {
+    display: flex;
+    flex-direction: column;
+    width: 600px;
+    max-width: 100vw;
+    margin-top: 3.75rem;
+    align-items: center;
+
+    .poop-logo {
+      width: 65px;
+      height: 60px;
+    }
+
+    .poop-elmo {
+      width: 100%;
+      height: auto;
+      margin-top: 1.875rem;
+    }
+
+    .title {
+      font-family: Itim, sans-serif;
+      color: #fff;
+      font-size: 1.25rem;
+      margin-top: 0.5rem;
+    }
+
+    .text-container {
+      background-color: #111724;
+      color: #fff;
+      padding: 2.5rem;
+    }
+
+    .primary-button {
+      font-size: 15px;
+      height: 40px;
+    }
+
+  }
+}
