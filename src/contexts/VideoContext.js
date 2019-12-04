@@ -197,10 +197,13 @@ class VideoProvider extends Component {
         days_ago,
         top: true
       });
-      if (i >= 10 || days_ago - daysAgo > 10) {
+      if (i >= 10) {
         this.updateState({ endOfList: true });
         return;
-      } else if (total_count === 0) {
+      } else if(days_ago - daysAgo > 10) {
+        return;
+      }
+        else if (total_count === 0) {
         i++;
       } else {
         i = 0;
