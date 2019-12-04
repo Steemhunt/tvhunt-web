@@ -16,7 +16,7 @@ const SideBar = props => {
 
   const scrollRef = useBottomScrollListener(
     () => {
-      infiniteLoad(lastDayLoaded + 1);
+      infiniteLoad(lastDayLoaded + 1, 5);
     },
     0, //offset
     500 //debounce

@@ -186,7 +186,7 @@ class VideoProvider extends Component {
     }
   };
 
-  infiniteLoad = async daysAgo => {
+  infiniteLoad = async (daysAgo, daysToLoad) => {
     const { loading, endOfList } = this.state.value;
     if (loading || endOfList) return;
     this.updateState({ loading: true, lastDayLoaded: daysAgo });
@@ -197,10 +197,10 @@ class VideoProvider extends Component {
         days_ago,
         top: true
       });
-      if (i >= 10) {
+      if ((i >= 5) || (daysToLoad && i === daysToLoad)) {
         this.updateState({ endOfList: true });
         return;
-      } else if(days_ago - daysAgo > 10) {
+      } else if(daysToLoad && days_ago > daysAgo + daysToLoad) {
         return;
       }
         else if (total_count === 0) {

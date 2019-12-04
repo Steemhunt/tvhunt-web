@@ -30,7 +30,7 @@ const Home = props => {
 
   useEffect(() => {
     scrollTop();
-    infiniteLoad(0);
+    infiniteLoad(0, 2);
 
     if (topic === "uploads") loadMyUploads();
     else if (topic === "votes") loadMyVotes();
