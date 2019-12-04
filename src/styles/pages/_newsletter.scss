@@ -34,9 +34,25 @@
       padding: 2.5rem;
     }
 
+    input {
+      background-color: transparent;
+      color: $primary;
+      border-color: $primary;
+      border-radius: 0;
+      height: 40px;
+    }
+
+    .ant-input-group-addon {
+      background-color: $primary;
+      border: transparent;
+      border-radius: 0;
+      color: #fff;
+    }
+
     .primary-button {
       font-size: 15px;
       height: 40px;
+      margin-top: 20px;
     }
 
   }
