@@ -1,5 +1,5 @@
 import React from "react";
-import { Input, Button } from "antd";
+import { Input } from "antd";
 import { Link } from "react-router-dom";
 import poopImg from "assets/images/poop.svg";
 import poopElmo from "assets/videos/poop-elmo.mp4";
@@ -10,8 +10,9 @@ const Newsletter = props => {
     <div className="newsletter-page">
       <MetaHelmet
         title="Make your number two great again 💩 - Poop Letter"
-        description="Subscribe to receive the funniest video of the day"
+        description="Subscribe and receive a funny video every day"
         pathname="/poop-letter"
+        image={`${process.env.REACT_APP_PUBLIC_URL}/poop-image-1200.png`}
       />
       <div className="content">
         <img className="poop-logo" src={poopImg} alt="" />
