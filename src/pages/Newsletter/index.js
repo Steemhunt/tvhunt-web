@@ -2,7 +2,7 @@ import React from "react";
 import { Button } from "antd";
 import { Link } from "react-router-dom";
 import poopImg from "assets/images/poop.svg";
-import poopElmo from "assets/images/poop-elmo.gif";
+import poopElmo from "assets/videos/poop-elmo.mp4";
 import MetaHelmet from "components/MetaHelmet";
 
 const Newsletter = props => {
@@ -16,7 +16,7 @@ const Newsletter = props => {
       <div className="content">
         <img className="poop-logo" src={poopImg} alt="" />
         <div className="title">Poop Letter</div>
-        <img className="poop-elmo" src={poopElmo} alt="" />
+        <video className="poop-elmo" src={poopElmo} alt="" autoPlay loop />
 
         <div className="text-container big">
           Dear daily pooper,
