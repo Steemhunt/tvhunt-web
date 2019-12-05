@@ -185,7 +185,7 @@
 
     @include responsive(mobile) {
       width: 100vw;
-      top: 0;
+      top: 40px;
     }
 
     @include responsive(mobile-landscape) {
