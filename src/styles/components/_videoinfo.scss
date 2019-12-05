@@ -36,12 +36,8 @@
 
   .youtube-button,
   .share-button {
-    color: #fff;
-    font-size: 36px;
-
-    &:hover {
-      color: $primary;
-    }
+    width: 32px;
+    height: 32px;
   }
 
   .youtube-button {

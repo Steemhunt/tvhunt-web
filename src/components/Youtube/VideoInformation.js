@@ -9,6 +9,8 @@ import moment from "moment";
 import isMobile from "ismobilejs";
 import { STATUS_PAUSED } from "./Video";
 import { displayUsername } from "utils/authHelper";
+import youtubeIcon from "assets/images/youtube-brands.svg";
+import shareIcon from "assets/images/share-solid.svg";
 
 const VideoInformation = props => {
   const { likeUnlike, value } = useContext(VideoContext);
@@ -35,18 +37,23 @@ const VideoInformation = props => {
               >
                 {currentVideo.title}
               </a>
-              <div className="row-align-center">
+              <div className="row-align-center mobile-portrait-hidden">
                 <a
-                  className="youtube-button hover-link mobile-portrait-hidden"
                   href={`https://youtube.com/watch?v=${currentVideo.unique_id}`}
                   rel="noopener noreferrer"
                   target="_blank"
                 >
-                  <Icon type="youtube" />
+                  <img
+                    className="youtube-button hover-link"
+                    src={youtubeIcon}
+                    alt=""
+                  />
                 </a>
-                <Icon
-                  className="share-button hover-link mobile-portrait-hidden"
-                  type="share-alt"
+                <img
+                  src={shareIcon}
+                  alt=""
+                  className="share-button hover-link"
+                  type="link"
                   onClick={() => {
                     navigator.clipboard.writeText(window.location.href);
                     notification["success"]({ message: "Copied to clipboard" });

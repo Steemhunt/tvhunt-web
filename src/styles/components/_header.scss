@@ -23,6 +23,9 @@
 }
 
 .mobile-youtube-header {
+  position: absolute;
+  left: 0;
+  top: 0;
   display: none;
   align-items: center;
   width: 100vw;
@@ -31,8 +34,19 @@
   color: $secondary;
   background-color: $dark_background;
   font-size: 1.5rem;
+  padding: 0 10px;
 
   @include responsive(mobile) {
     display: flex;
+  }
+
+  .youtube-button,
+  .share-button {
+    width: 24px;
+    height: 24px;
+  }
+
+  .youtube-button {
+    margin-right: 16px;
   }
 }
