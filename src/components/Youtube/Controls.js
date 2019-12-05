@@ -184,7 +184,11 @@ const Controls = props => {
                   updateState({ fullscreen: true });
                 }
               } else {
-                if (borderlessFullscreen) {
+                if (
+                  document.fullscreenElement ||
+                  document.webkitFullscreenElement ||
+                  document.mozFullScreenElement
+                ) {
                   updateState({ borderlessFullscreen: false });
                   closeFullscreen();
                 } else {
