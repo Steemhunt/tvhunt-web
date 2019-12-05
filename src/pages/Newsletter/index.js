@@ -1,11 +1,16 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import { Input } from "antd";
 import { Link } from "react-router-dom";
 import poopImg from "assets/images/poop.svg";
 import poopElmo from "assets/videos/poop-elmo.mp4";
 import MetaHelmet from "components/MetaHelmet";
+import AppContext from "contexts/AppContext";
 
 const Newsletter = props => {
+  const [email, setEmail] = useState("");
+  const [subscribed, setSubscribed] = useState(false);
+  const { subscribeEmail } = useContext(AppContext);
+
   return (
     <div className="newsletter-page">
       <MetaHelmet
@@ -31,8 +36,29 @@ const Newsletter = props => {
           Let’s make your number two great again 💩
           <br />
           <br />
-          <Input placeholder="Email address" addonAfter="SUBSCRIBE NOW" />
-          <br />
+          {!subscribed ? (
+            <>
+              <Input
+                onChange={e => setEmail(e.target.value)}
+                placeholder="Email address"
+                addonAfter={
+                  <div
+                    style={{ cursor: "pointer" }}
+                    onClick={() => {
+                      subscribeEmail(email, () => {
+                        setSubscribed(true);
+                      });
+                    }}
+                  >
+                    SUBSCRIBE NOW
+                  </div>
+                }
+              />
+              <br />
+            </>
+          ) : (
+            <div className="primary">Subscribed!</div>
+          )}
           <br />
           <Link className="small" to="/">
             <span role="img" aria-label="home">
