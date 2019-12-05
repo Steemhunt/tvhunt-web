@@ -186,7 +186,7 @@ input[type="text"] {
   &:hover {
     cursor: pointer;
     color: $primary;
-    transition: color 0.5s;
+    transition: color 250ms;
   }
 }
 
@@ -251,4 +251,22 @@ input[type="text"] {
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+}
+
+.ant-notification-notice {
+  background: #000 !important;
+  border: 1px solid $secondary;
+
+  svg {
+    fill: $secondary;
+  }
+
+  svg[data-icon="close"] {
+    fill: transparent;
+  }
+}
+
+
+.ant-notification-notice-message {
+  color: #fff !important;
 }
