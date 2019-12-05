@@ -49,11 +49,13 @@ const RankItem = props => {
           </>
         )}
         <div className="row-align-center video-detail">
-          <img
-            className="rank-item-thumbnail"
-            src={`https://img.youtube.com/vi/${unique_id}/hqdefault.jpg`}
-            alt=""
-          />
+          <div className="thumbnail-container">
+            <img
+              className="rank-item-thumbnail"
+              src={`https://img.youtube.com/vi/${unique_id}/hqdefault.jpg`}
+              alt=""
+            />
+          </div>
           <div className="text small">{_.truncate(title, { length: 60 })}</div>
         </div>
       </div>
