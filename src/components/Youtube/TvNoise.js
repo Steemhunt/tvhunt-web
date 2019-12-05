@@ -2,11 +2,9 @@ import React, { useEffect, useContext } from "react";
 import VideoContext from "contexts/VideoContext";
 import SubmitContext from "contexts/SubmitContext";
 import logo from "assets/images/logo-tvh.svg";
-import useWindowSize from "hooks/useWindowSize";
 import { STATUS_BUFFERING } from "./Video";
 
 const TvNoise = props => {
-  const { width, height } = useWindowSize();
   const { videoId } = useContext(SubmitContext);
   const { status, fullscreen, currentVideo } = useContext(VideoContext).value;
 
@@ -23,8 +21,8 @@ const TvNoise = props => {
       SAMPLE_COUNT = 10;
 
     window.onresize = function() {
-      canvas.width = width;
-      canvas.height = height;
+      canvas.width = document.body.clientWidth;
+      canvas.height = document.body.clientHeight;
       scanSize = canvas.offsetHeight / scaleFactor / 3;
 
       samples = [];
