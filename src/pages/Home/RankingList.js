@@ -32,7 +32,7 @@ function daysAgoToString(daysAgo) {
 
 const RankingList = props => {
   const { value } = useContext(VideoContext);
-  const { tab, daysPlaylist, loading } = value;
+  const { tab, daysPlaylist, totalCountMap, loading } = value;
 
   return (
     <div className={`ranking-list`}>
@@ -53,7 +53,7 @@ const RankingList = props => {
                   {daysAgoToString(parseInt(days_ago))}
                 </div>
                 <div className="text small compete-text">
-                  Total {list.length} videos competed
+                  Total {totalCountMap[days_ago]} videos competed
                 </div>
               </div>
               {sortedFilteredList.map((item, index) => (

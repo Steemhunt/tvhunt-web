@@ -27,6 +27,7 @@ const INITIAL_STATE = {
   tabs: [],
   player: null,
   status: null,
+  totalCountMap: {},
   daysPlaylist: {},
   playlist: [],
   liked: [],
@@ -187,29 +188,35 @@ class VideoProvider extends Component {
   };
 
   infiniteLoad = async (daysAgo, daysToLoad) => {
-    const { loading, endOfList } = this.state.value;
+    const { loading, endOfList, totalCountMap } = this.state.value;
     if (loading || endOfList) return;
     this.updateState({ loading: true, lastDayLoaded: daysAgo });
     let i = 0;
 
+    const clonedTotalCountMap = _.clone(totalCountMap);
     const call = async (days_ago, cb) => {
       const { videos, total_count } = await api.get("/videos.json", {
         days_ago,
         top: true
       });
-      if ((i >= 5) || (daysToLoad && i === daysToLoad)) {
+
+      clonedTotalCountMap[days_ago] = total_count;
+
+      if (i >= 5 || (daysToLoad && i === daysToLoad)) {
         this.updateState({ endOfList: true });
         return;
-      } else if(daysToLoad && days_ago > daysAgo + daysToLoad) {
+      } else if (daysToLoad && days_ago > daysAgo + daysToLoad) {
         return;
-      }
-        else if (total_count === 0) {
+      } else if (total_count === 0) {
         i++;
       } else {
         i = 0;
       }
-      this.populateList(videos, null, null, days_ago, () => {
-        call(days_ago + 1);
+
+      this.updateState({ totalCountMap: clonedTotalCountMap }, () => {
+        this.populateList(videos, null, null, days_ago, () => {
+          call(days_ago + 1);
+        });
       });
     };
 
