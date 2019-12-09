@@ -1,13 +1,16 @@
 import React, { useContext } from "react";
-import { Icon, notification } from "antd";
+import { Icon, Popconfirm, notification } from "antd";
 import { withRouter } from "react-router-dom";
 import VideoContext from "contexts/VideoContext";
 import logo from "assets/images/logo-tvh.svg";
 import youtubeIcon from "assets/images/youtube-brands.svg";
 import shareIcon from "assets/images/share-solid.svg";
+import flagIcon from "assets/images/flag-solid.svg";
 
 const Header = props => {
-  const { currentVideo, updateState, value } = useContext(VideoContext);
+  const { flagVideo, currentVideo, updateState, value } = useContext(
+    VideoContext
+  );
   const { fullscreen } = value;
   return (
     <div className="header mobile-hidden mobile-landscape-hidden">
@@ -18,8 +21,27 @@ const Header = props => {
           type="menu-unfold"
         />
         <div className="row-align-center">
+          <Popconfirm
+            title="Do you think this video does not fit here?"
+            onConfirm={() => flagVideo(currentVideo.id)}
+            onCancel={() => {}}
+            okText="Yes"
+            cancelText="No"
+          >
+            <img
+              src={flagIcon}
+              alt=""
+              className="flag-button hover-link"
+              type="link"
+              onClick={() => {
+                navigator.clipboard.writeText(window.location.href);
+                notification["success"]({ message: "Copied to clipboard" });
+              }}
+            />
+          </Popconfirm>
           <a
-            href={`https://youtube.com/watch?v=${currentVideo && currentVideo.unique_id}`}
+            href={`https://youtube.com/watch?v=${currentVideo &&
+              currentVideo.unique_id}`}
             rel="noopener noreferrer"
             target="_blank"
           >

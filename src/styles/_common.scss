@@ -253,6 +253,8 @@ input[type="text"] {
   user-select: none;
 }
 
+
+.ant-popover-inner,
 .ant-notification-notice {
   background: #000 !important;
   border: 1px solid $secondary;
@@ -267,6 +269,7 @@ input[type="text"] {
 }
 
 
+.ant-popover-message,
 .ant-notification-notice-message {
   color: #fff !important;
 }

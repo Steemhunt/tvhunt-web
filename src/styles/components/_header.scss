@@ -40,12 +40,18 @@
     display: flex;
   }
 
+  .flag-button {
+    width: 20px;
+    height: 20px;
+  }
+
   .youtube-button,
   .share-button {
     width: 24px;
     height: 24px;
   }
 
+  .flag-button,
   .youtube-button {
     margin-right: 16px;
   }

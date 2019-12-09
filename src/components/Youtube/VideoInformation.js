@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Icon, notification } from "antd";
+import { Icon, Popconfirm, notification } from "antd";
 import VideoContext from "contexts/VideoContext";
 import SubmitContext from "contexts/SubmitContext";
 import IconTag from "components/IconTag";
@@ -11,9 +11,10 @@ import { STATUS_PAUSED } from "./Video";
 import { displayUsername } from "utils/authHelper";
 import youtubeIcon from "assets/images/youtube-brands.svg";
 import shareIcon from "assets/images/share-solid.svg";
+import flagIcon from "assets/images/flag-solid.svg";
 
 const VideoInformation = props => {
-  const { likeUnlike, value } = useContext(VideoContext);
+  const { flagVideo, likeUnlike, value } = useContext(VideoContext);
   const { videoId } = useContext(SubmitContext);
   const { player, status, hover, currentVideo } = value;
 
@@ -38,6 +39,19 @@ const VideoInformation = props => {
                 {currentVideo.title}
               </a>
               <div className="row-align-center mobile-portrait-hidden">
+                <Popconfirm
+                  title="Do you think this video does not fit here?"
+                  onConfirm={() => flagVideo(currentVideo.id)}
+                  okText="Yes"
+                  placement="bottom"
+                >
+                  <img
+                    src={flagIcon}
+                    alt=""
+                    className="flag-button hover-link"
+                    type="link"
+                  />
+                </Popconfirm>
                 <a
                   href={`https://youtube.com/watch?v=${currentVideo.unique_id}`}
                   rel="noopener noreferrer"

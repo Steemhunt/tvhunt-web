@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { notification } from "antd";
 import { withRouter } from "react-router";
 import api from "utils/api";
 import { handleErrorMessage } from "utils/errorMessage";
@@ -68,7 +69,8 @@ class VideoProvider extends Component {
       setCurrentVideo: this.setCurrentVideo,
       destroyPlayer: this.destroyPlayer,
       loadVideosByTag: this.loadVideosByTag,
-      infiniteLoad: _.debounce(this.infiniteLoad, 300)
+      infiniteLoad: _.debounce(this.infiniteLoad, 300),
+      flagVideo: this.flagVideo
     };
   }
 
@@ -405,6 +407,17 @@ class VideoProvider extends Component {
         currentVideo: playlist[nextIndex]
       });
     }
+  };
+
+  flagVideo = videoId => {
+    api
+      .patch(`/videos/${videoId}/flag.json`)
+      .then(({ success }) => {
+        if (success) {
+          notification["success"]({ message: "Successfully flagged video." });
+        }
+      })
+      .catch(handleErrorMessage);
   };
 
   render() {
