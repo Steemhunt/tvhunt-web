@@ -189,7 +189,15 @@
     }
 
     @include responsive(mobile-landscape) {
-      top: 0;
+      top: 0px;
+    }
+
+    .middle-container {
+      position: relative;
+      z-index: 3;
+      @include responsive(mobile-landscape) {
+        margin-top: 50px;
+      }
     }
 
     &.paused {
