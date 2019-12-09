@@ -6,12 +6,19 @@ import logo from "assets/images/logo-tvh.svg";
 import youtubeIcon from "assets/images/youtube-brands.svg";
 import shareIcon from "assets/images/share-solid.svg";
 import flagIcon from "assets/images/flag-solid.svg";
+import _ from "lodash";
 
 const Header = props => {
-  const { flagVideo, currentVideo, updateState, value } = useContext(
+  const { flagUnflag, currentVideo, updateState, value } = useContext(
     VideoContext
   );
-  const { fullscreen } = value;
+  const { fullscreen, flagged } = value;
+
+  const alreadyFlagged =
+    currentVideo &&
+    flagged &&
+    _.find(flagged, ["id", currentVideo.id]) !== undefined;
+
   return (
     <div className="header mobile-hidden mobile-landscape-hidden">
       <div className="mobile-youtube-header row-space-between">
@@ -22,8 +29,12 @@ const Header = props => {
         />
         <div className="row-align-center">
           <Popconfirm
-            title="Do you think this video does not fit here?"
-            onConfirm={() => flagVideo(currentVideo.id)}
+            title={
+              alreadyFlagged
+                ? "Unflag video?"
+                : "Do you think this video does not fit here?"
+            }
+            onConfirm={() => flagUnflag(currentVideo.id)}
             onCancel={() => {}}
             okText="Yes"
             cancelText="No"

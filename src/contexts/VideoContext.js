@@ -32,6 +32,7 @@ const INITIAL_STATE = {
   daysPlaylist: {},
   playlist: [],
   liked: [],
+  flagged: [],
   votes: [],
   uploads: [],
   tags: [],
@@ -70,7 +71,7 @@ class VideoProvider extends Component {
       destroyPlayer: this.destroyPlayer,
       loadVideosByTag: this.loadVideosByTag,
       infiniteLoad: _.debounce(this.infiniteLoad, 300),
-      flagVideo: this.flagVideo
+      flagUnflag: this.flagUnflag
     };
   }
 
@@ -100,17 +101,21 @@ class VideoProvider extends Component {
 
   async refreshLikes() {
     let liked = getList("liked");
+    let flagged = getList("flagged");
     if (!liked) liked = [];
+    if (!flagged) flagged = [];
 
-    this.updateState({ liked });
+    this.updateState({ liked, flagged });
 
     console.log("liked", liked);
 
     if (userSession.isUserSignedIn()) {
       const gaiaLiked = await readFile("votes.json");
+      const gaiaFlagged = await readFile("flagged.json");
       if (gaiaLiked) liked.concat(gaiaLiked);
+      if (gaiaFlagged) flagged.concat(gaiaFlagged);
       console.log("liked", liked);
-      this.updateState({ liked });
+      this.updateState({ liked, flagged });
     }
   }
 
@@ -409,12 +414,31 @@ class VideoProvider extends Component {
     }
   };
 
-  flagVideo = videoId => {
+  flagUnflag = videoId => {
+    const { flagged } = this.state.value;
+    let method =
+      flagged && _.find(flagged, ["id", videoId]) !== undefined
+        ? "unflag"
+        : "flag";
     api
-      .patch(`/videos/${videoId}/flag.json`)
+      .patch(`/videos/${videoId}/${method}.json`)
       .then(({ success }) => {
         if (success) {
-          notification["success"]({ message: "Successfully flagged video." });
+          notification["success"]({
+            message: `Successfully ${method}ged video.`
+          });
+          let flagData = { id: videoId, timestamp: moment().utc() };
+          if (method === "flag") {
+            appendToList("flagged", flagData);
+            appendToFile("flagged.json", flagData, {}, () =>
+              this.refreshLikes()
+            );
+          } else {
+            removeFromList("flagged", videoId);
+            removeFromFile("flagged.json", videoId, {}, () =>
+              this.refreshLikes()
+            );
+          }
         }
       })
       .catch(handleErrorMessage);

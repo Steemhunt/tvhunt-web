@@ -12,13 +12,19 @@ import { displayUsername } from "utils/authHelper";
 import youtubeIcon from "assets/images/youtube-brands.svg";
 import shareIcon from "assets/images/share-solid.svg";
 import flagIcon from "assets/images/flag-solid.svg";
+import _ from "lodash";
 
 const VideoInformation = props => {
-  const { flagVideo, likeUnlike, value } = useContext(VideoContext);
+  const { flagUnflag, likeUnlike, value } = useContext(VideoContext);
   const { videoId } = useContext(SubmitContext);
-  const { player, status, hover, currentVideo } = value;
+  const { flagged, player, status, hover, currentVideo } = value;
 
   if (videoId) return null;
+
+  const alreadyFlagged =
+    currentVideo &&
+    flagged &&
+    _.find(flagged, ["id", currentVideo.id]) !== undefined;
 
   return (
     <div
@@ -40,8 +46,12 @@ const VideoInformation = props => {
               </a>
               <div className="row-align-center mobile-portrait-hidden">
                 <Popconfirm
-                  title="Do you think this video does not fit here?"
-                  onConfirm={() => flagVideo(currentVideo.id)}
+                  title={
+                    alreadyFlagged
+                      ? "Unflag video?"
+                      : "Do you think this video does not fit here?"
+                  }
+                  onConfirm={() => flagUnflag(currentVideo.id)}
                   okText="Yes"
                   placement="bottom"
                 >
