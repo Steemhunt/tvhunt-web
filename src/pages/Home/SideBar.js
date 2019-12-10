@@ -1,6 +1,5 @@
 import React, { useContext } from "react";
 import VideoContext, { MODE_TV } from "contexts/VideoContext";
-import SubmitContext from "contexts/SubmitContext";
 import { useBottomScrollListener } from "react-bottom-scroll-listener";
 import RankingList from "./RankingList";
 import UploadsAndVotes from "./UploadsAndVotes";
@@ -9,7 +8,6 @@ import logo from "assets/images/logo-tvh.svg";
 
 const SideBar = props => {
   const videoContext = useContext(VideoContext);
-  const submitContext = useContext(SubmitContext);
   const { infiniteLoad, value } = videoContext;
   const { fullscreen, mode, lastDayLoaded } = value;
 
