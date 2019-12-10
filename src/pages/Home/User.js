@@ -36,6 +36,7 @@ const User = props => {
               <div onClick={loadMyVotes} className="tooltip-menu-item">
                 <Icon type="caret-up" style={{ marginRight: 4 }} /> My Votes
               </div>
+              {/*
               <div onClick={loadMyVotes} className="tooltip-menu-item">
                 <Icon type="read" style={{ marginRight: 4 }} /> Terms
               </div>
@@ -45,6 +46,7 @@ const User = props => {
               <div onClick={logout} className="tooltip-menu-item">
                 <Icon type="appstore" style={{ marginRight: 4 }} /> Blockstack
               </div>
+              */}
               <div onClick={logout} className="tooltip-menu-item">
                 <Icon type="poweroff" style={{ marginRight: 4 }} /> Log out
               </div>
@@ -64,6 +66,7 @@ const User = props => {
           >
             Sign in
           </div>
+          {/*
           <Tooltip
             className="login"
             placement="bottomLeft"
@@ -84,6 +87,7 @@ const User = props => {
           >
             <Icon type="ellipsis" style={{ fontSize: 16, marginLeft: 14 }} />
           </Tooltip>
+          */}
         </>
       )}
     </div>
