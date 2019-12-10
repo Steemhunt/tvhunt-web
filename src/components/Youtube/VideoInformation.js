@@ -87,43 +87,45 @@ const VideoInformation = props => {
             </div>
           </div>
 
-          <div className="row-align-center badge small">
-            <img src={badge} alt="" />
-            <div>
-              <div className="secondary">
-                Hunted by {displayUsername(currentVideo, "a guest user")}
+          <div className="badge-container">
+            <div className="row-align-center badge small">
+              <img src={badge} alt="" />
+              <div>
+                <div className="secondary">
+                  Hunted by {displayUsername(currentVideo, "a guest user")}
+                </div>
+                <div className="text">
+                  {moment(currentVideo.created_at).fromNow()}
+                </div>
               </div>
-              <div className="text">
-                {moment(currentVideo.created_at).fromNow()}
+              <div className="divider" />
+              <div
+                className="hover-link upvote"
+                onClick={() => {
+                  likeUnlike({ id: currentVideo.id, slug: currentVideo.slug });
+                }}
+              >
+                <Icon type="caret-up" />
+                <div>{numeral(currentVideo.vote_count).format("0,0")}</div>
               </div>
             </div>
-            <div className="divider" />
-            <div
-              className="hover-link upvote"
-              onClick={() => {
-                likeUnlike({ id: currentVideo.id, slug: currentVideo.slug });
-              }}
-            >
-              <Icon type="caret-up" />
-              <div>{numeral(currentVideo.vote_count).format("0,0")}</div>
+            <div className="row-align-center tags">
+              {player &&
+                currentVideo &&
+                currentVideo.tags.map(t => {
+                  return (
+                    <IconTag
+                      key={t}
+                      text={t}
+                      url={`${t}/${currentVideo.slug}}`}
+                      style={{ fontSize: 14, marginRight: 10 }}
+                    />
+                  );
+                })}
             </div>
           </div>
         </>
       )}
-      <div className="row-align-center tags">
-        {player &&
-          currentVideo &&
-          currentVideo.tags.map(t => {
-            return (
-              <IconTag
-                key={t}
-                text={t}
-                url={`${t}/${currentVideo.slug}}`}
-                style={{ fontSize: 14, marginRight: 10 }}
-              />
-            );
-          })}
-      </div>
     </div>
   );
 };
