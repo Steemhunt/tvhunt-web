@@ -1,4 +1,5 @@
 import React, { useContext } from "react";
+import { Link } from "react-router-dom";
 import { Icon, Tooltip } from "antd";
 import AuthContext from "contexts/AuthContext";
 import VideoContext from "contexts/VideoContext";
@@ -12,15 +13,16 @@ const User = props => {
 
   return (
     <div className="row-align-center">
-      <div
-        className="poop-mail hover-link"
-        onClick={() => updateState({ loginModal: true })}
-      >
-        <span role="img" aria-label="poop">
-          💩
-        </span>{" "}
-        mail
-      </div>
+      <Link to="/poop-letter">
+        <div
+          className="poop-mail hover-link text"
+        >
+          <span role="img" aria-label="poop">
+            💩
+          </span>{" "}
+          mail
+        </div>
+      </Link>
       {user ? (
         <Tooltip
           className="login"
