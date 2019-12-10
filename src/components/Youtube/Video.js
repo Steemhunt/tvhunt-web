@@ -22,7 +22,9 @@ export const PLAYBACK_STATUS = {
 const Video = props => {
   const playerRef = useRef();
 
-  const { value, updateState, next } = useContext(VideoContext);
+  const { value, incrementViewCount, updateState, next } = useContext(
+    VideoContext
+  );
   const { videoId } = useContext(SubmitContext);
   const { player, currentVideo } = value;
 
@@ -47,6 +49,9 @@ const Video = props => {
   }, []); //eslint-disable-line
 
   useEffect(() => {
+    if (currentVideo) {
+      incrementViewCount(currentVideo.slug);
+    }
     player &&
       player.loadVideoById({
         videoId: videoId
@@ -79,4 +84,3 @@ const Video = props => {
 };
 
 export default withRouter(Video);
-  

@@ -71,7 +71,8 @@ class VideoProvider extends Component {
       destroyPlayer: this.destroyPlayer,
       loadVideosByTag: this.loadVideosByTag,
       infiniteLoad: _.debounce(this.infiniteLoad, 300),
-      flagUnflag: this.flagUnflag
+      flagUnflag: this.flagUnflag,
+      incrementViewCount: this.incrementViewCount
     };
   }
 
@@ -441,6 +442,13 @@ class VideoProvider extends Component {
           }
         }
       })
+      .catch(handleErrorMessage);
+  };
+
+  incrementViewCount = slug => {
+    api
+      .get(`/videos/${slug}.json`)
+      .then()
       .catch(handleErrorMessage);
   };
 
