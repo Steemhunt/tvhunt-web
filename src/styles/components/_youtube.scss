@@ -169,16 +169,17 @@
     left: 0;
     background-image: linear-gradient(
       to bottom,
-      #000,
-      #000,
+      rgba(0, 0, 0, 1.0),
+      rgba(0, 0, 0, 0.7),
       rgba(0, 0, 0, 0.3),
       rgba(0, 0, 0, 0.5),
       rgba(0, 0, 0, 0.7),
       rgba(0, 0, 0, 0.5),
       rgba(0, 0, 0, 0.3),
-      #000,
-      #000,
-      #000
+      rgba(0, 0, 0, 0.7),
+      rgba(0, 0, 0, 0.95),
+      rgba(0, 0, 0, 1.0),
+      rgba(0, 0, 0, 1.0)
     );
     opacity: 0;
     transition: opacity 250ms ease-in-out;
