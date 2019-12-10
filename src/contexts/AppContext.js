@@ -44,13 +44,35 @@ class AppProvider extends Component {
       .catch(handleErrorMessage);
   };
 
+  unsubscribeEmail = async (email, cb) => {
+    if (email.length === 0) return;
+    else if (!validateEmail(email)) {
+      notification["error"]({ message: "Invalid email format" });
+      return;
+    }
+
+    api
+      .patch("/email_subscriptions/unsubscribe.json", { email })
+      .then(data => {
+        const { is_subscribed } = data;
+        if (is_subscribed) {
+          notification["success"]({ message: "Subscribed" });
+        } else {
+          notification["success"]({ message: "Unsubscribed" });
+        }
+        cb && cb(data);
+      })
+      .catch(handleErrorMessage);
+  };
+
   render() {
     return (
       <Provider
         value={{
           ...this.state,
           updateState: this.updateState,
-          subscribeEmail: this.subscribeEmail
+          subscribeEmail: this.subscribeEmail,
+          unsubscribeEmail: this.unsubscribeEmail
         }}
       >
         {this.props.children}
