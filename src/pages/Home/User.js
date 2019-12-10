@@ -20,7 +20,7 @@ const User = props => {
           <span role="img" aria-label="poop">
             💩
           </span>{" "}
-          mail
+          letter
         </div>
       </Link>
       {user ? (
