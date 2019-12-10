@@ -31,7 +31,7 @@
     .title-text {
       padding-right: 1.25rem;
       color: #fff;
-      @include overflowLine(1.25rem, 2);
+      @include overflowLine(1.5rem, 2);
     }
   }
 
@@ -54,17 +54,21 @@
   }
 
   .tags {
-    margin-top: 1.25rem;
+    position: absolute;
+    top: 160px;
+  }
+
+  .badge-container {
+    position: absolute;
+    margin-top: 10px;
   }
 
   .badge {
-    position: absolute;
-    justify-content: center;
+    align-items: center;
     height: 60px;
     border-radius: 7px;
     padding: 0 0 0 15px;
     background-color: rgba(17, 23, 36, 0.8);
-    margin-top: 10px;
     white-space: nowrap;
 
     img {

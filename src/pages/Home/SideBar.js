@@ -1,5 +1,4 @@
 import React, { useContext } from "react";
-import { Icon, Button } from "antd";
 import VideoContext, { MODE_TV } from "contexts/VideoContext";
 import SubmitContext from "contexts/SubmitContext";
 import { useBottomScrollListener } from "react-bottom-scroll-listener";
@@ -24,29 +23,22 @@ const SideBar = props => {
 
   return (
     <div ref={scrollRef} className={`side-bar ${fullscreen && "fullscreen"}`}>
+      <div
+        className="hunt-video-button primary-button uppercase hover-link small"
+        onClick={() => submitContext.updateState({ showDrawer: true })}
+      >
+        <span role="img" aria-label="finger-point-right">
+          👉
+        </span>{" "}
+        Hunt Funny Video{" "}
+        <span role="img" aria-label="laugh-emoji">
+          🤣
+        </span>
+      </div>
       <div className="top-header">
         <img className="logo mobile-portrait-visible" src={logo} alt="logo" />
-        <div className="row-align-center hide-ranking mobile-portrait-hidden">
-          <User />
-        </div>
-
-        <div className="mobile-portrait-hidden">
-          <Button
-            onClick={() => submitContext.updateState({ showDrawer: true })}
-            className="primary-button"
-          >
-            HUNT VIDEO
-          </Button>
-        </div>
-
-        <div className="row-align-center mobile-portrait-visible">
-          <User />
-          <Icon
-            className="add-circle"
-            type="plus-circle"
-            onClick={() => submitContext.updateState({ showDrawer: true })}
-          />
-        </div>
+        <div/>
+        <User />
       </div>
 
       {mode === MODE_TV ? <RankingList /> : <UploadsAndVotes />}

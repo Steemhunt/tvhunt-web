@@ -4,7 +4,7 @@
   .back-to-rank {
     margin: 0.625rem 1.25rem;
     @include responsive(mobile) {
-      padding: 0 0.625rem;
+      margin: 0 0.625rem;
     }
   }
 

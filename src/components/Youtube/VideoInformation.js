@@ -109,23 +109,23 @@ const VideoInformation = props => {
                 <div>{numeral(currentVideo.vote_count).format("0,0")}</div>
               </div>
             </div>
-            <div className="row-align-center tags">
-              {player &&
-                currentVideo &&
-                currentVideo.tags.map(t => {
-                  return (
-                    <IconTag
-                      key={t}
-                      text={t}
-                      url={`${t}/${currentVideo.slug}}`}
-                      style={{ fontSize: 14, marginRight: 10 }}
-                    />
-                  );
-                })}
-            </div>
           </div>
         </>
       )}
+      <div className="row-align-center tags">
+        {player &&
+          currentVideo &&
+          currentVideo.tags.map(t => {
+            return (
+              <IconTag
+                key={t}
+                text={t}
+                url={`${t}/${currentVideo.slug}}`}
+                style={{ fontSize: 14, marginRight: 10 }}
+              />
+            );
+          })}
+      </div>
     </div>
   );
 };
