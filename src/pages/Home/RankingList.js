@@ -1,4 +1,5 @@
 import React, { useContext } from "react";
+import SubmitContext from "contexts/SubmitContext";
 import { withRouter } from "react-router";
 import { Icon } from "antd";
 import VideoContext from "contexts/VideoContext";
@@ -31,6 +32,7 @@ function daysAgoToString(daysAgo) {
 }
 
 const RankingList = props => {
+  const submitContext = useContext(SubmitContext);
   const { value } = useContext(VideoContext);
   const { tab, daysPlaylist, totalCountMap, loading } = value;
 
@@ -46,16 +48,34 @@ const RankingList = props => {
           return (
             <div key={days_ago}>
               <div className="section-container">
-                <div
-                  className="title secondary"
-                  style={index === 0 ? { marginTop: 16 } : {}}
-                >
-                  {daysAgoToString(parseInt(days_ago))}
-                </div>
-                <div className="text small compete-text">
-                  Total {totalCountMap[days_ago]} videos competed
+                <div className="plus-button-container">
+                  <div>
+                    <div
+                      className="title secondary"
+                      style={index === 0 ? { marginTop: 16 } : {}}
+                    >
+                      {daysAgoToString(parseInt(days_ago))}
+                    </div>
+                    <div className="text small compete-text">
+                      Total {totalCountMap[days_ago]} videos competed
+                    </div>
+                  </div>
+                  {days_ago === "0" && (
+                    <div
+                      className="hunt-video-button uppercase hover-link small"
+                      onClick={() =>
+                        submitContext.updateState({ showDrawer: true })
+                      }
+                    >
+                      <Icon
+                        type="plus-circle"
+                        style={{ fontSize: 32, color: "#fff" }}
+                      />
+                    </div>
+                  )}
                 </div>
               </div>
+
               {sortedFilteredList.map((item, index) => (
                 <RankItem key={index} rank={index + 1} data={item} />
               ))}

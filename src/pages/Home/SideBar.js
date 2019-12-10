@@ -23,18 +23,7 @@ const SideBar = props => {
 
   return (
     <div ref={scrollRef} className={`side-bar ${fullscreen && "fullscreen"}`}>
-      <div
-        className="hunt-video-button primary-button uppercase hover-link small"
-        onClick={() => submitContext.updateState({ showDrawer: true })}
-      >
-        <span role="img" aria-label="finger-point-right">
-          👉
-        </span>{" "}
-        Hunt Funny Video{" "}
-        <span role="img" aria-label="laugh-emoji">
-          🤣
-        </span>
-      </div>
+
       <div className="top-header">
         <img className="logo mobile-portrait-visible" src={logo} alt="logo" />
         <div/>

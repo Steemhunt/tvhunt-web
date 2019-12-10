@@ -1,6 +1,18 @@
 .ranking-list {
   padding-bottom: 100px;
 
+  .hunt-video-button {
+    display: flex;
+    align-items: center;
+    height: 44px;
+    width: 57px;
+    padding-left: 8px;
+    border-top-left-radius: 99px;
+    border-bottom-left-radius: 99px;
+    border-left-radius: 99px;
+    background-color: $primary;
+  }
+
   .back-to-rank {
     margin: 0.625rem 1.25rem;
     @include responsive(mobile) {
@@ -9,10 +21,12 @@
   }
 
   .section-container {
-    padding: 0 1.25rem;
+    padding: 0 0 0 1.25rem;
+    margin-top: 1.875rem;
+    margin-bottom: 1.875rem;
 
     @include responsive(mobile) {
-      padding: 0 0.625rem;
+      padding: 0 0 0 0.625rem;
     }
   }
 
@@ -35,11 +49,16 @@
 
   .title {
     font-size: 1.375rem;
-    margin-top: 1.875rem;
   }
 
-  .compete-text {
-    margin-bottom: 1.875rem;
+  .plus-button-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .title {
+      margin: 0 !important;
+    }
   }
 
   .ant-tabs-bar {
