@@ -59,7 +59,7 @@ const RankingList = props => {
               {sortedFilteredList.map((item, index) => (
                 <RankItem key={index} rank={index + 1} data={item} />
               ))}
-              {list.length === 10 && (
+              {totalCountMap[days_ago] > list.length && (
                 <ShowMoreItems nextDay={days_ago} text="Show More" />
               )}
             </div>
