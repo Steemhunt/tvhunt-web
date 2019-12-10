@@ -36,19 +36,21 @@
   }
 
   .flag-button {
-    width: 28px;
-    height: 28px;
+    width: 24px;
+    height: 24px;
+    margin-right: 20px;
   }
 
-  .youtube-button,
-  .share-button {
+  .youtube-button {
     width: 32px;
     height: 32px;
+    // No margin to avoid touch area expands to the margin (wrapped by anchor tag)
   }
 
-  .flag-button,
-  .youtube-button {
-    margin-right: 16px;
+  .share-button {
+    width: 26px;
+    height: 26px;
+    margin-left: 20px;
   }
 
   .tags {
