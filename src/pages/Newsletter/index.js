@@ -22,7 +22,9 @@ const Newsletter = props => {
       <div className="content">
         <img className="poop-logo" src={poopImg} alt="" />
         <div className="title">Poop Letter</div>
-        <video className="poop-elmo" src={poopElmo} alt="" autoPlay loop />
+        <video class="poop-elmo" alt="Poop Letter" playsInline autoPlay="autoplay" muted loop>
+          <source src={poopElmo}/>
+        </video>
 
         <div className="text-container big">
           Dear daily pooper,
