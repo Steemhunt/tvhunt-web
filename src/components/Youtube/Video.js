@@ -49,9 +49,6 @@ const Video = props => {
   }, []); //eslint-disable-line
 
   useEffect(() => {
-    if (currentVideo) {
-      incrementViewCount(currentVideo.slug);
-    }
     player &&
       player.loadVideoById({
         videoId: videoId
