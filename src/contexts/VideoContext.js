@@ -305,6 +305,7 @@ class VideoProvider extends Component {
         daysPlaylist: clonedDaysPlaylist,
         playlist: newPlaylist,
         currentVideo,
+        fullscreen: isMobile().phone && currentVideo,
         tab,
         loading: false,
         lastDayLoaded: days_ago
