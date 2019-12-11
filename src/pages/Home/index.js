@@ -30,12 +30,13 @@ const Home = props => {
 
   useEffect(() => {
     scrollTop();
-    infiniteLoad(0, 2);
-
-    if (topic === "uploads") loadMyUploads();
-    else if (topic === "votes") loadMyVotes();
-    else if (topic === "tags") loadVideosByTag(slug, params);
-    else if ((topic, slug)) loadVideos(topic, slug);
+    infiniteLoad(0, 2, () => {
+      console.log("cb");
+      if (topic === "uploads") loadMyUploads();
+      else if (topic === "votes") loadMyVotes();
+      else if (topic === "tags") loadVideosByTag(slug, params);
+      else if (topic && slug) updateCurrentVideo(topic, slug);
+    });
   }, []); //eslint-disable-line
 
   useEffect(() => {
