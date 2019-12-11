@@ -86,7 +86,7 @@ class VideoProvider extends Component {
     if (foundVideo && !_.isEqual(foundVideo, currentVideo)) {
       this.updateState({ currentVideo: foundVideo });
       this.incrementViewCount(foundVideo.slug);
-    } else {
+    } else if(slug) {
       api
         .get(`/videos/${slug}.json`)
         .then(currentVideo => this.updateState({ currentVideo }))
