@@ -195,7 +195,7 @@ class VideoProvider extends Component {
     }
   };
 
-  infiniteLoad = async (daysAgo, daysToLoad) => {
+  infiniteLoad = async (daysAgo, daysToLoad, cb) => {
     const { loading, endOfList, totalCountMap } = this.state.value;
     if (loading || endOfList) return;
     this.updateState({ loading: true, lastDayLoaded: daysAgo });
@@ -211,9 +211,12 @@ class VideoProvider extends Component {
       clonedTotalCountMap[days_ago] = total_count;
 
       if (i >= 5 || (daysToLoad && i === daysToLoad)) {
-        this.updateState({ endOfList: true });
+        this.updateState({ endOfList: true }, () => {
+          cb && cb();
+        });
         return;
       } else if (daysToLoad && days_ago > daysAgo + daysToLoad) {
+        cb && cb();
         return;
       } else if (total_count === 0) {
         i++;
