@@ -247,7 +247,7 @@ class VideoProvider extends Component {
   };
 
   loadVideos = (topic, slug, days_ago = 0, top = false, cb) => {
-    const { daysPlaylist } = this.state.value;
+    const { daysPlaylist, totalCountMap } = this.state.value;
     this.updateState({ loading: true, lastDayLoaded: days_ago });
     api
       .get("/videos.json", { days_ago, top })
@@ -258,7 +258,11 @@ class VideoProvider extends Component {
         ) {
           cb && cb({ success: false });
         } else {
-          this.populateList(videos, topic, slug, days_ago, cb);
+          const clonedTotalCountMap = _.clone(totalCountMap);
+          clonedTotalCountMap[days_ago] = total_count;
+          this.updateState({ totalCountMap: clonedTotalCountMap }, () => {
+            this.populateList(videos, topic, slug, days_ago, cb);
+          });
         }
 
         this.updateState({ loading: false });
