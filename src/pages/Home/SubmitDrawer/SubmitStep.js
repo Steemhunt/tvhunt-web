@@ -8,14 +8,15 @@ const SubmitStep = props => {
   const { videoURL, submitting, getVideoInfo, updateState } = useContext(
     SubmitContext
   );
+
   return (
     <div className="step-submit">
       <div className="title big">SUBMIT VIDEO</div>
       <img className="dog-img" src={tv} alt="" />
       <div className="desc text">
-        LOL Hunt is a daily top chart for funny Youtube clips.
-        You can simply share a video that you’ve found today.
-        The daily ranking is based on the upvotes.
+        LOL Hunt is a daily top chart for funny Youtube clips. You can simply
+        share a video that you’ve found today. The daily ranking is based on the
+        upvotes.
       </div>
 
       <div className="input-desc text-white">Input URL of Youtube Video</div>

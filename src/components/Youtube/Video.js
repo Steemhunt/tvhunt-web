@@ -3,6 +3,7 @@ import { withRouter } from "react-router";
 import VideoContext from "contexts/VideoContext";
 import SubmitContext from "contexts/SubmitContext";
 import _ from "lodash";
+import isMobile from "ismobilejs";
 
 export const STATUS_UNSTARTED = "unstarted";
 export const STATUS_ENDED = "ended";
@@ -22,9 +23,7 @@ export const PLAYBACK_STATUS = {
 const Video = props => {
   const playerRef = useRef();
 
-  const { value, incrementViewCount, updateState, next } = useContext(
-    VideoContext
-  );
+  const { value, updateState, next } = useContext(VideoContext);
   const { videoId } = useContext(SubmitContext);
   const { player, currentVideo } = value;
 
@@ -51,11 +50,12 @@ const Video = props => {
   useEffect(() => {
     player &&
       player.loadVideoById({
-        videoId: videoId
-          ? videoId
-          : currentVideo
-          ? currentVideo.unique_id
-          : null
+        videoId:
+          !isMobile().phone && videoId
+            ? videoId
+            : currentVideo
+            ? currentVideo.unique_id
+            : null
       });
   }, [player, currentVideo, videoId]); //eslint-disable-line
 

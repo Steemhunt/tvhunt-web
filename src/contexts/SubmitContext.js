@@ -51,7 +51,7 @@ class SubmitProvider extends Component {
       .catch(handleErrorMessage);
   };
 
-  getVideoInfo = async () => {
+  getVideoInfo = async cb => {
     const { videoURL, step } = this.state;
     const videoId = youtubeParser(videoURL);
 
@@ -63,11 +63,17 @@ class SubmitProvider extends Component {
         })
         .then(videoInfo => {
           console.log("vid info", videoInfo);
-          this.setState({ videoInfo, videoId, step: step + 1 });
+          this.setState({
+            videoInfo,
+            videoId,
+            step: step + 1
+          });
         })
         .catch(handleErrorMessage)
         .finally(() => {
-          this.updateState({ submitting: false });
+          this.updateState({ submitting: false }, () => {
+            cb && cb();
+          });
         });
     } else {
       handleErrorMessage({ message: "Invalid Video URL" });
