@@ -45,7 +45,7 @@ const Home = props => {
     }
   }, [topic, slug]); //eslint-disable-line
 
-  let metaTitle = "LOL Hunt - Daily top chart for videos";
+  let metaTitle = "LOL Hunt - Daily top chart for funny Youtube clips";
   let pathname = "";
   let image = `${process.env.REACT_APP_PUBLIC_URL}/og-image-1200.png`;
 
