@@ -23,8 +23,9 @@ const SideBar = props => {
     <div ref={scrollRef} className={`side-bar ${fullscreen && "fullscreen"}`}>
 
       <div className="top-header">
-        <img className="logo mobile-portrait-visible" src={logo} alt="logo" />
-        <div/>
+        <a href="/">
+          <img className="logo mobile-portrait-visible" src={logo} alt="logo" />
+        </a>
         <User />
       </div>
 
