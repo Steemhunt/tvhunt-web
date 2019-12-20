@@ -1,30 +1,26 @@
-import React, { Component } from "react";
-import { notification } from "antd";
-import { withRouter } from "react-router";
-import api from "utils/api";
-import { handleErrorMessage } from "utils/errorMessage";
-import { getList, appendToList, removeFromList } from "utils/storage";
-import {
-  readFile,
-  appendToFile,
-  removeFromFile
-} from "utils/blockstackStorage";
-import { UserSession, AppConfig } from "blockstack";
-import isMobile from "ismobilejs";
-import _ from "lodash";
-import moment from "moment";
+import React, { Component } from 'react';
+import { notification } from 'antd';
+import { withRouter } from 'react-router';
+import api from 'utils/api';
+import { handleErrorMessage } from 'utils/errorMessage';
+import { getList, appendToList, removeFromList } from 'utils/storage';
+import { readFile, appendToFile, removeFromFile } from 'utils/blockstackStorage';
+import { UserSession, AppConfig } from 'blockstack';
+import isMobile from 'ismobilejs';
+import _ from 'lodash';
+import moment from 'moment';
 
 const appConfig = new AppConfig();
 const userSession = new UserSession({ appConfig });
 
-export const MODE_TV = "MODE_TV";
-export const MODE_UPLOADED = "MODE_UPLOADED";
-export const MODE_VOTED = "MODE_VOTED";
-export const MODE_TAG = "MODE_TAG";
+export const MODE_TV = 'MODE_TV';
+export const MODE_UPLOADED = 'MODE_UPLOADED';
+export const MODE_VOTED = 'MODE_VOTED';
+export const MODE_TAG = 'MODE_TAG';
 
 const INITIAL_STATE = {
   mode: MODE_TV,
-  tab: "all",
+  tab: 'all',
   tabs: [],
   player: null,
   status: null,
@@ -46,7 +42,7 @@ const INITIAL_STATE = {
   hover: false,
   loading: false,
   lastDayLoaded: 0,
-  endOfList: false
+  endOfList: false,
 };
 
 const VideoContext = React.createContext(INITIAL_STATE);
@@ -72,7 +68,7 @@ class VideoProvider extends Component {
       loadVideosByTag: this.loadVideosByTag,
       infiniteLoad: _.debounce(this.infiniteLoad, 300),
       flagUnflag: this.flagUnflag,
-      incrementViewCount: this.incrementViewCount
+      incrementViewCount: this.incrementViewCount,
     };
   }
 
@@ -82,11 +78,11 @@ class VideoProvider extends Component {
 
   updateCurrentVideo = (topic, slug) => {
     const { playlist, currentVideo } = this.state.value;
-    const foundVideo = _.find(playlist, ["slug", slug]);
+    const foundVideo = _.find(playlist, ['slug', slug]);
     if (foundVideo && !_.isEqual(foundVideo, currentVideo)) {
       this.updateState({ currentVideo: foundVideo });
       this.incrementViewCount(foundVideo.slug);
-    } else if(slug) {
+    } else if (slug) {
       api
         .get(`/videos/${slug}.json`)
         .then(currentVideo => this.updateState({ currentVideo }))
@@ -95,33 +91,33 @@ class VideoProvider extends Component {
   };
 
   destroyPlayer = () => {
-    console.log("destroying player");
+    console.log('destroying player');
     const { player } = this.state.value;
     player.destroy();
     this.updateState({
       player: null,
       currentVideo: null,
       status: null,
-      currentTime: null
+      currentTime: null,
     });
   };
 
   async refreshLikes() {
-    let liked = getList("liked");
-    let flagged = getList("flagged");
+    let liked = getList('liked');
+    let flagged = getList('flagged');
     if (!liked) liked = [];
     if (!flagged) flagged = [];
 
     this.updateState({ liked, flagged });
 
-    console.log("liked", liked);
+    console.log('liked', liked);
 
     if (userSession.isUserSignedIn()) {
-      const gaiaLiked = await readFile("votes.json");
-      const gaiaFlagged = await readFile("flagged.json");
+      const gaiaLiked = await readFile('votes.json');
+      const gaiaFlagged = await readFile('flagged.json');
       if (gaiaLiked) liked.concat(gaiaLiked);
       if (gaiaFlagged) flagged.concat(gaiaFlagged);
-      console.log("liked", liked);
+      console.log('liked', liked);
       this.updateState({ liked, flagged });
     }
   }
@@ -135,67 +131,67 @@ class VideoProvider extends Component {
   loadVideosByTag = (tags, slug) => {
     this.updateState({ loading: true, mode: MODE_TAG });
     api
-      .get("/videos.json", { tags })
+      .get('/videos.json', { tags })
       .then(({ total_count, videos }) => {
         this.updateState({
           playlist: videos,
           loading: false,
           tags: videos,
-          currentVideo: slug ? _.find(videos, ["slug", slug]) : videos[0]
+          currentVideo: slug ? _.find(videos, ['slug', slug]) : videos[0],
         });
       })
       .catch(handleErrorMessage);
   };
 
   loadMyUploads = async () => {
-    this.props.history.push("/uploads");
+    this.props.history.push('/uploads');
     this.updateState({ mode: MODE_UPLOADED, loading: true, uploads: [] });
-    const videos = await readFile("my_videos.json");
+    const videos = await readFile('my_videos.json');
     if (!videos) {
       this.populateList([]);
       this.updateState({ loading: false });
       return;
     }
-    const slugs = videos.map(({ slug }) => slug).join(",");
-    console.log("slugs", slugs);
+    const slugs = videos.map(({ slug }) => slug).join(',');
+    console.log('slugs', slugs);
 
     if (!slugs) {
       this.updateState({
         loading: false,
-        uploads: []
+        uploads: [],
       });
     } else {
       api
-        .get("/videos.json", { slugs })
+        .get('/videos.json', { slugs })
         .then(({ total_count, videos }) =>
           this.updateState({
             loading: false,
-            uploads: videos
-          })
+            uploads: videos,
+          }),
         )
         .catch(handleErrorMessage);
     }
   };
 
   loadMyVotes = async () => {
-    this.props.history.push("/votes");
+    this.props.history.push('/votes');
     this.updateState({ mode: MODE_VOTED, loading: true, votes: [] });
-    const vids = await readFile("votes.json");
-    const slugs = vids.map(({ slug }) => slug).join(",");
-    console.log("slugs", slugs);
+    const vids = await readFile('votes.json');
+    const slugs = vids.map(({ slug }) => slug).join(',');
+    console.log('slugs', slugs);
     if (!slugs) {
       this.updateState({
         loading: false,
-        votes: []
+        votes: [],
       });
     } else {
       api
-        .get("/videos.json", { slugs })
+        .get('/videos.json', { slugs })
         .then(({ total_count, videos }) =>
           this.updateState({
             loading: false,
-            votes: videos
-          })
+            votes: videos,
+          }),
         )
         .catch(handleErrorMessage);
     }
@@ -209,9 +205,9 @@ class VideoProvider extends Component {
 
     const clonedTotalCountMap = _.clone(totalCountMap);
     const call = async (days_ago, cb) => {
-      const { videos, total_count } = await api.get("/videos.json", {
+      const { videos, total_count } = await api.get('/videos.json', {
         days_ago,
-        top: true
+        top: true,
       });
 
       clonedTotalCountMap[days_ago] = total_count;
@@ -250,7 +246,7 @@ class VideoProvider extends Component {
       handleErrorMessage(e);
     }
 
-    console.log("result", result);
+    console.log('result', result);
 
     return result;
   };
@@ -259,12 +255,9 @@ class VideoProvider extends Component {
     const { daysPlaylist, totalCountMap } = this.state.value;
     this.updateState({ loading: true, lastDayLoaded: days_ago });
     api
-      .get("/videos.json", { days_ago, top })
+      .get('/videos.json', { days_ago, top })
       .then(({ total_count, videos }) => {
-        if (
-          daysPlaylist[days_ago] &&
-          daysPlaylist[days_ago].length === total_count
-        ) {
+        if (daysPlaylist[days_ago] && daysPlaylist[days_ago].length === total_count) {
           cb && cb({ success: false });
         } else {
           const clonedTotalCountMap = _.clone(totalCountMap);
@@ -283,14 +276,14 @@ class VideoProvider extends Component {
     const { playlist, daysPlaylist, currentVideo: curr } = this.state.value;
 
     let currentVideo = curr;
-    let tab = topic || "all";
+    let tab = topic || 'all';
 
     if (slug) {
-      currentVideo = _.find(videos, ["slug", slug]);
+      currentVideo = _.find(videos, ['slug', slug]);
     } else {
       if (!isMobile().phone && !curr) {
         currentVideo = videos.filter(v => {
-          if (tab === "all") return true;
+          if (tab === 'all') return true;
           return v.tags.includes(tab);
         })[0];
       }
@@ -298,16 +291,13 @@ class VideoProvider extends Component {
 
     const clonedDaysPlaylist = _.clone(daysPlaylist);
     if (!clonedDaysPlaylist[days_ago]) clonedDaysPlaylist[days_ago] = [];
-    clonedDaysPlaylist[days_ago] = _.uniqBy(
-      clonedDaysPlaylist[days_ago].concat(videos),
-      "slug"
-    );
+    clonedDaysPlaylist[days_ago] = _.uniqBy(clonedDaysPlaylist[days_ago].concat(videos), 'slug');
 
     if (!currentVideo) {
       currentVideo = await this.loadVideo(slug);
     }
 
-    const newPlaylist = _.uniqBy(playlist.concat(videos), "slug");
+    const newPlaylist = _.uniqBy(playlist.concat(videos), 'slug');
 
     this.updateState(
       {
@@ -317,11 +307,11 @@ class VideoProvider extends Component {
         fullscreen: isMobile().phone && currentVideo,
         tab,
         loading: false,
-        lastDayLoaded: days_ago
+        lastDayLoaded: days_ago,
       },
       () => {
         cb && cb({ success: true, playlist: newPlaylist });
-      }
+      },
     );
   };
 
@@ -330,7 +320,7 @@ class VideoProvider extends Component {
     this.updateState({
       currentVideo: data,
       currentIndex: _.findIndex(playlist, { slug: data.slug }),
-      fullscreen: isMobile().phone
+      fullscreen: isMobile().phone,
     });
     this.props.history.push(`/${data.tags[0]}/${data.slug}`);
   };
@@ -345,40 +335,39 @@ class VideoProvider extends Component {
   likeUnlike = (data, cb) => {
     const { id, slug } = data;
     const { playlist, liked, tags, uploads, votes, mode } = this.state.value;
-    let method =
-      liked && _.find(liked, ["slug", slug]) !== undefined ? "unlike" : "like";
+    let method = liked && _.find(liked, ['slug', slug]) !== undefined ? 'unlike' : 'like';
 
     api
       .patch(`/videos/${id}/${method}.json`)
       .then(({ success, vote_count }) => {
         let likeData = { slug, timestamp: moment().utc() };
-        if (method === "like") {
-          appendToList("liked", likeData);
-          appendToFile("votes.json", likeData, {}, () => this.refreshLikes());
+        if (method === 'like') {
+          appendToList('liked', likeData);
+          appendToFile('votes.json', likeData, {}, () => this.refreshLikes());
         } else {
-          removeFromList("liked", slug);
-          removeFromFile("votes.json", slug, {}, () => this.refreshLikes());
+          removeFromList('liked', slug);
+          removeFromFile('votes.json', slug, {}, () => this.refreshLikes());
         }
 
-        let key = "playlist";
+        let key = 'playlist';
         let clonedPlaylist = [];
         let video = null;
 
         if (mode === MODE_UPLOADED) {
-          key = "uploads";
+          key = 'uploads';
           clonedPlaylist = _.clone(uploads);
-          video = _.find(clonedPlaylist, ["id", id]);
+          video = _.find(clonedPlaylist, ['id', id]);
         } else if (mode === MODE_VOTED) {
-          key = "votes";
+          key = 'votes';
           clonedPlaylist = _.clone(votes);
-          video = _.find(clonedPlaylist, ["id", id]);
+          video = _.find(clonedPlaylist, ['id', id]);
         } else if (mode === MODE_TAG) {
-          key = "tags";
+          key = 'tags';
           clonedPlaylist = _.clone(tags);
-          video = _.find(clonedPlaylist, ["id", id]);
+          video = _.find(clonedPlaylist, ['id', id]);
         } else {
           clonedPlaylist = _.clone(playlist);
-          video = _.find(clonedPlaylist, ["id", id]);
+          video = _.find(clonedPlaylist, ['id', id]);
         }
 
         if (video) {
@@ -399,7 +388,7 @@ class VideoProvider extends Component {
     if (prevIndex < 0) prevIndex += playlist.length;
     this.updateState({
       currentIndex: prevIndex,
-      currentVideo: playlist[prevIndex]
+      currentVideo: playlist[prevIndex],
     });
   };
 
@@ -409,50 +398,38 @@ class VideoProvider extends Component {
     const nextIndex = currentIndex + 1;
     console.log(playlist.length, nextIndex);
     if (nextIndex > playlist.length - 1 && mode === MODE_TV) {
-      this.loadVideos(
-        null,
-        null,
-        lastDayLoaded + 1,
-        true,
-        ({ playlist: newPlaylist }) => {
-          this.updateState({
-            currentIndex: nextIndex,
-            currentVideo: newPlaylist[nextIndex]
-          });
-        }
-      );
+      this.loadVideos(null, null, lastDayLoaded + 1, true, ({ playlist: newPlaylist }) => {
+        this.updateState({
+          currentIndex: nextIndex,
+          currentVideo: newPlaylist[nextIndex],
+        });
+      });
     } else {
       this.updateState({
         currentIndex: nextIndex,
-        currentVideo: playlist[nextIndex]
+        currentVideo: playlist[nextIndex],
       });
     }
   };
 
-  flagUnflag = videoId => {
+  flagUnflag = (videoId, user) => {
+    const username = user ? user.username : null;
     const { flagged } = this.state.value;
-    let method =
-      flagged && _.find(flagged, ["id", videoId]) !== undefined
-        ? "unflag"
-        : "flag";
+    let method = flagged && _.find(flagged, ['id', videoId]) !== undefined ? 'unflag' : 'flag';
     api
-      .patch(`/videos/${videoId}/${method}.json`)
+      .patch(`/videos/${videoId}/${method}.json`, { username })
       .then(({ success }) => {
         if (success) {
-          notification["success"]({
-            message: `Successfully ${method}ged video.`
+          notification['success']({
+            message: `Successfully ${method}ged video.`,
           });
           let flagData = { id: videoId, timestamp: moment().utc() };
-          if (method === "flag") {
-            appendToList("flagged", flagData);
-            appendToFile("flagged.json", flagData, {}, () =>
-              this.refreshLikes()
-            );
+          if (method === 'flag') {
+            appendToList('flagged', flagData);
+            appendToFile('flagged.json', flagData, {}, () => this.refreshLikes());
           } else {
-            removeFromList("flagged", videoId);
-            removeFromFile("flagged.json", videoId, {}, () =>
-              this.refreshLikes()
-            );
+            removeFromList('flagged', videoId);
+            removeFromFile('flagged.json', videoId, {}, () => this.refreshLikes());
           }
         }
       })
