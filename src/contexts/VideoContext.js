@@ -198,6 +198,7 @@ class VideoProvider extends Component {
   };
 
   infiniteLoad = async (daysAgo, daysToLoad, callback) => {
+    console.log("infinite load called");
     const { loading, endOfList, totalCountMap } = this.state.value;
     if (loading || endOfList) return;
     this.updateState({ loading: true, lastDayLoaded: daysAgo });

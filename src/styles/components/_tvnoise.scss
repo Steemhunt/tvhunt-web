@@ -5,13 +5,6 @@
   position: fixed;
   top: 0;
   z-index: 99;
-  opacity: 1;
-  transition: opacity 0.5s linear;
-  pointer-events: none;
-
-  &.fade-out {
-      opacity: 0;
-  }
 
   .absolute-center {
     position: absolute;
@@ -37,5 +30,15 @@
     &.fullscreen {
       width: 100vw;
     }
+  }
+}
+
+.noise-parent-container {
+  transition: opacity 0.5s linear;
+  pointer-events: none;
+  opacity: 1;
+
+  &.fade-out {
+    opacity: 0;
   }
 }

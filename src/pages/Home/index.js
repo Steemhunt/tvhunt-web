@@ -21,6 +21,7 @@ const Home = props => {
 
   const { currentVideo } = value;
 
+
   const {
     match: {
       params: { topic, slug, params }
@@ -28,6 +29,7 @@ const Home = props => {
   } = props;
 
   useEffect(() => {
+    console.log("loading list");
     scrollTop();
     infiniteLoad(0, 2, () => {
       if (topic === "uploads") loadMyUploads();

@@ -1,23 +1,23 @@
-import React, { useRef, useEffect, useContext } from "react";
-import { withRouter } from "react-router";
-import VideoContext from "contexts/VideoContext";
-import SubmitContext from "contexts/SubmitContext";
-import _ from "lodash";
-import isMobile from "ismobilejs";
+import React, { useRef, useEffect, useMemo, useContext } from 'react';
+import { withRouter } from 'react-router';
+import VideoContext from 'contexts/VideoContext';
+import SubmitContext from 'contexts/SubmitContext';
+import _ from 'lodash';
+import isMobile from 'ismobilejs';
 
-export const STATUS_UNSTARTED = "unstarted";
-export const STATUS_ENDED = "ended";
-export const STATUS_PLAYING = "playing";
-export const STATUS_PAUSED = "paused";
-export const STATUS_BUFFERING = "buffering";
-export const STATUS_CUED = "cued";
+export const STATUS_UNSTARTED = 'unstarted';
+export const STATUS_ENDED = 'ended';
+export const STATUS_PLAYING = 'playing';
+export const STATUS_PAUSED = 'paused';
+export const STATUS_BUFFERING = 'buffering';
+export const STATUS_CUED = 'cued';
 export const PLAYBACK_STATUS = {
-  "-1": STATUS_UNSTARTED,
-  "0": STATUS_ENDED,
-  "1": STATUS_PLAYING,
-  "2": STATUS_PAUSED,
-  "3": STATUS_BUFFERING,
-  "5": STATUS_CUED
+  '-1': STATUS_UNSTARTED,
+  '0': STATUS_ENDED,
+  '1': STATUS_PLAYING,
+  '2': STATUS_PAUSED,
+  '3': STATUS_BUFFERING,
+  '5': STATUS_CUED,
 };
 
 const Video = props => {
@@ -28,6 +28,7 @@ const Video = props => {
   const { player, currentVideo } = value;
 
   useEffect(() => {
+    console.log("initializing youtube instance");
     if (window.YT) {
       new window.YT.Player(playerRef.current, {
         playerVars: {
@@ -37,30 +38,26 @@ const Video = props => {
           autohide: 0,
           muted: 1,
           mute: 1,
-          widget_referrer: process.env.REACT_APP_PUBLIC_URL
+          widget_referrer: process.env.REACT_APP_PUBLIC_URL,
         },
         events: {
           onReady: onPlayerReady,
-          onStateChange: onPlayerStateChange
-        }
+          onStateChange: onPlayerStateChange,
+        },
       });
     }
   }, []); //eslint-disable-line
 
   useEffect(() => {
+    console.log('loading video');
     player &&
       player.loadVideoById({
-        videoId:
-          !isMobile().phone && videoId
-            ? videoId
-            : currentVideo
-            ? currentVideo.unique_id
-            : null
+        videoId: !isMobile().phone && videoId ? videoId : currentVideo ? currentVideo.unique_id : null,
       });
   }, [player, currentVideo, videoId]); //eslint-disable-line
 
   function onPlayerReady({ target }) {
-    console.log("player ready!");
+    console.log('player ready!');
     target.setSize = _.debounce(target.setSize, 100);
     target.seekTo = _.debounce(target.seekTo, 500);
     target.getDuration = _.debounce(target.getDuration, 100);
@@ -77,7 +74,10 @@ const Video = props => {
     updateState({ status });
   }
 
-  return <div id="youtube-iframe" ref={playerRef} />;
+  return useMemo(() => {
+    console.log('video rerendered');
+    return <div id="youtube-iframe" ref={playerRef} />;
+  }, []);
 };
 
 export default withRouter(Video);
