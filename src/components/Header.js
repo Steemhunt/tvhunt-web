@@ -44,15 +44,10 @@ const Header = props => {
               alt=""
               className="flag-button hover-link"
               type="link"
-              onClick={() => {
-                navigator.clipboard.writeText(window.location.href);
-                notification["success"]({ message: "Copied to clipboard" });
-              }}
             />
           </Popconfirm>
           <a
-            href={`https://youtube.com/watch?v=${currentVideo &&
-              currentVideo.unique_id}`}
+            href={`https://youtube.com/watch?v=${currentVideo && currentVideo.unique_id}`}
             rel="noopener noreferrer"
             target="_blank"
           >
