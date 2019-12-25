@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Icon, Popconfirm, notification } from "antd";
+import { Icon, Modal, notification } from "antd";
 import { withRouter } from "react-router-dom";
 import VideoContext from "contexts/VideoContext";
 import logo from "assets/images/logo-tvh.svg";
@@ -27,24 +27,22 @@ const Header = props => {
           type="menu-unfold"
         />
         <div className="row-align-center">
-          <Popconfirm
-            title={
-              alreadyFlagged
-                ? "Unflag video?"
-                : "Do you think this video does not fit here?"
+          <img
+            src={flagIcon}
+            alt=""
+            className="flag-button hover-link"
+            type="link"
+            onClick={() => Modal.confirm({
+                title: 'Flag Video',
+                content: alreadyFlagged ? "Unflag video?" : "Do you think this video does not fit here?",
+                okText: 'Yes',
+                cancelText: 'Cancel',
+                onOk() {
+                  return flagUnflag(currentVideo.id)
+                }
+              })
             }
-            onConfirm={() => flagUnflag(currentVideo.id)}
-            onCancel={() => {}}
-            okText="Yes"
-            cancelText="No"
-          >
-            <img
-              src={flagIcon}
-              alt=""
-              className="flag-button hover-link"
-              type="link"
-            />
-          </Popconfirm>
+          />
           <a
             href={`https://youtube.com/watch?v=${currentVideo && currentVideo.unique_id}`}
             rel="noopener noreferrer"

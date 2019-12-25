@@ -432,6 +432,7 @@ class VideoProvider extends Component {
             removeFromList('flagged', videoId);
             removeFromFile('flagged.json', videoId, {}, () => this.refreshLikes());
           }
+          this.updateState({ flagged: getList('flagged') }); // Update states with the safeStorage data
         }
       })
       .catch(handleErrorMessage);
