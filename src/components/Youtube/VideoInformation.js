@@ -13,6 +13,7 @@ import { displayUsername } from 'utils/authHelper';
 import youtubeIcon from 'assets/images/youtube-brands.svg';
 import shareIcon from 'assets/images/share-solid.svg';
 import flagIcon from 'assets/images/flag-solid.svg';
+import { CopyToClipboard } from 'react-copy-to-clipboard';
 import _ from 'lodash';
 
 const VideoInformation = props => {
@@ -58,16 +59,14 @@ const VideoInformation = props => {
                 >
                   <img className="youtube-button hover-link" src={youtubeIcon} alt="" />
                 </a>
-                <img
-                  src={shareIcon}
-                  alt=""
-                  className="share-button hover-link"
-                  type="link"
-                  onClick={() => {
-                    navigator.clipboard.writeText(window.location.href);
-                    notification['success']({ message: 'Copied to clipboard' });
-                  }}
-                />
+                <CopyToClipboard text={window.location.href} onCopy={() => notification["success"]({ message: "Copied to clipboard" })}>
+                  <img
+                    src={shareIcon}
+                    alt=""
+                    className="share-button hover-link"
+                    type="link"
+                  />
+                </CopyToClipboard>
               </div>
             </div>
           </div>
