@@ -9,10 +9,8 @@ import flagIcon from "assets/images/flag-solid.svg";
 import _ from "lodash";
 
 const Header = props => {
-  const { flagUnflag, currentVideo, updateState, value } = useContext(
-    VideoContext
-  );
-  const { fullscreen, flagged } = value;
+  const { flagUnflag, updateState, value } = useContext(VideoContext);
+  const { fullscreen, flagged, currentVideo } = value;
 
   const alreadyFlagged =
     currentVideo &&
