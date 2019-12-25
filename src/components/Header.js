@@ -7,10 +7,12 @@ import youtubeIcon from "assets/images/youtube-brands.svg";
 import shareIcon from "assets/images/share-solid.svg";
 import flagIcon from "assets/images/flag-solid.svg";
 import { CopyToClipboard } from 'react-copy-to-clipboard';
+import AuthContext from 'contexts/AuthContext';
 import _ from "lodash";
 
 const Header = props => {
   const { flagUnflag, updateState, value } = useContext(VideoContext);
+  const { user } = useContext(AuthContext);
   const { fullscreen, flagged, currentVideo } = value;
 
   const alreadyFlagged =
@@ -38,7 +40,7 @@ const Header = props => {
                 okText: 'Yes',
                 cancelText: 'Cancel',
                 onOk() {
-                  return flagUnflag(currentVideo.id)
+                  return flagUnflag(currentVideo.id, user);
                 }
               })
             }
